@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jskgmail.lifesaver.Main4Activity">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:padding="5dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="A flood occurs when water overflows or inundates land that's normally dry. This can happen in a multitude of ways. Most common is when rivers or streams overflow their banks. ... Coastal flooding occurs when a large storm or tsunami causes the sea to surge inland
+\nSteps to Take\n
+1.	Move immediately to higher ground or stay on high ground.\n
+2.	Evacuate if directed.\n
+3.	Avoid walking or driving through flood waters. Turn Around, Don't Drown! Just 6 inches of moving water can knock you down and one foot of moving water can sweep your vehicle away.
+Get to high ground – Climb to safety!\n
+1.	Get out of low areas that may be subject to flooding.\n
+2.	Avoid already-flooded areas and do not attempt to cross flowing water.
+\n3.	Stay away from power lines and electrical wires.\n
+As most people are well aware, the immediate impacts of flooding include loss of human life, damage to property, destruction of crops, loss of livestock, and deterioration of health conditions owing to waterborne diseases.
+\n"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="214dp" />"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
+</android.support.v4.widget.NestedScrollView>
