@@ -84,7 +84,6 @@ holder.txtviewtitle.setText(title.get(position));
 
 
 
-
         return convertView;
     }
 

@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     private static final int RESULT_PICK_CONTACT = 85;
     private ArrayList<String> stringArrayList, stringArrayList1;
     ListViewAdfrlist adapter;
+    static String phon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +64,40 @@ public class MainActivity extends AppCompatActivity
         stringArrayList=new ArrayList<>();
         stringArrayList1=new ArrayList<>();
         go();
-  }
 
+
+
+
+
+ogogog();
+
+
+
+
+
+
+
+
+
+
+  }
+void ogogog()
+{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
     private void go() {
         ImageView img2=(ImageView)findViewById(R.id.imageView) ;
 
@@ -242,8 +275,9 @@ Log.e("MainActivity", "Failed to pick contact");
             Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
             startActivityForResult(intent,RESULT_PICK_CONTACT);}
 else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+            Intent intent = new Intent(MainActivity.this,Main2Activity.class);
+            startActivity(intent);}
+         else if (id == R.id.nav_send) {
 
         }
 
@@ -274,7 +308,7 @@ else if (id == R.id.nav_share) {
             Log.d("name",name);
             Log.d("phno",phoneNo);
 
-
+phon=phoneNo;
 
             stringArrayList.add(name);
             stringArrayList1.add(phoneNo);

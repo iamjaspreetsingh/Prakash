@@ -16,7 +16,7 @@
         <item
             android:id="@+id/Emergencycontacts"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Emergency Contacts" />
+            android:title="Add Emergency Contacts" />
 
     </group>
 
