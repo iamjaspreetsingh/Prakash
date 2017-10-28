@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.jskgmail.lifesaver"
         minSdkVersion 19
-        targetSdkVersion 25
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -41,6 +41,7 @@ dependencies {
 
 
 
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
@@ -51,13 +52,12 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:10.0.1'
     compile 'com.android.support:support-vector-drawable:25.3.1'
     compile 'com.firebaseui:firebase-ui-storage:0.6.0'
+    compile 'com.google.android.gms:play-services-maps:10.0.1'
+
     testCompile 'junit:junit:4.12'
 }
 
-
-
-
-
-
-
 apply plugin: 'com.google.gms.google-services'
+
+
+

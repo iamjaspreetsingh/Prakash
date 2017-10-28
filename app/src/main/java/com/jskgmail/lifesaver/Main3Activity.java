@@ -1,3 +1,4 @@
+
 package com.jskgmail.lifesaver;
 
 import android.net.Uri;
@@ -29,33 +30,7 @@ String s="https://firebasestorage.googleapis.com/v0/b/lifesaver-18f28.appspot.co
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
