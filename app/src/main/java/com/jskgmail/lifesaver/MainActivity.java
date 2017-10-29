@@ -122,8 +122,7 @@ ogogog();
       alert.setView(alertLayout);
       // disallow cancel of AlertDialog on click of back button and outside touch
       alert.setTitle("Emergency Call For");
-      alert.setIcon(R.drawable.ic_announcement_black_24dp);
-      Button earth=(Button)alertLayout.findViewById(R.id.button2);
+         Button earth=(Button)alertLayout.findViewById(R.id.button2);
       earth.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
