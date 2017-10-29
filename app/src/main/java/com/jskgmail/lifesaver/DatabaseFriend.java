@@ -16,11 +16,6 @@ import java.util.List;
 public class DatabaseFriend extends SQLiteOpenHelper {
 
 
-
-
-
-
-
         // All Static variables
         // Database Version
         private static final int DATABASE_VERSION = 1;
@@ -37,13 +32,8 @@ public class DatabaseFriend extends SQLiteOpenHelper {
         private static final String KEY_NAME = "name";
     private static final String KEY_DNAME = "name1";
     private static final String KEY_DDNAME = "name2";
-
-        public DatabaseFriend(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        }
-
-
-
+    public DatabaseFriend(Context context) {
+    super(context, DATABASE_NAME, null, DATABASE_VERSION);}
         // Creating Tables
         @Override
         public void onCreate(SQLiteDatabase db) {
@@ -92,6 +82,7 @@ public class DatabaseFriend extends SQLiteOpenHelper {
                     cursor.getString(1),  cursor.getString(2),  cursor.getString(3));
             // return contact
             return contact;
+
         }
 
 
@@ -141,10 +132,10 @@ public class DatabaseFriend extends SQLiteOpenHelper {
             values.put(KEY_NAME, contact.getName());
             values.put(KEY_DNAME, contact.getNameD());
             values.put(KEY_DDNAME, contact.getNameDD());
-
-            // updating row
+           // updating row
             return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
                     new String[]{String.valueOf(contact.getID())});
+
         }
 
         // Deleting single contact

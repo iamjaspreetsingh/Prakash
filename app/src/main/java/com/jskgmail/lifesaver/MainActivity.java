@@ -93,10 +93,6 @@ void ogogog()
 
 
 
-
-
-
-
 }
     private void go() {
         ImageView img2=(ImageView)findViewById(R.id.imageView) ;
@@ -243,6 +239,7 @@ Log.e("MainActivity", "Failed to pick contact");
             return true;
         }
         return super.onOptionsItemSelected(item);
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -281,12 +278,11 @@ else if (id == R.id.nav_share) {
 
         }
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
 
     private void contactPicked(Intent data) {
         ListView l=(ListView)findViewById(R.id.lv);
