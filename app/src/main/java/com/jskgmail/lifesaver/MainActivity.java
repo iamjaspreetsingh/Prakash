@@ -1,7 +1,6 @@
 package com.jskgmail.lifesaver;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -26,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -123,24 +123,30 @@ ogogog();
       // disallow cancel of AlertDialog on click of back button and outside touch
       alert.setTitle("Emergency Call For");
       alert.setIcon(R.drawable.ic_announcement_black_24dp);
-      alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
+      Button earth=(Button)alertLayout.findViewById(R.id.button2);
+      earth.setOnClickListener(new View.OnClickListener() {
           @Override
-          public void onClick(DialogInterface dialog, int which) {
+          public void onClick(View v) {
+              Uri call=Uri.parse("+911123093054");
+              Intent surf=new Intent(Intent.ACTION_DIAL,call);
+              startActivity(surf);
 
-          }
-      });
-
-
-      alert.setPositiveButton("Set", new DialogInterface.OnClickListener() {
-
-
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
 
 
           }
       });
+      Button flood=(Button)alertLayout.findViewById(R.id.button2);
+      flood.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+
+              Uri call=Uri.parse("+911123093054");
+              Intent surf=new Intent(Intent.ACTION_DIAL,call);
+              startActivity(surf);
+
+          }
+      });
+
       AlertDialog dialog = alert.create();
       dialog.show();
 

@@ -55,7 +55,7 @@ name.setText(cn.getNameD());
 
 
 
-
+finish();
             }
         });
 
