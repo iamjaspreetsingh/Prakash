@@ -140,9 +140,9 @@ ogogog();
           @Override
           public void onClick(View v) {
 
-              Uri call=Uri.parse("+911123093054");
-              Intent surf=new Intent(Intent.ACTION_DIAL,call);
-              startActivity(surf);
+              Uri call=Uri.parse("tel:+911123093054");
+              Intent surf1=new Intent(Intent.ACTION_DIAL,call);
+              startActivity(surf1);
 
           }
       });
