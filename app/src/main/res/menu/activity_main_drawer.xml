@@ -15,6 +15,10 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Add Emergency Contacts" />
 
+        <item
+            android:id="@+id/settingg"
+            android:icon="@drawable/ic_settings_black1_24dp"
+            android:title="Settings" />
     </group>
 
 

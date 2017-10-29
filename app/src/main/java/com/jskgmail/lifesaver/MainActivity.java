@@ -493,7 +493,10 @@ Log.e("MainActivity", "Failed to pick contact");
             Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
             startActivityForResult(intent, RESULT_PICK_CONTACT);
         }
-
+        else if (id == R.id.settingg) {
+            Intent i = new Intent(MainActivity.this, MainsettingActivity.class);
+            startActivity(i);
+        }
 
 
 
