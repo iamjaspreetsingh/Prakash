@@ -73,7 +73,7 @@ public class Friends {
 
     // setting name
     public void setNameD(String name1){
-        this._name = name1;
+        this._name1 = name1;
         Log.i("sd","dsdsds");
     }
     public String getNameDD(){
@@ -82,7 +82,7 @@ public class Friends {
 
     // setting name
     public void setNameDD(String name2){
-        this._name = name2;
+        this._name2 = name2;
         Log.i("sd","dsdsds");
     }
 

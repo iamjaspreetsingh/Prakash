@@ -8,11 +8,8 @@
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Earthquake" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Floods" />
+            android:title="My Location" />
+
         <item
             android:id="@+id/Emergencycontacts"
             android:icon="@drawable/ic_menu_slideshow"
@@ -20,17 +17,6 @@
 
     </group>
 
-    <item android:title="Helpline">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Complaint" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Helpline numbers" />
-        </menu>
-    </item>
+
 
 </menu>
