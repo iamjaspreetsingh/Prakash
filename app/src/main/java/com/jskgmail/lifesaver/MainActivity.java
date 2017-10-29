@@ -1,6 +1,7 @@
 package com.jskgmail.lifesaver;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,9 +18,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,7 +62,23 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              
+
+
+
+gogo();
+
+
+
+
+
+
+
+
+
+
+
+
+
             }
         });
 
@@ -82,6 +101,53 @@ ogogog();
 
 
 
+  }
+
+
+
+
+
+
+
+  void gogo()
+  {
+
+
+      LayoutInflater inflater = getLayoutInflater();
+      View alertLayout = inflater.inflate(R.layout.layoutemergency, null);
+
+      AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+      // this is set the view from XML inside AlertDialog
+      alert.setView(alertLayout);
+      // disallow cancel of AlertDialog on click of back button and outside touch
+      alert.setTitle("Emergency Call For");
+      alert.setIcon(R.drawable.ic_announcement_black_24dp);
+      alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+
+          }
+      });
+
+
+      alert.setPositiveButton("Set", new DialogInterface.OnClickListener() {
+
+
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+
+
+          }
+      });
+      AlertDialog dialog = alert.create();
+      dialog.show();
+
+
+
+
+
 
 
 
@@ -90,6 +156,20 @@ ogogog();
 
 
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void ogogog()
 {
 
