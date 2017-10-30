@@ -28,6 +28,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -92,7 +93,9 @@ gogo();
         stringArrayList=new ArrayList<>();
         stringArrayList1=new ArrayList<>();
         go();
-
+        TextView t=(TextView)findViewById(R.id.icon);
+        if(!(MainsettingActivity.name.equals("")))
+        t.setText("Hey "+MainsettingActivity.name);
 
 
 
