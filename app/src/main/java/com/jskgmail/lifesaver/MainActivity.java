@@ -50,7 +50,9 @@ public class MainActivity extends AppCompatActivity
     private static final int RESULT_PICK_CONTACT = 85;
     private ArrayList<String> stringArrayList, stringArrayList1;
     ListViewAdfrlist adapter;
-    static String phon;static String myLocation;int ch=0;
+    static String phon;static String myLocation;
+    static double mylocationa;
+    static double myLocationb;int ch=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +60,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ListView l=(ListView)findViewById(R.id.lv);
-
-
-
-
-
-
-
 
 
 
@@ -77,17 +72,6 @@ public class MainActivity extends AppCompatActivity
 
 
 gogo();
-
-
-
-
-
-
-
-
-
-
-
 
 
             }
@@ -294,7 +278,8 @@ void ogogog()
             location.getLongitude();
 
             myLocation = "Latitude = " + location.getLatitude() + " Longitude = " + location.getLongitude();
-
+mylocationa=location.getLatitude();
+            myLocationb=location.getLongitude();
             //I make a log to see the results
             Log.e("My", myLocation);
             if(!(ch==1))
