@@ -30,7 +30,7 @@
         android:layout_marginBottom="26dp"
         android:layout_weight="5.14"
         android:padding="1dp"
-        android:text="     LIFESAVER"
+        android:text="LIFESAVER"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="25sp" />
 </RelativeLayout>

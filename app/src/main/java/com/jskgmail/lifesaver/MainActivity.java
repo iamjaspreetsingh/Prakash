@@ -28,7 +28,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -44,7 +43,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -62,17 +60,7 @@ public class MainActivity extends AppCompatActivity
         ListView l=(ListView)findViewById(R.id.lv);
 
 
-        DatabaseFriend db = new DatabaseFriend(getApplicationContext());
-        List<Friends> contacts = db.getAllContacts();
-        TextView tjk=(TextView)findViewById(R.id.iconppp);
-        for (Friends cn : contacts) {
-            if(!(cn.getName().equals("")))
-            {
-                tjk.setText("Hey "+cn.getNameD());
 
-            }
-
-        }
 
 
 
