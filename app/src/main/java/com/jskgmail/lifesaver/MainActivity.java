@@ -44,6 +44,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,6 +60,27 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ListView l=(ListView)findViewById(R.id.lv);
+
+
+        DatabaseFriend db = new DatabaseFriend(getApplicationContext());
+        List<Friends> contacts = db.getAllContacts();
+        TextView tjk=(TextView)findViewById(R.id.iconppp);
+        for (Friends cn : contacts) {
+            if(!(cn.getName().equals("")))
+            {
+                tjk.setText("Hey "+cn.getNameD());
+
+            }
+
+        }
+
+
+
+
+
+
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,9 +115,16 @@ gogo();
         stringArrayList=new ArrayList<>();
         stringArrayList1=new ArrayList<>();
         go();
-        TextView t=(TextView)findViewById(R.id.icon);
-        if(!(MainsettingActivity.name.equals("")))
-        t.setText("Hey "+MainsettingActivity.name);
+
+
+
+
+
+
+
+
+
+
 
 
 
