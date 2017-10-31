@@ -282,10 +282,10 @@ void ogogog()
 mylocationa=location.getLatitude();
             myLocationb=location.getLongitude();
             //I make a log to see the results
-            Log.e("My", myLocation);
-            if(!(ch==1))
+            Log.e("my", myLocation);
+
                 go1();
-            ch=1;
+
         }
 
         public void onStatusChanged(String s, int i, Bundle bundle) {
