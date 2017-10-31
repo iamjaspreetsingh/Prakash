@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Main2Activity extends AppCompatActivity  {
+public class Main2Activity extends AppCompatActivity implements LocationListener {
 static String myLocation;int ch=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +94,33 @@ final String TAG="qqqq";
 
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        location.getLatitude();
+        location.getLongitude();
 
+        myLocation = "Latitude = " + location.getLatitude() + " Longitude = " + location.getLongitude();
 
+        //I make a log to see the results
+        Log.e("My", myLocation);
 
+        go();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 
 
     public class MyCurrentLocationListener implements LocationListener {
@@ -109,7 +133,7 @@ final String TAG="qqqq";
 
             //I make a log to see the results
             Log.e("My", myLocation);
-            if(!(ch==1))
+
 go();
              ch=1;
         }

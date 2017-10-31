@@ -23,22 +23,23 @@
         android:id="@+id/textView66"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Username"
+        android:layout_alignBaseline="@+id/no"
+        android:layout_alignBottom="@+id/no"
+        android:layout_alignParentStart="true"
+        android:text="Mobile "
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="17sp"
-        android:layout_alignTop="@+id/no"
-        android:layout_alignParentStart="true" />
+        android:textSize="17sp" />
 
     <TextView
         android:id="@+id/textView66"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mobile :"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="17sp"
         android:layout_alignBaseline="@+id/user"
         android:layout_alignBottom="@+id/user"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:text="Username"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="17sp" />
 
     <EditText
         android:id="@+id/editText"
@@ -56,9 +57,9 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:layout_below="@+id/editText"
-        android:layout_alignStart="@+id/no"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/no"
+        android:layout_alignStart="@+id/no" />
 
     <Button
         android:id="@+id/don"
@@ -76,7 +77,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number"
-        android:layout_below="@+id/user"
-        android:layout_alignStart="@+id/editText"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="13dp"
+        android:layout_below="@+id/editText"
+        android:layout_alignStart="@+id/editText" />
 </RelativeLayout>

@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        ogogog();
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-
+Intent i=new Intent(MainActivity.this,Main2Activity.class);
+                startActivity(i);
 
 gogo();
 
