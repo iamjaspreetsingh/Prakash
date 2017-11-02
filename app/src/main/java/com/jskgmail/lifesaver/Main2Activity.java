@@ -17,8 +17,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 
 public class Main2Activity extends AppCompatActivity {
@@ -26,7 +32,7 @@ static String myLocation;int ch=0;
     private static final String TAG = MainActivity.class.getSimpleName();
 
     // TODO - insert your themoviedb.org API KEY here
-    private final static String API_KEY = "";
+    private final static String API_KEY = "AIzaSyClHbZ-x92EYceOWKDSgT0NPZEBBEa_wnU";
 
 
 
@@ -60,10 +66,27 @@ static String myLocation;int ch=0;
 
 
         if (API_KEY.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
             return;
         }
 
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call call = apiService.getall(API_KEY);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Log.e(TAG,"success");
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+Log.e(TAG,"failureee");
+            }
+
+
+        });
 
 
 
@@ -192,7 +215,7 @@ Log.d("disable","d");
 
     public static class ApiClient {
 
-        public static final String BASE_URL = "http://api.themoviedb.org/3/";
+        public static final String BASE_URL = "https://maps.googleapis.com/maps/api/elevation/json?locations=39.7391536,-104.9847034&key=";
         private static Retrofit retrofit = null;
 
 
@@ -208,7 +231,13 @@ Log.d("disable","d");
     }
 
 
+    public interface ApiInterface {
+        @GET("")
+        Call getall(@Query("api_key") String apiKey);
 
+        @GET("movie/{id}")
+        Call getElevation(@Path("id") int id, @Query("api_key") String apiKey);
+    }
 
 
 
