@@ -29,9 +29,8 @@ import retrofit2.http.Query;
 
 public class Main2Activity extends AppCompatActivity {
 static String myLocation;int ch=0;
-    private static final String TAG = MainActivity.class.getSimpleName();
+String TAG = "tag";
 
-    // TODO - insert your themoviedb.org API KEY here
     private final static String API_KEY = "AIzaSyClHbZ-x92EYceOWKDSgT0NPZEBBEa_wnU";
 
 
@@ -41,6 +40,49 @@ static String myLocation;int ch=0;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+
+        if (API_KEY.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
+            return;
+        } Log.e(TAG,"whyy");
+
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call call = apiService.getall(API_KEY);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Log.e(TAG,"success");
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.e(TAG,"failureee");
+            }
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         MyCurrentLocationListener locationListener = new MyCurrentLocationListener();
@@ -65,28 +107,6 @@ static String myLocation;int ch=0;
 
 
 
-        if (API_KEY.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        ApiInterface apiService =
-                ApiClient.getClient().create(ApiInterface.class);
-
-        Call call = apiService.getall(API_KEY);
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) {
-                Log.e(TAG,"success");
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-Log.e(TAG,"failureee");
-            }
-
-
-        });
 
 
 
@@ -215,7 +235,7 @@ Log.d("disable","d");
 
     public static class ApiClient {
 
-        public static final String BASE_URL = "https://maps.googleapis.com/maps/api/elevation/json?locations=39.7391536,-104.9847034&key=";
+        public static final String BASE_URL ="https://maps.googleapis.com/maps/api/elevation/";
         private static Retrofit retrofit = null;
 
 
@@ -232,7 +252,7 @@ Log.d("disable","d");
 
 
     public interface ApiInterface {
-        @GET("")
+        @GET("json?locations=39.7391536,-104.9847034&key=")
         Call getall(@Query("api_key") String apiKey);
 
         @GET("movie/{id}")
