@@ -54,9 +54,10 @@ dependencies {
     compile 'com.firebaseui:firebase-ui-storage:0.6.0'
     compile 'com.google.android.gms:play-services-maps:10.0.1'
 
-        compile 'com.google.maps:google-maps-services:0.2.4'
-        compile 'org.slf4j:slf4j-nop:1.7.25'
+     compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.google.code.gson:gson:2.6.2'
 
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     testCompile 'junit:junit:4.12'
 }
 

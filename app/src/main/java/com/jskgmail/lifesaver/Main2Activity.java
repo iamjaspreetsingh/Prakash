@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,8 +17,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+
 public class Main2Activity extends AppCompatActivity {
 static String myLocation;int ch=0;
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    // TODO - insert your themoviedb.org API KEY here
+    private final static String API_KEY = "";
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +49,43 @@ static String myLocation;int ch=0;
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,locationListener);
+
+
+
+
+
+
+
+
+
+
+        if (API_KEY.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 
@@ -125,6 +175,52 @@ go();
 Log.d("disable","d");
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static class ApiClient {
+
+        public static final String BASE_URL = "http://api.themoviedb.org/3/";
+        private static Retrofit retrofit = null;
+
+
+        public static Retrofit getClient() {
+            if (retrofit==null) {
+                retrofit = new Retrofit.Builder()
+                        .baseUrl(BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+            }
+            return retrofit;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
