@@ -17,6 +17,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,8 +62,18 @@ String TAG = "tag";
             @Override
             public void onResponse(Call call, Response response) {
                 Log.e(TAG,"success");
-                Log.e(TAG,  response.toString());
+                Log.e(TAG,  response.raw().request().url().toString());
+                String url=response.raw().request().url().toString();
 
+
+                try {
+                    JSONObject json=new JSONObject(Readurl(url));String title=(String)json.get("results");
+                 
+                    Log.e("content", String.valueOf(json));
+                    Log.e("contenttitle",title);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
 
@@ -135,6 +151,29 @@ String TAG = "tag";
 
 
     }
+
+    private String Readurl(String urls) throws Exception {
+        BufferedReader reader = null;
+        try {
+            URL url = new URL(urls);
+            reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            StringBuffer buffer = new StringBuffer();
+            int read;
+            char[] chars = new char[1024];
+            while ((read = reader.read(chars)) != -1)
+                buffer.append(chars, 0, read);
+
+            return buffer.toString();
+        } finally {
+            if (reader != null)
+                reader.close();
+        }
+    }
+
+
+
+
+
 
 
 
