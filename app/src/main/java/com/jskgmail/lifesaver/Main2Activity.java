@@ -56,6 +56,9 @@ String TAG = "tag";
             @Override
             public void onResponse(Call call, Response response) {
                 Log.e(TAG,"success");
+                Log.e(TAG,  response.toString());
+
+
             }
 
             @Override
@@ -253,7 +256,8 @@ Log.d("disable","d");
 
 
     public interface ApiInterface {
-        @GET("json?locations=39.7391536,-104.9847034&key=")
+        String loc="39.7391536,-104.9847034";
+        @GET("json?locations="+loc+"&key=")
         Call<ResponseBody> getall(@Query("api_key") String apiKey);
 
         @GET("movie/{id}")
