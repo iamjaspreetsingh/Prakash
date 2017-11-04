@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -253,7 +254,7 @@ Log.d("disable","d");
 
     public interface ApiInterface {
         @GET("json?locations=39.7391536,-104.9847034&key=")
-        Call getall(@Query("api_key") String apiKey);
+        Call<ResponseBody> getall(@Query("api_key") String apiKey);
 
         @GET("movie/{id}")
         Call getElevation(@Path("id") int id, @Query("api_key") String apiKey);
