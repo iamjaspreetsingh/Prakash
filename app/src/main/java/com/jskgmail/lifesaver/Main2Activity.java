@@ -35,17 +35,16 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 
 public class Main2Activity extends AppCompatActivity {
 static String myLocation;int ch=0;
 String TAG = "tag";
-
+String latlong="39.7391536,-104.9847034";
     private final static String API_KEY = "AIzaSyClHbZ-x92EYceOWKDSgT0NPZEBBEa_wnU";
-
-
+    private final static String API_KEY1="AIzaSyCGZpTkUUlIYjYuJNOZMJKA6Ar4d7fE7Dc";
+double eleva=0;
 
 
     @Override
@@ -62,7 +61,7 @@ String TAG = "tag";
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 //TODO
-        Call call = apiService.getall(API_KEY);
+        Call call = apiService.getall(latlong,API_KEY);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -72,14 +71,7 @@ String TAG = "tag";
                 FriendsProcessor mytask = new FriendsProcessor();
                 mytask.execute(url);
 
-                try {
-                    JSONObject json=new JSONObject(Readurl(url));String title=(String)json.get("results");
 
-                    Log.e("content", String.valueOf(json));
-                    Log.e("contenttitle",title);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
             }
 
@@ -93,6 +85,48 @@ String TAG = "tag";
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+        if (API_KEY1.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
+            return;
+        } Log.e(TAG,"whyy");
+
+        ApiInterface1 apiService1 =
+                ApiClient.getClient1().create(ApiInterface1.class);
+//TODO
+        Call call1 = apiService1.getall(API_KEY1);
+        call1.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Log.e(TAG,"success");
+                Log.e(TAG,  response.raw().request().url().toString());
+                String url=response.raw().request().url().toString();
+                FriendsProcessor1 mytask = new FriendsProcessor1();
+                mytask.execute(url);
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.e(TAG,"failureee");
+            }
+
+
+        });
 
 
 
@@ -157,6 +191,252 @@ String TAG = "tag";
 
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private class FriendsProcessor1 extends AsyncTask<String, Void, Integer> {
+
+
+
+        public FriendsProcessor1() {
+
+            super();
+
+        }
+
+
+        // The onPreExecute is executed on the main UI thread before background processing is
+
+        // started. In this method, we start the progressdialog.
+
+        @Override
+
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+
+
+            // Show the progress dialog on the screen
+
+
+        }
+
+
+        // This method is executed in the background and will return a result to onPostExecute
+
+        // method. It receives the file name as input parameter.
+
+        @Override
+
+        protected Integer doInBackground(String... urls) {
+
+
+            InputStream inputStream = null;
+
+            HttpURLConnection urlConnection = null;
+
+            Integer result = 0;
+
+
+            // TODO connect to server, download and process the JSON string
+
+
+            // Now we read the file, line by line and construct the
+
+            // Json string from the information read in.
+
+            try {
+
+                /* forming th java.net.URL object */
+
+                URL url = new URL(urls[0]);
+
+                urlConnection = (HttpURLConnection) url.openConnection();
+
+
+
+                 /* optional request header */
+
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+
+
+
+                /* optional request header */
+
+                urlConnection.setRequestProperty("Accept", "application/json");
+
+
+
+                /* for Get request */
+
+                urlConnection.setRequestMethod("GET");
+
+                int statusCode = urlConnection.getResponseCode();
+
+
+
+                /* 200 represents HTTP OK */
+
+                if (statusCode == 200) {
+
+                    inputStream = new BufferedInputStream(urlConnection.getInputStream());
+
+
+                    // Convert the read in information to a Json string
+
+                    String response = convertInputStreamToString(inputStream);
+
+
+                    // now process the string using the method that we implemented in the previous exercise
+
+                    Log.e("responseeee",response.replace(" ",""));
+                    JSONObject obj=new JSONObject(response.replace(" ",""));
+
+                        String ele = (obj.getString("snappedPoints"));
+                        String[] elee=ele.split(",");
+                        String elv=elee[0].replace("[{\"location\":{\"latitude\":","");
+                    String elv1=elee[1].replace("\"longitude\":","").replace("}","");
+                        Log.e("lat",elv);
+                    Log.e("longi",elv1);
+
+latlong=elv+","+elv1;
+                    ApiInterface apiService =
+                            ApiClient.getClient().create(ApiInterface.class);
+//TODO
+                    Call call = apiService.getall(latlong,API_KEY);
+                    call.enqueue(new Callback() {
+                        @Override
+                        public void onResponse(Call call, Response response) {
+                            Log.e(TAG,"success");
+                            Log.e(TAG,  response.raw().request().url().toString());
+                            String url=response.raw().request().url().toString();
+                            FriendsProcessor mytask = new FriendsProcessor();
+                            mytask.execute(url);
+
+
+
+                        }
+
+                        @Override
+                        public void onFailure(Call call, Throwable t) {
+                            Log.e(TAG,"failureee");
+                        }
+
+
+                    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    result = 1; // Successful
+
+                } else {
+
+                    result = 0; //"Failed to fetch data!";
+
+                }
+
+            } catch (Exception e) {
+
+                Log.d(TAG, e.getLocalizedMessage());
+
+            }
+
+            return result; //"Failed to fetch data!";
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -264,8 +544,10 @@ JSONObject obj=new JSONObject(response.replace(" ",""));
                     if(obj.getString("status").equals("OK")) {
                         String ele = (obj.getString("results"));
                      String[] elee=ele.split(",");
-
-                        Log.e("elevation", elee[0].replace("[{\"elevation\":",""));
+                        String elv=elee[0].replace("[{\"elevation\":","");
+                        Log.e("elevation",elv);
+eleva=eleva-Double.valueOf(elv);
+                        Log.e("elelelele", String.valueOf(eleva));
                         result = 1; // Successful
                     }
                 } else {
@@ -326,23 +608,7 @@ JSONObject obj=new JSONObject(response.replace(" ",""));
 
 
 
-    private String Readurl(String urls) throws Exception {
-        BufferedReader reader = null;
-        try {
-            URL url = new URL(urls);
-            reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            StringBuffer buffer = new StringBuffer();
-            int read;
-            char[] chars = new char[1024];
-            while ((read = reader.read(chars)) != -1)
-                buffer.append(chars, 0, read);
 
-            return buffer.toString();
-        } finally {
-            if (reader != null)
-                reader.close();
-        }
-    }
 
 
 
@@ -453,7 +719,9 @@ Log.d("disable","d");
     public static class ApiClient {
 
         public static final String BASE_URL ="https://maps.googleapis.com/maps/api/elevation/";
+        public static final String BASE_URL1 ="https://roads.googleapis.com/v1/";
         private static Retrofit retrofit = null;
+        private static Retrofit retrofit1 = null;
 
 
         public static Retrofit getClient() {
@@ -465,19 +733,39 @@ Log.d("disable","d");
             }
             return retrofit;
         }
+
+
+
+
+        public static Retrofit getClient1() {
+            if (retrofit1==null) {
+                retrofit1 = new Retrofit.Builder()
+                        .baseUrl(BASE_URL1)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+            }
+            return retrofit1;
+        }
+
+
+
     }
+
 
 
     public interface ApiInterface {
         String loc="39.7391536,-104.9847034";
-        @GET("json?locations="+loc+"&key=")
-        Call<ResponseBody> getall(@Query("api_key") String apiKey);
+        @GET("json?")
+        Call<ResponseBody> getall(@Query("locations") String loc,@Query("key") String apiKey);
 
-        @GET("movie/{id}")
-        Call getElevation(@Path("id") int id, @Query("api_key") String apiKey);
     }
 
+    public interface ApiInterface1 {
+        String loc="60.170880,24.942795";
+        @GET("nearestRoads?points="+loc+"")
+        Call<ResponseBody> getall(@Query("key") String apiKey1);
 
+    }
 
 
 
