@@ -1,13 +1,19 @@
 package com.jskgmail.lifesaver;
 
+import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,7 +40,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 
-public class Main2Activity extends AppCompatActivity  {
+public class Main2Activity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
     static String myLocation = "11,12";
     String TAG = "tag";
     String latlong = "39.7391536,-104.9847034";
@@ -42,6 +48,14 @@ public class Main2Activity extends AppCompatActivity  {
     private final static String API_KEY1 = "AIzaSyCGZpTkUUlIYjYuJNOZMJKA6Ar4d7fE7Dc";
     double eleva = 0;
     double diffelevation = 0;
+
+
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLocation;
+    private LocationManager locationManager;
+    private LocationRequest mLocationRequest;
+
+
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
@@ -50,20 +64,14 @@ public class Main2Activity extends AppCompatActivity  {
         setContentView(R.layout.activity_main2);
 
 
-
-
-
         go();
 
-
-
-
-
-
-
-
-
-
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        locationManager = (LocationManager) getSystemService(getApplicationContext().LOCATION_SERVICE);
 
 
         if (API_KEY.isEmpty()) {
@@ -128,63 +136,85 @@ public class Main2Activity extends AppCompatActivity  {
         });
 
 
-
-
-
-
-
     }
 
+    @Override
+    public void onConnected(Bundle bundle) {
 
+        startLocationUpdates();
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLocation == null) {
+            startLocationUpdates();
+        }
+        if (mLocation != null) {
+            double latitude = mLocation.getLatitude();
+            double longitude = mLocation.getLongitude();
+        } else {
+            // Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    protected void startLocationUpdates() {
+        // Create the location request
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(10)
+                .setFastestInterval(10);
+        // Request location updates
 
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                mLocationRequest, this);
+        Log.d("reque", "--->>>>");
+    }
 
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.i(TAG, "Connection Suspended");
+        mGoogleApiClient.connect();
+    }
 
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(TAG, "Connection failed. Error: " + connectionResult.getErrorCode());
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+    @Override
+    public void onLocationChanged(Location location) {
+Log.e("lococococ", String.valueOf(location.getLatitude()));
+    }
 
 
     private class FriendsProcessor1 extends AsyncTask<String, Void, Integer> {
@@ -615,34 +645,6 @@ final String TAG="qqqq";
 
 
 
-
-    public class MyCurrentLocationListener implements LocationListener {
-
-        public void onLocationChanged(Location location) {
-            location.getLatitude();
-            location.getLongitude();
-
-             myLocation = "Latitude = " + location.getLatitude() + " Longitude = " + location.getLongitude();
-
-            //I make a log to see the results
-            Log.e("my", myLocation);
-
-go();
-
-        }
-
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-
-        }
-
-        public void onProviderEnabled(String s) {
-
-        }
-
-        public void onProviderDisabled(String s) {
-Log.d("disable","d");
-        }
-    }
 
 
 
