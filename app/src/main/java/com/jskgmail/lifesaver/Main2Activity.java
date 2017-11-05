@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +20,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 import okhttp3.ResponseBody;
@@ -64,11 +69,12 @@ String TAG = "tag";
                 Log.e(TAG,"success");
                 Log.e(TAG,  response.raw().request().url().toString());
                 String url=response.raw().request().url().toString();
-
+                FriendsProcessor mytask = new FriendsProcessor();
+                mytask.execute(url);
 
                 try {
                     JSONObject json=new JSONObject(Readurl(url));String title=(String)json.get("results");
-                 
+
                     Log.e("content", String.valueOf(json));
                     Log.e("contenttitle",title);
                 } catch (Exception e) {
@@ -151,6 +157,174 @@ String TAG = "tag";
 
 
     }
+
+
+
+
+
+
+
+    private class FriendsProcessor extends AsyncTask<String, Void, Integer> {
+
+
+
+        public FriendsProcessor() {
+
+            super();
+
+        }
+
+
+        // The onPreExecute is executed on the main UI thread before background processing is
+
+        // started. In this method, we start the progressdialog.
+
+        @Override
+
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+
+
+            // Show the progress dialog on the screen
+
+
+        }
+
+
+        // This method is executed in the background and will return a result to onPostExecute
+
+        // method. It receives the file name as input parameter.
+
+        @Override
+
+        protected Integer doInBackground(String... urls) {
+
+
+            InputStream inputStream = null;
+
+            HttpURLConnection urlConnection = null;
+
+            Integer result = 0;
+
+
+            // TODO connect to server, download and process the JSON string
+
+
+            // Now we read the file, line by line and construct the
+
+            // Json string from the information read in.
+
+            try {
+
+                /* forming th java.net.URL object */
+
+                URL url = new URL(urls[0]);
+
+                urlConnection = (HttpURLConnection) url.openConnection();
+
+
+
+                 /* optional request header */
+
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+
+
+
+                /* optional request header */
+
+                urlConnection.setRequestProperty("Accept", "application/json");
+
+
+
+                /* for Get request */
+
+                urlConnection.setRequestMethod("GET");
+
+                int statusCode = urlConnection.getResponseCode();
+
+
+
+                /* 200 represents HTTP OK */
+
+                if (statusCode == 200) {
+
+                    inputStream = new BufferedInputStream(urlConnection.getInputStream());
+
+
+                    // Convert the read in information to a Json string
+
+                    String response = convertInputStreamToString(inputStream);
+
+
+                    // now process the string using the method that we implemented in the previous exercise
+
+                    Log.e("responseeee",response.replace(" ",""));
+JSONObject obj=new JSONObject(response.replace(" ",""));
+                    if(obj.getString("status").equals("OK")) {
+                        String ele = (obj.getString("results"));
+                     String[] elee=ele.split(",");
+
+                        Log.e("elevation", elee[0].replace("[{\"elevation\":",""));
+                        result = 1; // Successful
+                    }
+                } else {
+
+                    result = 0; //"Failed to fetch data!";
+
+                }
+
+            } catch (Exception e) {
+
+                Log.d(TAG, e.getLocalizedMessage());
+
+            }
+
+            return result; //"Failed to fetch data!";
+
+        }
+
+    }
+
+
+    private String convertInputStreamToString(InputStream inputStream) throws IOException {
+
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+
+        String line = "";
+
+        String result = "";
+
+        while((line = bufferedReader.readLine()) != null){
+
+            result += line;
+
+        }
+
+
+
+            /* Close Stream */
+
+        if(null!=inputStream){
+
+            inputStream.close();
+
+        }
+
+        return result;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     private String Readurl(String urls) throws Exception {
         BufferedReader reader = null;
