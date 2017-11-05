@@ -9,7 +9,7 @@ import android.widget.EditText;
 import java.util.List;
 
 public class MainsettingActivity extends AppCompatActivity {
-    static String username="",myno="",name="";
+    static String username="unknown",myno="087987879879",name="unknown";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

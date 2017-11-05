@@ -1,13 +1,9 @@
 package com.jskgmail.lifesaver;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -38,14 +34,15 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 
-public class Main2Activity extends AppCompatActivity {
-static String myLocation;int ch=0;
-String TAG = "tag";
-String latlong="39.7391536,-104.9847034";
+public class Main2Activity extends AppCompatActivity  {
+    static String myLocation = "11,12";
+    String TAG = "tag";
+    String latlong = "39.7391536,-104.9847034";
     private final static String API_KEY = "AIzaSyClHbZ-x92EYceOWKDSgT0NPZEBBEa_wnU";
-    private final static String API_KEY1="AIzaSyCGZpTkUUlIYjYuJNOZMJKA6Ar4d7fE7Dc";
-double eleva=0;
-
+    private final static String API_KEY1 = "AIzaSyCGZpTkUUlIYjYuJNOZMJKA6Ar4d7fE7Dc";
+    double eleva = 0;
+    double diffelevation = 0;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,136 +50,82 @@ double eleva=0;
         setContentView(R.layout.activity_main2);
 
 
+
+
+
+        go();
+
+
+
+
+
+
+
+
+
+
+
+
         if (API_KEY.isEmpty()) {
             Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
             return;
-        } Log.e(TAG,"whyy");
+        }
+        Log.e(TAG, "whyy");
 
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 //TODO
-        Call call = apiService.getall(latlong,API_KEY);
+        Call call = apiService.getall(latlong, API_KEY);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                Log.e(TAG,"success");
-                Log.e(TAG,  response.raw().request().url().toString());
-                String url=response.raw().request().url().toString();
+                Log.e(TAG, "success");
+                Log.e(TAG, response.raw().request().url().toString());
+                String url = response.raw().request().url().toString();
                 FriendsProcessor mytask = new FriendsProcessor();
                 mytask.execute(url);
-
 
 
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Log.e(TAG,"failureee");
+                Log.e(TAG, "failureee");
             }
 
 
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         if (API_KEY1.isEmpty()) {
             Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
             return;
-        } Log.e(TAG,"whyy");
+        }
+        Log.e(TAG, "whyy");
 
         ApiInterface1 apiService1 =
                 ApiClient.getClient1().create(ApiInterface1.class);
 //TODO
-        Call call1 = apiService1.getall(API_KEY1);
+        Call call1 = apiService1.getall(latlong, API_KEY1);
         call1.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                Log.e(TAG,"success");
-                Log.e(TAG,  response.raw().request().url().toString());
-                String url=response.raw().request().url().toString();
+                Log.e(TAG, "success");
+                Log.e(TAG, response.raw().request().url().toString());
+                String url = response.raw().request().url().toString();
                 FriendsProcessor1 mytask = new FriendsProcessor1();
                 mytask.execute(url);
-
 
 
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Log.e(TAG,"failureee");
+                Log.e(TAG, "failureee");
             }
 
 
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        MyCurrentLocationListener locationListener = new MyCurrentLocationListener();
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,locationListener);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -546,8 +489,17 @@ JSONObject obj=new JSONObject(response.replace(" ",""));
                      String[] elee=ele.split(",");
                         String elv=elee[0].replace("[{\"elevation\":","");
                         Log.e("elevation",elv);
-eleva=eleva-Double.valueOf(elv);
-                        Log.e("elelelele", String.valueOf(eleva));
+                        if(!(eleva==0)){if(Double.valueOf(elv)>0)
+                            diffelevation=eleva-Double.valueOf(elv);
+                        else  diffelevation=eleva+Double.valueOf(elv);
+                        }
+                        else {if(Double.valueOf(elv)>0)
+                            eleva =  Double.valueOf(elv)-eleva;
+                            else  eleva = eleva + Double.valueOf(elv);
+                        }                      Log.e("elelelele", String.valueOf(eleva));
+                        Log.e("differelelelele", String.valueOf(diffelevation));
+                        if(diffelevation>2.5)
+                            Log.e("Alert","You are unsafe . You need go down !!");
                         result = 1; // Successful
                     }
                 } else {
@@ -621,35 +573,25 @@ eleva=eleva-Double.valueOf(elv);
     void go(){
 
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
 
         DatabaseReference myRef99 = database.getReference(MainsettingActivity.myno);
 
         myRef99.setValue(myLocation);
 
 
-        DatabaseReference myRef = database.getReference(MainsettingActivity.myno).child("gps");
-
-        myRef.setValue(myLocation);
+        myRef99.child("gps").setValue(myLocation);
 
 
-        DatabaseReference myRef1 = database.getReference(MainsettingActivity.myno).child("user");
+        myRef99.child("user").setValue(MainsettingActivity.username);
 
-        myRef1.setValue(MainsettingActivity.username);
+      myRef99.child("myno").setValue(MainsettingActivity.myno);
 
-        DatabaseReference myRef2 = database.getReference(MainsettingActivity.myno).child("myno");
-
-        myRef2.setValue(MainsettingActivity.myno);
-
-        DatabaseReference myRef3 = database.getReference(MainsettingActivity.myno).child("friendno");
-
-        myRef3.setValue(MainActivity.phon);
-        DatabaseReference myRef44 = database.getReference(MainsettingActivity.myno).child("flood");
-
-        myRef44.setValue("0");
+        myRef99.child("friendno").setValue(MainActivity.phon);
+        myRef99.child("flood").setValue("0");
 
 final String TAG="qqqq";
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef99.child("gps").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
@@ -762,8 +704,8 @@ Log.d("disable","d");
 
     public interface ApiInterface1 {
         String loc="60.170880,24.942795";
-        @GET("nearestRoads?points="+loc+"")
-        Call<ResponseBody> getall(@Query("key") String apiKey1);
+        @GET("nearestRoads?"+"")
+        Call<ResponseBody> getall(@Query("points") String point,@Query("key") String apiKey1);
 
     }
 
