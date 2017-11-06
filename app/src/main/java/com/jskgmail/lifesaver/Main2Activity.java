@@ -43,6 +43,8 @@ import retrofit2.http.Query;
 public class Main2Activity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
     static String myLocation = "11,12";
     String TAG = "tag";
+ static double lat=39.7,longi=-104;
+
     String latlong = "39.7391536,-104.9847034";
     private final static String API_KEY = "AIzaSyClHbZ-x92EYceOWKDSgT0NPZEBBEa_wnU";
     private final static String API_KEY1 = "AIzaSyCGZpTkUUlIYjYuJNOZMJKA6Ar4d7fE7Dc";
@@ -64,7 +66,6 @@ public class Main2Activity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_main2);
 
 
-        go();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -74,66 +75,6 @@ public class Main2Activity extends AppCompatActivity implements GoogleApiClient.
         locationManager = (LocationManager) getSystemService(getApplicationContext().LOCATION_SERVICE);
 
 
-        if (API_KEY.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
-            return;
-        }
-        Log.e(TAG, "whyy");
-
-        ApiInterface apiService =
-                ApiClient.getClient().create(ApiInterface.class);
-//TODO
-        Call call = apiService.getall(latlong, API_KEY);
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) {
-                Log.e(TAG, "success");
-                Log.e(TAG, response.raw().request().url().toString());
-                String url = response.raw().request().url().toString();
-                FriendsProcessor mytask = new FriendsProcessor();
-                mytask.execute(url);
-
-
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-                Log.e(TAG, "failureee");
-            }
-
-
-        });
-
-
-        if (API_KEY1.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
-            return;
-        }
-        Log.e(TAG, "whyy");
-
-        ApiInterface1 apiService1 =
-                ApiClient.getClient1().create(ApiInterface1.class);
-//TODO
-        Call call1 = apiService1.getall(latlong, API_KEY1);
-        call1.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) {
-                Log.e(TAG, "success");
-                Log.e(TAG, response.raw().request().url().toString());
-                String url = response.raw().request().url().toString();
-                FriendsProcessor1 mytask = new FriendsProcessor1();
-                mytask.execute(url);
-
-
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-                Log.e(TAG, "failureee");
-            }
-
-
-        });
 
 
     }
@@ -159,6 +100,12 @@ public class Main2Activity extends AppCompatActivity implements GoogleApiClient.
         if (mLocation != null) {
             double latitude = mLocation.getLatitude();
             double longitude = mLocation.getLongitude();
+          latlong=latitude+","+longitude;
+            lat=latitude;
+            longi=longitude;
+            go();
+            goapii();
+
         } else {
             // Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
         }
@@ -168,8 +115,8 @@ public class Main2Activity extends AppCompatActivity implements GoogleApiClient.
         // Create the location request
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10)
-                .setFastestInterval(10);
+                .setInterval(10000)
+                .setFastestInterval(100);
         // Request location updates
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -214,6 +161,11 @@ public class Main2Activity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onLocationChanged(Location location) {
 Log.e("lococococ", String.valueOf(location.getLatitude()));
+        latlong=location.getLatitude()+","+location.getLongitude();
+        lat=location.getLatitude();
+        longi=location.getLongitude();
+        go();
+
     }
 
 
@@ -413,7 +365,87 @@ latlong=elv+","+elv1;
 
 
 
+void goapii()
+{
 
+
+
+
+
+    if (API_KEY.isEmpty()) {
+        Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
+        return;
+    }
+    Log.e(TAG, "whyy");
+
+    ApiInterface apiService =
+            ApiClient.getClient().create(ApiInterface.class);
+//TODO
+    Call call = apiService.getall(latlong, API_KEY);
+    call.enqueue(new Callback() {
+        @Override
+        public void onResponse(Call call, Response response) {
+            Log.e(TAG, "success");
+            Log.e(TAG, response.raw().request().url().toString());
+            String url = response.raw().request().url().toString();
+            FriendsProcessor mytask = new FriendsProcessor();
+            mytask.execute(url);
+
+
+        }
+
+        @Override
+        public void onFailure(Call call, Throwable t) {
+            Log.e(TAG, "failureee");
+        }
+
+
+    });
+
+
+    if (API_KEY1.isEmpty()) {
+        Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
+        return;
+    }
+    Log.e(TAG, "whyy");
+
+    ApiInterface1 apiService1 =
+            ApiClient.getClient1().create(ApiInterface1.class);
+//TODO
+    Call call1 = apiService1.getall(latlong, API_KEY1);
+    call1.enqueue(new Callback() {
+        @Override
+        public void onResponse(Call call, Response response) {
+            Log.e(TAG, "success");
+            Log.e(TAG, response.raw().request().url().toString());
+            String url = response.raw().request().url().toString();
+            FriendsProcessor1 mytask = new FriendsProcessor1();
+            mytask.execute(url);
+
+
+        }
+
+        @Override
+        public void onFailure(Call call, Throwable t) {
+            Log.e(TAG, "failureee");
+        }
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 
 
 
@@ -606,11 +638,10 @@ JSONObject obj=new JSONObject(response.replace(" ",""));
 
 
         DatabaseReference myRef99 = database.getReference(MainsettingActivity.myno);
+        myRef99.setValue(latlong+"");
 
-        myRef99.setValue(myLocation);
 
-
-        myRef99.child("gps").setValue(myLocation);
+        myRef99.child("gps").setValue(latlong+"");
 
 
         myRef99.child("user").setValue(MainsettingActivity.username);
@@ -698,14 +729,14 @@ final String TAG="qqqq";
 
 
     public interface ApiInterface {
-        String loc="39.7391536,-104.9847034";
+
         @GET("json?")
         Call<ResponseBody> getall(@Query("locations") String loc,@Query("key") String apiKey);
 
     }
 
     public interface ApiInterface1 {
-        String loc="60.170880,24.942795";
+
         @GET("nearestRoads?"+"")
         Call<ResponseBody> getall(@Query("points") String point,@Query("key") String apiKey1);
 
