@@ -719,7 +719,8 @@ ApiInterface1 apiService1 =
 
                         //the condition to check if the person is inside the house during earthquake
 
-                          isunsafe();
+              if(diffelevation>2)
+                  Log.e("Alert","you are at risk");
 
 
                         Log.e("highelevation", String.valueOf(highelevation));
@@ -742,11 +743,7 @@ ApiInterface1 apiService1 =
         }
 
     }
-void isunsafe()
-{if (diffelevation>2)
-    Toast.makeText(getApplicationContext(), "Alert You are unsafe .You need to go to the nearest safe place..!!", Toast.LENGTH_LONG).show();
 
-}
 
     private String convertInputStreamToString(InputStream inputStream) throws IOException {
 
