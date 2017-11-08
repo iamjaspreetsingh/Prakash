@@ -127,8 +127,7 @@ public class MainActivity extends AppCompatActivity
 
 gogo();
 
-
-            }
+          }
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -219,8 +218,8 @@ gogo();
         // Create the location request
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10000)
-                .setFastestInterval(100);
+                .setInterval(100000)
+                .setFastestInterval(10000);
         // Request location updates
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -379,8 +378,8 @@ gogo();
                     Log.e("longi",elv1);
 
                     latlong=elv+","+elv1;
-                    Main2Activity.ApiInterface apiService =
-                            Main2Activity.ApiClient.getClient().create(Main2Activity.ApiInterface.class);
+                    ApiInterface apiService =
+                            ApiClient.getClient().create(ApiInterface.class);
 //TODO
                     Call call = apiService.getall(latlong,API_KEY);
                     call.enqueue(new Callback() {
@@ -474,16 +473,13 @@ gogo();
 
 
 
-
-
         if (API_KEY.isEmpty()) {
             Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
             return;
         }
         Log.e(TAG, "whyy");
 
-        Main2Activity.ApiInterface apiService =
-                Main2Activity.ApiClient.getClient().create(Main2Activity.ApiInterface.class);
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 //TODO
         Call call = apiService.getall(latlong, API_KEY);
         call.enqueue(new Callback() {
@@ -512,9 +508,8 @@ gogo();
             return;
         }
         Log.e(TAG, "whyy");
-
-        Main2Activity.ApiInterface1 apiService1 =
-                Main2Activity.ApiClient.getClient1().create(Main2Activity.ApiInterface1.class);
+ApiInterface1 apiService1 =
+                ApiClient.getClient1().create(ApiInterface1.class);
 //TODO
         Call call1 = apiService1.getall(latlong, API_KEY1);
         call1.enqueue(new Callback() {
