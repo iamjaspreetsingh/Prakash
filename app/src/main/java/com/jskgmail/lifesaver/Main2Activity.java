@@ -41,7 +41,7 @@ import retrofit2.http.Query;
 
 
 public class Main2Activity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
-    static String myLocation = "11,12";
+
     String TAG = "tag";
  static double lat=39.7,longi=-104;
 
