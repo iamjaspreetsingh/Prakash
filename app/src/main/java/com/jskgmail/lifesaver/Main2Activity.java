@@ -45,7 +45,7 @@ public class Main2Activity extends AppCompatActivity implements GoogleApiClient.
     String TAG = "tag";
  static double lat=39.7,longi=-104;
 
-    String latlong = "39.7391536,-104.9847034";
+    String latlong = "";//the realtime latitude longitude parameter
     private final static String API_KEY = "AIzaSyClHbZ-x92EYceOWKDSgT0NPZEBBEa_wnU";
     private final static String API_KEY1 = "AIzaSyCGZpTkUUlIYjYuJNOZMJKA6Ar4d7fE7Dc";
     double eleva = 0;
@@ -107,7 +107,7 @@ public class Main2Activity extends AppCompatActivity implements GoogleApiClient.
             goapii();
 
         } else {
-            // Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -560,8 +560,10 @@ JSONObject obj=new JSONObject(response.replace(" ",""));
                             else  eleva = eleva + Double.valueOf(elv);
                         }                      Log.e("elelelele", String.valueOf(eleva));
                         Log.e("differelelelele", String.valueOf(diffelevation));
+
+                        //the condition to check if the person is inside the house during earthquake
                         if(diffelevation>2.5)
-                            Log.e("Alert","You are unsafe . You need go down !!");
+                            Toast.makeText(getApplicationContext(),"Alert You are unsafe .You need to go to the nearest safe place..!!",Toast.LENGTH_LONG).show();
                         result = 1; // Successful
                     }
                 } else {
