@@ -1,6 +1,7 @@
 package com.jskgmail.lifesaver;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
@@ -27,6 +28,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -56,6 +58,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -71,8 +74,9 @@ public class MainActivity extends AppCompatActivity
     private StorageReference mStorageRef;
     private static final int RESULT_PICK_CONTACT = 85;
     private ArrayList<String> stringArrayList, stringArrayList1;
+
     ListViewAdfrlist adapter;
-    static String phon="99999999";static String myLocation;
+    static String phon="",naam="";static String myLocation;
     static double mylocationa;
     static double myLocationb;int ch=0;
 
@@ -98,7 +102,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
+int highelevation=0;
 
 
 
@@ -116,6 +120,59 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ListView l=(ListView)findViewById(R.id.lv);
+TextView t=(TextView)findViewById(R.id.textView4);
+
+
+SharedPreferences preference=getSharedPreferences("emergency",MODE_PRIVATE);
+        String phno=preference.getString("mob",null);
+        String nam=preference.getString("nam",null);
+        stringArrayList=new ArrayList<>();
+        stringArrayList1=new ArrayList<>();
+if(nam!=null) {
+    String[] name=nam.split(",");
+    String[] no=phno.split(",");
+    for(int i=0;i<name.length;i++) {
+        stringArrayList.add(name[i]);
+        stringArrayList1.add(no[i]);
+    }
+
+    ListViewAdfrlist adapterj = new ListViewAdfrlist(MainActivity.this, stringArrayList, stringArrayList1);
+    l.setAdapter(adapterj);
+if(adapterj.isEmpty())
+    t.setVisibility(View.GONE);
+    else
+    t.setVisibility(View.VISIBLE);
+}
+
+
+
+// for adding a username and no at start only
+DatabaseFriend db = new DatabaseFriend(getApplicationContext());
+        List<Friends> contacts = db.getAllContacts();
+int c=0;
+        for (Friends cn : contacts) {
+            c++;
+
+
+        }
+        if(c==0)
+        {
+            Intent i=new Intent(MainActivity.this,MainsettingActivity.class);
+            startActivity(i);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -137,8 +194,7 @@ gogo();
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        stringArrayList=new ArrayList<>();
-        stringArrayList1=new ArrayList<>();
+
         go11();
 
 
@@ -209,7 +265,8 @@ gogo();
             go();
             goapii();
 
-        } else {
+
+            } else {
             Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
         }
     }
@@ -661,8 +718,11 @@ ApiInterface1 apiService1 =
                         Log.e("differelelelele", String.valueOf(diffelevation));
 
                         //the condition to check if the person is inside the house during earthquake
-                        if(diffelevation>2.5)
-                            Toast.makeText(getApplicationContext(),"Alert You are unsafe .You need to go to the nearest safe place..!!",Toast.LENGTH_LONG).show();
+
+                          isunsafe();
+
+
+                        Log.e("highelevation", String.valueOf(highelevation));
                         result = 1; // Successful
                     }
                 } else {
@@ -682,7 +742,11 @@ ApiInterface1 apiService1 =
         }
 
     }
+void isunsafe()
+{if (diffelevation>2)
+    Toast.makeText(getApplicationContext(), "Alert You are unsafe .You need to go to the nearest safe place..!!", Toast.LENGTH_LONG).show();
 
+}
 
     private String convertInputStreamToString(InputStream inputStream) throws IOException {
 
@@ -1242,11 +1306,18 @@ Log.e("MainActivity", "Failed to pick contact");
             name = cursor.getString(nameIndex);
             Log.d("name",name);
             Log.d("phno",phoneNo);
-
-phon=phoneNo;
-
+naam=naam+name+",";
+phon=phon+phoneNo+",";
+            SharedPreferences.Editor editor=getSharedPreferences("emergency",MODE_PRIVATE).edit();
+            editor.putString("mob",phon);
+            editor.putString("nam",naam);
+            editor.apply();
             stringArrayList.add(name);
             stringArrayList1.add(phoneNo);
+            TextView t=(TextView)findViewById(R.id.textView4);
+
+                t.setVisibility(View.VISIBLE);
+
             adapter=new ListViewAdfrlist(MainActivity.this,stringArrayList,stringArrayList1);
             l.setAdapter(adapter);
 // Set the value to the textviews
