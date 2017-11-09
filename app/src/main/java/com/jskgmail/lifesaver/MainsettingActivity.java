@@ -28,6 +28,9 @@ public class MainsettingActivity extends AppCompatActivity {
                user.setText(cn.getName());
 name1.setText(cn.getNameD());
                no.setText(cn.getNameDD());
+               username=cn.getName();
+               name=cn.getNameD();
+               myno=cn.getNameDD();
            }
 
         }

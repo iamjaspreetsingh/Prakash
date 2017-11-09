@@ -104,8 +104,7 @@ public class MainActivity extends AppCompatActivity
 
 int highelevation=0;
 
-
-
+String flood="0";
 
 
 
@@ -259,6 +258,7 @@ gogo();
         if (mLocation != null) {
             double latitude = mLocation.getLatitude();
             double longitude = mLocation.getLongitude();
+
             latlong=latitude+","+longitude;
             lat=latitude;
             longi=longitude;
@@ -272,26 +272,86 @@ gogo();
     }
 
     protected void startLocationUpdates() {
-        // Create the location request
-        mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(100000)
-                .setFastestInterval(10000);
-        // Request location updates
+        DatabaseReference myRef99 = database.getReference(MainsettingActivity.myno);
+        DatabaseReference myref=myRef99.child("flood");
+        DatabaseReference myrefelev=myRef99.child("elevation");
+        final String TAG="qqqq";
+        myref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                Log.e(TAG, "Value is: " + value);
+                if(value.equals("1"))//earthquake in the area so update
+                {
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
-                mLocationRequest, this);
-        Log.d("reque", "--->>>>");
+flood="1";
+
+                    mLocationRequest = LocationRequest.create()
+                            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                            .setInterval(100000)
+                            .setFastestInterval(10000);
+                    // Request location updates
+
+                    if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,mLocationRequest,MainActivity.this);
+                    Log.d("reque", "--->>>>");
+
+
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+
+        myrefelev.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                Double value = dataSnapshot.getValue(Double.class);
+                Log.e(TAG, "Value is: " + value);
+               if((flood.equals("1"))&&(value>2))
+Toast.makeText(getApplicationContext(),"You are at risk Go to the safest place",Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+        // Create the location request if person's last location is of disaster
+
     }
 
     @Override
@@ -722,8 +782,6 @@ ApiInterface1 apiService1 =
               if(diffelevation>2)
                   Log.e("Alert","you are at risk");
 
-
-                        Log.e("highelevation", String.valueOf(highelevation));
                         result = 1; // Successful
                     }
                 } else {
@@ -800,7 +858,6 @@ ApiInterface1 apiService1 =
 
 
         DatabaseReference myRef99 = database.getReference(MainsettingActivity.myno);
-        myRef99.setValue(latlong+"");
 
 
         myRef99.child("gps").setValue(latlong+"");
@@ -811,7 +868,9 @@ ApiInterface1 apiService1 =
         myRef99.child("myno").setValue(MainsettingActivity.myno);
 
         myRef99.child("friendno").setValue(MainActivity.phon);
-        myRef99.child("flood").setValue("0");
+
+        myRef99.child("flood").setValue(flood);
+        myRef99.child("elevation").setValue(diffelevation);
 
         final String TAG="qqqq";
         myRef99.child("gps").addListenerForSingleValueEvent(new ValueEventListener() {
