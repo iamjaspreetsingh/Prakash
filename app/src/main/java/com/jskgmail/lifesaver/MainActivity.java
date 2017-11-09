@@ -272,7 +272,30 @@ gogo();
     }
 
     protected void startLocationUpdates() {
-        DatabaseReference myRef99 = database.getReference(MainsettingActivity.myno);
+        DatabaseFriend db = new DatabaseFriend(getApplicationContext());
+        List<Friends> contacts = db.getAllContacts();
+        String myno="98";
+        for (Friends cn : contacts) {
+            if(!(cn.getName().equals("")))
+            {
+
+
+                myno=cn.getNameDD();
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+        DatabaseReference myRef99 = database.getReference(myno);
         DatabaseReference myref=myRef99.child("flood");
         DatabaseReference myrefelev=myRef99.child("elevation");
         final String TAG="qqqq";
@@ -328,9 +351,31 @@ flood="1";
                 // whenever data at this location is updated.
                 Double value = dataSnapshot.getValue(Double.class);
                 Log.e(TAG, "Value is: " + value);
-               if((flood.equals("1"))&&(value>2))
-Toast.makeText(getApplicationContext(),"You are at risk Go to the safest place",Toast.LENGTH_LONG).show();
+               if((flood.equals("1"))&&(value>2)) {
 
+
+                   LayoutInflater inflater = getLayoutInflater();
+                   View alertLayout = inflater.inflate(R.layout.layoutalert, null);
+
+                   AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+
+                   // this is set the view from XML inside AlertDialog
+                   alert.setView(alertLayout);
+                   // disallow cancel of AlertDialog on click of back button and outside touch
+                   alert.setTitle("Alert ");
+                   alert.setIcon(R.drawable.ic_add_alert_black_24dp);
+
+                   AlertDialog dialog = alert.create();
+                   dialog.show();
+
+
+
+
+
+
+
+
+               }
             }
 
             @Override
@@ -857,15 +902,40 @@ ApiInterface1 apiService1 =
 
 
 
-        DatabaseReference myRef99 = database.getReference(MainsettingActivity.myno);
+
+        DatabaseFriend db = new DatabaseFriend(getApplicationContext());
+        List<Friends> contacts = db.getAllContacts();
+String username="",name="",myno="98";
+        for (Friends cn : contacts) {
+            if(!(cn.getName().equals("")))
+            {
+
+                username=cn.getName();
+                name=cn.getNameD();
+                myno=cn.getNameDD();
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+        DatabaseReference myRef99 = database.getReference(myno);
 
 
         myRef99.child("gps").setValue(latlong+"");
 
 
-        myRef99.child("user").setValue(MainsettingActivity.username);
+        myRef99.child("user").setValue(username);
 
-        myRef99.child("myno").setValue(MainsettingActivity.myno);
+        myRef99.child("myno").setValue(myno);
 
         myRef99.child("friendno").setValue(MainActivity.phon);
 
