@@ -330,7 +330,8 @@ flood="1";
                     LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,mLocationRequest,MainActivity.this);
                     Log.d("reque", "--->>>>");
 
-
+alertmyfriend();
+                    finish();
 
 
                 }
@@ -396,6 +397,46 @@ flood="1";
 
 
         // Create the location request if person's last location is of disaster
+
+    }
+// sends sms to emergency contacts automaticaaly with all the details of wwhere the phone was last spotted
+    private void alertmyfriend() {
+        Intent intentt = new Intent(Intent.ACTION_VIEW);
+        intentt.setData(Uri.parse("sms:"));
+        intentt.setType("vnd.android-dir/mms-sms");
+        intentt.putExtra("sms_body", "Your friend is in danger. His gps location :"+latlong+" & at the height of "+diffelevation+"m from road level");
+
+
+
+
+        SharedPreferences preference=getSharedPreferences("emergency",MODE_PRIVATE);
+        String phno=preference.getString("mob",null);
+        String numbers="";
+
+        if(phno!=null) {
+
+            String[] no = phno.split(",");
+            intentt.putExtra("address",numbers);
+            for (int i = 0; i < no.length; i++) {
+numbers=numbers+no[i]+";";
+
+            }
+        }
+
+
+
+
+
+
+
+
+        intentt.putExtra("address",numbers);
+        MainActivity.this.startActivity(intentt);
+finish();
+
+
+
+
 
     }
 
