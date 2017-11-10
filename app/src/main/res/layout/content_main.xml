@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="false"
+    android:scrollX="0dp"
+    android:scrollY="0dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jskgmail.lifesaver.MainActivity"
     tools:showIn="@layout/app_bar_main">
@@ -36,7 +39,9 @@
                     android:layout_below="@+id/cardView"
                     android:layout_marginStart="18dp"
 
+                    android:focusable="true"
                     android:paddingTop="3dp"
+                    android:selectAllOnFocus="true"
                     android:text="Your area is safe of earthquake or any such disaster"
                     android:textColor="@android:color/holo_green_dark" />
 
@@ -100,7 +105,7 @@
             <ListView
                 android:id="@+id/lv"
                 android:layout_width="match_parent"
-                android:layout_height="182dp"
+                android:layout_height="204dp"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/textView4"
                 android:layout_marginTop="19dp"
