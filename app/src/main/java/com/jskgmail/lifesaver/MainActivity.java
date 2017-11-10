@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity
 
 
 
-int highelevation=0;
 
 String flood="0";
 
