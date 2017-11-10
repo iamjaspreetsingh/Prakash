@@ -21,6 +21,9 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/videoView2"
+            android:layout_marginTop="17dp"
             android:padding="5dp"
             android:text="What is an earthquake and what are its causes?\n
         Earthquakes are usually caused when rock underground suddenly breaks along a fault. This sudden release of energy causes the seismic waves that make the ground shake. When two blocks of rock or two plates are rubbing against each other, they stick a little. ... When the rocks break, the earthquake occurs.
@@ -32,10 +35,11 @@ What should you do during and after an earthquake?\n
 1.	Check yourself and others for injuries. ...\n
 2.	Check water, gas, and electric lines for damage. ...\n
 3.	Turn on the radio. ...\n"
-  android:layout_below="@+id/videoView2"
-            android:layout_alignParentStart="true"
- android:layout_marginTop="17dp" />"
+            android:textAppearance="@style/TextAppearance.AppCompat" /><![CDATA[
+
+        "
 android:layout_centerVertical="true"
 android:layout_alignParentStart="true" />
-</RelativeLayout>
+]]>
+    </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

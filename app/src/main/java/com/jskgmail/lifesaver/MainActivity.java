@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
     private final static String API_KEY = "AIzaSyClHbZ-x92EYceOWKDSgT0NPZEBBEa_wnU";
     private final static String API_KEY1 = "AIzaSyCGZpTkUUlIYjYuJNOZMJKA6Ar4d7fE7Dc";
     double eleva = 0;
-    double diffelevation = 0;
+   static double diffelevation = 0;
 
 
     private GoogleApiClient mGoogleApiClient;
@@ -120,16 +120,16 @@ String flood="0";
         setSupportActionBar(toolbar);
         ListView l=(ListView)findViewById(R.id.lv);
 TextView t=(TextView)findViewById(R.id.textView4);
-
-
-SharedPreferences preference=getSharedPreferences("emergency",MODE_PRIVATE);
-        String phno=preference.getString("mob",null);
-        String nam=preference.getString("nam",null);
         stringArrayList=new ArrayList<>();
         stringArrayList1=new ArrayList<>();
-if(nam!=null) {
-    String[] name=nam.split(",");
-    String[] no=phno.split(",");
+
+SharedPreferences preference=getSharedPreferences("emergency",MODE_PRIVATE);
+        phon=preference.getString("mob",null);
+         naam=preference.getString("nam",null);
+
+if(naam!=null) {
+    String[] name=naam.split(",");
+    String[] no=phon.split(",");
     for(int i=0;i<name.length;i++) {
         stringArrayList.add(name[i]);
         stringArrayList1.add(no[i]);
@@ -240,7 +240,7 @@ gogo();
     @Override
     public void onConnected(Bundle bundle) {
 
-        startLocationUpdates();
+
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -253,7 +253,9 @@ gogo();
         }
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLocation == null) {
-            startLocationUpdates();
+
+            startLocationUpdates1();
+
         }
         if (mLocation != null) {
             double latitude = mLocation.getLatitude();
@@ -264,12 +266,118 @@ gogo();
             longi=longitude;
             go();
             goapii();
-
+            startLocationUpdates();
 
             } else {
             Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    protected void startLocationUpdates1() {
+
+                        mLocationRequest = LocationRequest.create()
+                                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                                .setInterval(100000)
+                                .setFastestInterval(10000);
+                        // Request location updates
+
+                        if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            return;
+                        }
+                        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, MainActivity.this);
+                        Log.d("reque", "--->>>>");
+
+
+                        finish();
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     protected void startLocationUpdates() {
         DatabaseFriend db = new DatabaseFriend(getApplicationContext());
@@ -290,108 +398,97 @@ gogo();
 
 
 
+ {
 
 
+    DatabaseReference myRef99 = database.getReference(myno);
 
+    DatabaseReference myref = myRef99.child("flood");
+    DatabaseReference myrefelev = myRef99.child("elevation");
+    final String TAG = "qqqq";
+    myref.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            // This method is called once with the initial value and again
+            // whenever data at this location is updated.
+            String value = dataSnapshot.getValue(String.class);
+            Log.e(TAG, "Value is: " + value);
+            if (value.equals("1"))//earthquake in the area so update
+            {
 
+                flood = "1";
 
-        DatabaseReference myRef99 = database.getReference(myno);
-        DatabaseReference myref=myRef99.child("flood");
-        DatabaseReference myrefelev=myRef99.child("elevation");
-        final String TAG="qqqq";
-        myref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.e(TAG, "Value is: " + value);
-                if(value.equals("1"))//earthquake in the area so update
-                {
+                mLocationRequest = LocationRequest.create()
+                        .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                        .setInterval(100000)
+                        .setFastestInterval(10000);
+                // Request location updates
 
-flood="1";
-
-                    mLocationRequest = LocationRequest.create()
-                            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                            .setInterval(100000)
-                            .setFastestInterval(10000);
-                    // Request location updates
-
-                    if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        return;
-                    }
-                    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,mLocationRequest,MainActivity.this);
-                    Log.d("reque", "--->>>>");
-
-alertmyfriend();
-                    finish();
-
-
+                if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
                 }
+                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, MainActivity.this);
+                Log.d("reque", "--->>>>");
+
+                alertmyfriend();
+                finish();
+
+
             }
+        }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
+        @Override
+        public void onCancelled(DatabaseError error) {
+            // Failed to read value
+            Log.w(TAG, "Failed to read value.", error.toException());
+        }
+    });
+
+
+    myrefelev.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            // This method is called once with the initial value and again
+            // whenever data at this location is updated.
+            Double value = dataSnapshot.getValue(Double.class);
+            Log.e(TAG, "Value is: " + value);
+            if ((flood.equals("1")) && (value > 2)) {
+
+
+                LayoutInflater inflater = getLayoutInflater();
+                View alertLayout = inflater.inflate(R.layout.layoutalert, null);
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+
+                // this is set the view from XML inside AlertDialog
+                alert.setView(alertLayout);
+                // disallow cancel of AlertDialog on click of back button and outside touch
+                alert.setTitle("Alert ");
+                alert.setIcon(R.drawable.ic_add_alert_black_24dp);
+
+                AlertDialog dialog = alert.create();
+                dialog.show();
+
+
             }
-        });
+        }
+
+        @Override
+        public void onCancelled(DatabaseError error) {
+            // Failed to read value
+            Log.w(TAG, "Failed to read value.", error.toException());
+        }
+    });
 
 
-        myrefelev.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                Double value = dataSnapshot.getValue(Double.class);
-                Log.e(TAG, "Value is: " + value);
-               if((flood.equals("1"))&&(value>2)) {
-
-
-                   LayoutInflater inflater = getLayoutInflater();
-                   View alertLayout = inflater.inflate(R.layout.layoutalert, null);
-
-                   AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-
-                   // this is set the view from XML inside AlertDialog
-                   alert.setView(alertLayout);
-                   // disallow cancel of AlertDialog on click of back button and outside touch
-                   alert.setTitle("Alert ");
-                   alert.setIcon(R.drawable.ic_add_alert_black_24dp);
-
-                   AlertDialog dialog = alert.create();
-                   dialog.show();
-
-
-
-
-
-
-
-
-               }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-
-
-
-
-
-
-
+}
 
 
 
@@ -404,7 +501,7 @@ alertmyfriend();
         Intent intentt = new Intent(Intent.ACTION_VIEW);
         intentt.setData(Uri.parse("sms:"));
         intentt.setType("vnd.android-dir/mms-sms");
-        intentt.putExtra("sms_body", "Your friend is in danger. His gps location :"+latlong+" & at the height of "+diffelevation+"m from road level");
+        intentt.putExtra("sms_body", "Your friend is in danger due to an earthquake. His location is : https://www.google.com/maps/search/"+latlong+"/  & at the height of "+diffelevation+" metres from road level");
 
 
 
@@ -954,6 +1051,7 @@ String username="",name="",myno="98";
                 username=cn.getName();
                 name=cn.getNameD();
                 myno=cn.getNameDD();
+                Log.e("numbermy",myno);
             }
 
         }

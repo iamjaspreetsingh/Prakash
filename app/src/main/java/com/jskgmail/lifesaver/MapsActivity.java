@@ -3,6 +3,7 @@ package com.jskgmail.lifesaver;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -43,7 +44,7 @@ Log.e("zzzz"+MainActivity.mylocationa, ""+MainActivity.myLocationb);
         LatLng sydney = new LatLng(MainActivity.lat,MainActivity.longi);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker at your location"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,16));
-
+        Toast.makeText(getApplicationContext(),"At the height of "+MainActivity.diffelevation+" metres",Toast.LENGTH_LONG).show();
          }
 
 }

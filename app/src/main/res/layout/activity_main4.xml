@@ -21,6 +21,9 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="214dp"
         android:padding="5dp"
         android:text="A flood occurs when water overflows or inundates land that's normally dry. This can happen in a multitude of ways. Most common is when rivers or streams overflow their banks. ... Coastal flooding occurs when a large storm or tsunami causes the sea to surge inland
 \nSteps to Take\n
@@ -33,11 +36,12 @@ Get to high ground – Climb to safety!\n
 \n3.	Stay away from power lines and electrical wires.\n
 As most people are well aware, the immediate impacts of flooding include loss of human life, damage to property, destruction of crops, loss of livestock, and deterioration of health conditions owing to waterborne diseases.
 \n"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="214dp" />"
+        android:textAppearance="@style/TextAppearance.AppCompat" /><![CDATA[
+
+    "
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
 
+]]>
 </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

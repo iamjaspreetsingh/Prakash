@@ -5,7 +5,7 @@
     android:id="@+id/done"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="7dp"
+    android:padding="9dp"
     tools:context="com.jskgmail.lifesaver.MainsettingActivity">
 
     <TextView
@@ -23,21 +23,21 @@
         android:id="@+id/textView66"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/no"
-        android:layout_alignBottom="@+id/no"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/editText"
+        android:layout_marginTop="26dp"
         android:text="Mobile "
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="17sp" />
 
     <TextView
-        android:id="@+id/textView66"
+        android:id="@+id/textView69"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/user"
-        android:layout_alignBottom="@+id/user"
+        android:layout_above="@+id/user"
         android:layout_alignParentStart="true"
         android:text="Username"
+
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="17sp" />
 
@@ -45,11 +45,11 @@
         android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="37dp"
-        android:layout_toEndOf="@+id/textView66"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView6"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:layout_alignEnd="@+id/don" />
 
     <EditText
         android:id="@+id/user"
@@ -57,27 +57,30 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:layout_marginTop="17dp"
-        android:layout_below="@+id/no"
-        android:layout_alignStart="@+id/no" />
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/no" />
 
     <Button
         android:id="@+id/don"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="141dp"
-        android:background="@color/cardview_shadow_end_color"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginEnd="33dp"
+        android:background="?attr/colorPrimary"
         android:text="Done"
-        android:layout_below="@+id/user"
-        android:layout_alignEnd="@+id/no" />
+        android:textColor="@color/cast_expanded_controller_text_color" />
 
     <EditText
         android:id="@+id/no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editText"
+        android:layout_marginTop="47dp"
         android:ems="10"
         android:inputType="number"
-        android:layout_marginTop="13dp"
-        android:layout_below="@+id/editText"
-        android:layout_alignStart="@+id/editText" />
+        android:layout_alignEnd="@+id/editText" />
 </RelativeLayout>
