@@ -9,11 +9,13 @@
         android:id="@+id/textView68"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="211dp"
         android:padding="4dp"
         android:text="Name"
-        android:layout_marginEnd="211dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/textView69"
@@ -23,5 +25,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="187dp"
         android:padding="4dp"
-        android:text="No" />
+        android:text="No"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="15sp" />
 </RelativeLayout>

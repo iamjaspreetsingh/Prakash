@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
     String TAG = "tag";
     static double lat=39.7,longi=-104;
 
-    String latlong = "";//the realtime latitude longitude parameter
+   static String latlong = "";//the realtime latitude longitude parameter
     private final static String API_KEY = "AIzaSyClHbZ-x92EYceOWKDSgT0NPZEBBEa_wnU";
     private final static String API_KEY1 = "AIzaSyCGZpTkUUlIYjYuJNOZMJKA6Ar4d7fE7Dc";
     double eleva = 0;
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-String flood="0";
+static String flood="0";
 
 
 
@@ -121,6 +121,10 @@ String flood="0";
 TextView t=(TextView)findViewById(R.id.textView4);
         stringArrayList=new ArrayList<>();
         stringArrayList1=new ArrayList<>();
+
+
+        SharedPreferences preferenceflood=getSharedPreferences("flood",MODE_PRIVATE);
+        flood=preferenceflood.getString("flood","0");
 
 SharedPreferences preference=getSharedPreferences("emergency",MODE_PRIVATE);
         phon=preference.getString("mob","");
@@ -255,6 +259,8 @@ gogo();
 
             startLocationUpdates1();
 
+           
+
         }
         if (mLocation != null) {
             double latitude = mLocation.getLatitude();
@@ -265,6 +271,7 @@ gogo();
             longi=longitude;
             go();
             goapii();
+
             startService();
             startLocationUpdates();
 
@@ -433,7 +440,7 @@ gogo();
     DatabaseReference myRef99 = database.getReference(myno);
 
     DatabaseReference myref = myRef99.child("flood");
-    DatabaseReference myrefelev = myRef99.child("elevation");
+
     final String TAG = "qqqq";
     myref.addValueEventListener(new ValueEventListener() {
         @Override
@@ -442,10 +449,24 @@ gogo();
             // whenever data at this location is updated.
             String value = dataSnapshot.getValue(String.class);
             Log.e(TAG, "Value is: " + value);
+            if(value.equals("0"))
+            {
+
+                flood = "0";
+                SharedPreferences.Editor editor=getSharedPreferences("flood",MODE_PRIVATE).edit();
+                editor.putString("flood","0");
+
+                editor.apply();
+
+            }
             if (value.equals("1"))//earthquake in the area so update
             {
 
                 flood = "1";
+                SharedPreferences.Editor editor=getSharedPreferences("flood",MODE_PRIVATE).edit();
+                editor.putString("flood","1");
+
+                editor.apply();
 
                 mLocationRequest = LocationRequest.create()
                         .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -481,40 +502,6 @@ gogo();
     });
 
 
-    myrefelev.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            // This method is called once with the initial value and again
-            // whenever data at this location is updated.
-            Double value = dataSnapshot.getValue(Double.class);
-            Log.e(TAG, "Value is: " + value);
-            if ((flood.equals("1")) && (value > 2)) {
-
-
-                LayoutInflater inflater = getLayoutInflater();
-                View alertLayout = inflater.inflate(R.layout.layoutalert, null);
-
-                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-
-                // this is set the view from XML inside AlertDialog
-                alert.setView(alertLayout);
-                // disallow cancel of AlertDialog on click of back button and outside touch
-                alert.setTitle("Alert ");
-                alert.setIcon(R.drawable.ic_add_alert_black_24dp);
-
-                AlertDialog dialog = alert.create();
-                dialog.show();
-
-
-            }
-        }
-
-        @Override
-        public void onCancelled(DatabaseError error) {
-            // Failed to read value
-            Log.w(TAG, "Failed to read value.", error.toException());
-        }
-    });
 
 
 }
@@ -532,8 +519,10 @@ gogo();
         intentt.setType("vnd.android-dir/mms-sms");
         intentt.putExtra("sms_body", "Your friend is in danger due to an earthquake. His location is : https://www.google.com/maps/search/"+latlong+"/  & at the height of "+diffelevation+" metres from road level");
 
-
-
+        MainActivity.flood="0";
+        SharedPreferences.Editor editor=getSharedPreferences("flood",MODE_PRIVATE).edit();
+        editor.putString("flood","0");
+editor.apply();
 
         SharedPreferences preference=getSharedPreferences("emergency",MODE_PRIVATE);
         String phno=preference.getString("mob",null);
@@ -558,7 +547,9 @@ numbers=numbers+no[i]+";";
 
         intentt.putExtra("address",numbers);
         MainActivity.this.startActivity(intentt);
+
 finish();
+
 
 
 
@@ -873,7 +864,47 @@ ApiInterface1 apiService1 =
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1106,7 +1137,8 @@ String username="",name="",myno="98";
         myRef99.child("myno").setValue(myno);
 
         myRef99.child("friendno").setValue(MainActivity.phon);
-
+        SharedPreferences preferenceflood=getSharedPreferences("flood",MODE_PRIVATE);
+        flood=preferenceflood.getString("flood","0");
         myRef99.child("flood").setValue(flood);
         myRef99.child("elevation").setValue(diffelevation);
 
@@ -1200,6 +1232,43 @@ String username="",name="",myno="98";
         Call<ResponseBody> getall(@Query("points") String point,@Query("key") String apiKey1);
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
