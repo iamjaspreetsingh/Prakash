@@ -123,10 +123,10 @@ TextView t=(TextView)findViewById(R.id.textView4);
         stringArrayList1=new ArrayList<>();
 
 SharedPreferences preference=getSharedPreferences("emergency",MODE_PRIVATE);
-        phon=preference.getString("mob",null);
-         naam=preference.getString("nam",null);
+        phon=preference.getString("mob","");
+         naam=preference.getString("nam","");
 
-if(naam!=null) {
+if(naam!="") {
     String[] name=naam.split(",");
     String[] no=phon.split(",");
     for(int i=0;i<name.length;i++) {
@@ -265,6 +265,7 @@ gogo();
             longi=longitude;
             go();
             goapii();
+            startService();
             startLocationUpdates();
 
             } else {
@@ -280,7 +281,12 @@ gogo();
 
 
 
+    public void startService() {
+        startService(new Intent(getBaseContext(), MyService.class));
 
+
+
+    }
 
 
 
