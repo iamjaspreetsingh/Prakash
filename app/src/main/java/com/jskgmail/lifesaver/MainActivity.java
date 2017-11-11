@@ -293,9 +293,9 @@ gogo();
             latlong=latitude+","+longitude;
             lat=latitude;
             longi=longitude;
-            go();
-            goapii();
 
+            goapii();
+            go();
             startService();
             startLocationUpdates();
 
@@ -461,7 +461,49 @@ gogo();
  {
 
 
-    DatabaseReference myRef99 = database.getReference(myno);
+     mLocationRequest = LocationRequest.create()
+             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+             .setInterval(1000)
+             .setFastestInterval(1000);
+     // Request location updates
+
+     if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+         // TODO: Consider calling
+         //    ActivityCompat#requestPermissions
+         // here to request the missing permissions, and then overriding
+         //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+         //                                          int[] grantResults)
+         // to handle the case where the user grants the permission. See the documentation
+         // for ActivityCompat#requestPermissions for more details.
+         return;
+     }
+     LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, MainActivity.this);
+     Log.d("reque", "--->>>>");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     DatabaseReference myRef99 = database.getReference(myno);
 
     DatabaseReference myref = myRef99.child("flood");
 
@@ -491,31 +533,13 @@ gogo();
                 editor.putString("flood","1");
 
                 editor.apply();
-
-                mLocationRequest = LocationRequest.create()
-                        .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                        .setInterval(100000)
-                        .setFastestInterval(10000);
-                // Request location updates
-
-                if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, MainActivity.this);
-                Log.d("reque", "--->>>>");
-
                 alertmyfriend();
-                finish();
+                finish();}
 
 
-            }
+
+
+
         }
 
         @Override
@@ -721,11 +745,11 @@ finish();
                     Log.e("lat",elv);
                     Log.e("longi",elv1);
 
-                    latlong=elv+","+elv1;
+                   String latlongnew=elv+","+elv1;
                     ApiInterface apiService =
                             ApiClient.getClient().create(ApiInterface.class);
 //TODO
-                    Call call = apiService.getall(latlong,API_KEY);
+                    Call call = apiService.getall(latlongnew,API_KEY);
                     call.enqueue(new Callback() {
                         @Override
                         public void onResponse(Call call, Response response) {
