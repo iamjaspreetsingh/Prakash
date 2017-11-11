@@ -129,8 +129,9 @@ TextView t=(TextView)findViewById(R.id.textView4);
 SharedPreferences preference=getSharedPreferences("emergency",MODE_PRIVATE);
         phon=preference.getString("mob","");
          naam=preference.getString("nam","");
-
+        final FloatingActionButton fab11 = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 if(naam!="") {
+    fab11.setVisibility(View.GONE);
     String[] name=naam.split(",");
     String[] no=phon.split(",");
     for(int i=0;i<name.length;i++) {
@@ -188,6 +189,29 @@ gogo();
 
           }
         });
+
+
+
+
+        fab11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+                startActivityForResult(intent, RESULT_PICK_CONTACT);
+
+
+
+            }
+        });
+
+
+
+
+
+
+
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -259,7 +283,7 @@ gogo();
 
             startLocationUpdates1();
 
-           
+
 
         }
         if (mLocation != null) {
@@ -1677,6 +1701,8 @@ phon=phon+phoneNo+",";
             editor.apply();
             stringArrayList.add(name);
             stringArrayList1.add(phoneNo);
+            FloatingActionButton fab11=(FloatingActionButton)findViewById(R.id.floatingActionButton);
+            fab11.setVisibility(View.GONE);
             TextView t=(TextView)findViewById(R.id.textView4);
 
                 t.setVisibility(View.VISIBLE);
