@@ -350,8 +350,19 @@ gogo();
                             //                                          int[] grantResults)
                             // to handle the case where the user grants the permission. See the documentation
                             // for ActivityCompat#requestPermissions for more details.
+
+
+
+
+
+
+
+
+
+
                             return;
                         }
+
                         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, MainActivity.this);
                         Log.d("reque", "--->>>>");
 

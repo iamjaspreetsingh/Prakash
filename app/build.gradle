@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 24
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.jskgmail.lifesaver"
         minSdkVersion 19
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 22
+        versionCode 5
+        versionName "1.01"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -16,7 +16,9 @@ android {
         release {
 
 
-
+            aaptOptions {
+                cruncherEnabled = false
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

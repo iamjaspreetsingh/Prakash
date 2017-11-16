@@ -15,6 +15,10 @@ public class MainsettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainsetting);
+
+
+
+
         final EditText user=(EditText)findViewById(R.id.user);
         Button don=(Button)findViewById(R.id.don);
        final EditText no=(EditText)findViewById(R.id.no);
