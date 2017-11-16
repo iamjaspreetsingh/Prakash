@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -58,9 +59,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.ResponseBody;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,7 +74,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+;
     private StorageReference mStorageRef;
     private static final int RESULT_PICK_CONTACT = 85;
     private ArrayList<String> stringArrayList, stringArrayList1;
@@ -117,6 +122,15 @@ static String flood="0";
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+
+
+
+
+
+
+
         ListView l=(ListView)findViewById(R.id.lv);
 TextView t=(TextView)findViewById(R.id.textView4);
         stringArrayList=new ArrayList<>();
@@ -230,7 +244,6 @@ gogo();
 
 
 
-
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -238,25 +251,20 @@ gogo();
                 .build();
         locationManager = (LocationManager) getSystemService(getApplicationContext().LOCATION_SERVICE);
 
+        int RC_LOCATION = ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION);
 
-
-
+        String[] perms = { android.Manifest.permission.ACCESS_FINE_LOCATION,  };
+        if(RC_LOCATION!=0)
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, Arrays.asList(perms))) {
+            new AppSettingsDialog.Builder(this).build().show();
+        }
 
 
 
 
 
     }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -649,6 +657,8 @@ finish();
         go();
 
     }
+
+
 
 
     private class FriendsProcessor1 extends AsyncTask<String, Void, Integer> {
