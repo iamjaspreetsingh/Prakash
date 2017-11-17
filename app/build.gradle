@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 24
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.jskgmail.lifesaver"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 25
-        versionCode 7
-        versionName "1.01"
+        versionCode 8
+        versionName "1.02"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -46,7 +46,7 @@ dependencies {
 
 
 
-
+    compile 'com.android.support:multidex:1.0.1'
     compile 'pub.devrel:easypermissions:1.0.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'

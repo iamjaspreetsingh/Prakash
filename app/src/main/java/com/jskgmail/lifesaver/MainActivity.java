@@ -1,7 +1,9 @@
 package com.jskgmail.lifesaver;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
@@ -26,7 +28,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -102,7 +104,6 @@ public class MainActivity extends AppCompatActivity
     private LocationRequest mLocationRequest;
 
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
 
@@ -117,9 +118,11 @@ static String flood="0";
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -128,10 +131,7 @@ static String flood="0";
 
 
 
-
-
-
-        ListView l=(ListView)findViewById(R.id.lv);
+        final ListView l=(ListView)findViewById(R.id.lv);
 TextView t=(TextView)findViewById(R.id.textView4);
         stringArrayList=new ArrayList<>();
         stringArrayList1=new ArrayList<>();
@@ -160,8 +160,65 @@ if(adapterj.isEmpty())
     else
     t.setVisibility(View.VISIBLE);
 }
+l.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.layoutdelete, null);
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+
+        // this is set the view from XML inside AlertDialog
+        alert.setView(alertLayout);
+        // disallow cancel of AlertDialog on click of back button and outside touch
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+String n=stringArrayList.get(position);
+                String p=stringArrayList1.get(position);
+stringArrayList.remove(position);
+                stringArrayList1.remove(position);
+
+                ListViewAdfrlist adapterj = new ListViewAdfrlist(MainActivity.this, stringArrayList, stringArrayList1);
+                l.setAdapter(adapterj);
+                SharedPreferences.Editor editor=getSharedPreferences("emergency",MODE_PRIVATE).edit();
+                editor.putString("mob",phon.replace(p+",",""));
+                editor.putString("nam",naam.replace(n+",",""));
+                editor.apply();
 
 
+
+
+            }
+        });
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog dialog = alert.create();
+        dialog.show();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return false;
+    }
+});
 
 // for adding a username and no at start only
 DatabaseFriend db = new DatabaseFriend(getApplicationContext());
@@ -198,8 +255,9 @@ int c=0;
             @Override
             public void onClick(View view) {
 
-
-gogo();
+                Uri call=Uri.parse("tel:+911123093054");
+                Intent surf=new Intent(Intent.ACTION_DIAL,call);
+                startActivity(surf);
 
           }
         });
@@ -519,6 +577,7 @@ gogo();
 
 
 
+     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
 
@@ -1192,6 +1251,7 @@ String username="",name="",myno="98";
 
 
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
 
@@ -1433,58 +1493,7 @@ String username="",name="",myno="98";
 // MainActivity
 
 
-  void gogo()
-  {
 
-
-      LayoutInflater inflater = getLayoutInflater();
-      View alertLayout = inflater.inflate(R.layout.layoutemergency, null);
-
-      AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-      // this is set the view from XML inside AlertDialog
-      alert.setView(alertLayout);
-      // disallow cancel of AlertDialog on click of back button and outside touch
-      alert.setTitle("Emergency Call For");
-         Button earth=(Button)alertLayout.findViewById(R.id.button2);
-      earth.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              Uri call=Uri.parse("+911123093054");
-              Intent surf=new Intent(Intent.ACTION_DIAL,call);
-              startActivity(surf);
-
-
-
-          }
-      });
-      Button flood=(Button)alertLayout.findViewById(R.id.button2);
-      flood.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-
-              Uri call=Uri.parse("tel:+911123093054");
-              Intent surf1=new Intent(Intent.ACTION_DIAL,call);
-              startActivity(surf1);
-
-          }
-      });
-
-      AlertDialog dialog = alert.create();
-      dialog.show();
-
-
-
-
-
-
-
-
-
-
-
-
-  }
 
 
 
