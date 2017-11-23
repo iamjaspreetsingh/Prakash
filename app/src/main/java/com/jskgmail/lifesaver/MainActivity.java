@@ -1,11 +1,16 @@
 package com.jskgmail.lifesaver;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -76,7 +81,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener, SensorEventListener {
 ;
     private StorageReference mStorageRef;
     private static final int RESULT_PICK_CONTACT = 85;
@@ -104,16 +109,17 @@ public class MainActivity extends AppCompatActivity
     private LocationRequest mLocationRequest;
 
 
-
-
-
-
+    private Sensor senAccelerometer;
+    private SensorManager senSensorManager;
+float lastx=0,lasty=0,lastz=0;
+    long lastupdate = System.currentTimeMillis();
 
 static String flood="0";
 
 
 
-
+    private SensorManager mSensorManager;
+    private Sensor TemperatureSensor;
 
 
 
@@ -125,7 +131,17 @@ static String flood="0";
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+goapiihospital();
 
+
+
+        senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        senSensorManager.registerListener(this, senAccelerometer , SensorManager.SENSOR_DELAY_NORMAL);
+         TemperatureSensor = senSensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+ senSensorManager.registerListener(this,
+                    TemperatureSensor,
+                    SensorManager.SENSOR_DELAY_NORMAL);
 
 
 
@@ -717,7 +733,59 @@ finish();
 
     }
 
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        Sensor mySensor = sensorEvent.sensor;
 
+        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            float x = sensorEvent.values[0];
+            float y = sensorEvent.values[1];
+            float z = sensorEvent.values[2];
+
+            long curTime = System.currentTimeMillis();
+
+            long diffTime = (curTime - lastupdate);
+
+            if ((curTime - lastupdate) > 100) {
+
+
+
+                float speed = Math.abs(x + y + z - lastx - lasty - lastz)/ diffTime * 10000;
+                Log.e("speeed",speed+"" );
+                if (speed > 2000) {
+//TODO alert
+                }
+
+                lastx = x;
+                lasty = y;
+                lastz = z;
+
+
+
+
+                lastupdate = curTime;
+            }
+        }
+
+        if(sensorEvent.sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE){
+            Log.e("temp",sensorEvent.values[0]+"");
+        }
+
+
+
+
+
+
+
+
+
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+Log.e("accuracyyy",""+accuracy);
+    }
 
 
     private class FriendsProcessor1 extends AsyncTask<String, Void, Integer> {
@@ -984,34 +1052,235 @@ ApiInterface1 apiService1 =
 
 
 
+    }
 
 
 
 
 
+//hospital
+
+
+
+    void goapiihospital()
+    {
 
 
 
 
+        ApiInterfacehosp apiService = ApiClienthospital.getClient().create(ApiInterfacehosp.class);
+//TODO
+        Call call = apiService.getall();
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Log.e(TAG, "success");
+                Log.e(TAG, response.raw().request().url().toString());
+                String url = response.raw().request().url().toString();
+               Hospitalprocessor mytask = new Hospitalprocessor();
+                mytask.execute(url);
 
 
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.e(TAG, "failureee");
+            }
 
 
-
-
-
-
-
-
-
-
-
-
+        });
 
 
 
 
     }
+
+    private class Hospitalprocessor extends AsyncTask<String, Void, Integer> {
+
+
+
+        public Hospitalprocessor() {
+
+            super();
+
+        }
+
+
+        // The onPreExecute is executed on the main UI thread before background processing is
+
+        // started. In this method, we start the progressdialog.
+
+        @Override
+
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+
+
+            // Show the progress dialog on the screen
+
+
+        }
+
+
+        // This method is executed in the background and will return a result to onPostExecute
+
+        // method. It receives the file name as input parameter.
+
+        @Override
+
+        protected Integer doInBackground(String... urls) {
+
+
+            InputStream inputStream = null;
+
+            HttpURLConnection urlConnection = null;
+
+            Integer result = 0;
+
+
+            // TODO connect to server, download and process the JSON string
+
+
+            // Now we read the file, line by line and construct the
+
+            // Json string from the information read in.
+
+            try {
+
+                /* forming th java.net.URL object */
+
+                URL url = new URL(urls[0]);
+
+                urlConnection = (HttpURLConnection) url.openConnection();
+
+
+
+                 /* optional request header */
+
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+
+
+
+                /* optional request header */
+
+                urlConnection.setRequestProperty("Accept", "application/json");
+
+
+
+                /* for Get request */
+
+                urlConnection.setRequestMethod("GET");
+
+                int statusCode = urlConnection.getResponseCode();
+
+
+
+                /* 200 represents HTTP OK */
+
+                if (statusCode == 200) {
+
+                    inputStream = new BufferedInputStream(urlConnection.getInputStream());
+
+
+                    // Convert the read in information to a Json string
+
+                    String response = convertInputStreamToString(inputStream);
+
+
+                    // now process the string using the method that we implemented in the previous exercise
+    JSONObject obj=new JSONObject(response.replace(" ",""));
+
+                   String data=obj.getString("data");
+                    String[] dataa=data.split("\\[");
+                    Log.e("respon",dataa[14]);
+String[] pin=dataa[14].split(",");
+                    Log.e("responzzzz",pin[11]);
+                        result = 1; // Successful
+
+                } else {
+
+                    result = 0; //"Failed to fetch data!";
+
+                }
+
+            } catch (Exception e) {
+
+                Log.d(TAG, e.getLocalizedMessage());
+
+            }
+
+            return result; //"Failed to fetch data!";
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1297,7 +1566,30 @@ String username="",name="",myno="98";
 
 
 
+    public static class ApiClienthospital {
 
+        public static final String BASE_URL ="https://data.gov.in/node/356921/datastore/export/";
+
+        private static Retrofit retrofit = null;
+
+        public static Retrofit getClient() {
+            if (retrofit==null) {
+                retrofit = new Retrofit.Builder()
+                        .baseUrl(BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+            }
+            return retrofit;
+        }
+
+
+    }
+    public interface ApiInterfacehosp {
+
+        @GET("json")
+        Call<ResponseBody> getall();
+
+    }
 
 
 
