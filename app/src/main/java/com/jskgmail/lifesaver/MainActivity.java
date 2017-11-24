@@ -56,6 +56,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity
     static String phon="",naam="";static String myLocation;
     static double mylocationa;
     static double myLocationb;int ch=0;
-
+String ZIP;
 
     String TAG = "tag";
     static double lat=39.7,longi=-104;
@@ -120,7 +121,7 @@ static String flood="0";
 
     private SensorManager mSensorManager;
     private Sensor TemperatureSensor;
-
+    private String API_KEYpin="AIzaSyBCy3Ghs09Bk0YULL2SmI-F5yXTJ6KJCWg";
 
 
     @Override
@@ -131,7 +132,8 @@ static String flood="0";
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-goapiihospital();
+
+
 
 
 
@@ -377,6 +379,7 @@ int c=0;
             longi=longitude;
 
             goapii();
+            goapipin();
             go();
             startService();
             startLocationUpdates();
@@ -751,7 +754,7 @@ finish();
 
 
                 float speed = Math.abs(x + y + z - lastx - lasty - lastz)/ diffTime * 10000;
-                Log.e("speeed",speed+"" );
+                Log.v("speeed",speed+"" );
                 if (speed > 2000) {
 //TODO alert
                 }
@@ -1056,6 +1059,232 @@ ApiInterface1 apiService1 =
 
 
 
+    void goapipin()
+    {
+
+        if (API_KEYpin.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+        ApiInterfacepin apiService = ApiClientpin.getClient().create(ApiInterfacepin.class);
+//TODO
+        Call call = apiService.getall(latlong,API_KEYpin);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Log.e(TAG, "success");
+                Log.e(TAG, response.raw().request().url().toString());
+                String url = response.raw().request().url().toString();
+                Log.e(TAG, url);
+                Pincode mytask = new Pincode();
+                mytask.execute(url);
+
+
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.e(TAG, "failureee");
+            }
+
+
+        });
+
+
+
+
+    }
+
+    private class Pincode extends AsyncTask<String, Void, Integer> {
+
+
+
+        public Pincode() {
+
+            super();
+
+        }
+
+
+        // The onPreExecute is executed on the main UI thread before background processing is
+
+        // started. In this method, we start the progressdialog.
+
+        @Override
+
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+
+
+            // Show the progress dialog on the screen
+
+
+        }
+
+
+        // This method is executed in the background and will return a result to onPostExecute
+
+        // method. It receives the file name as input parameter.
+
+        @Override
+
+        protected Integer doInBackground(String... urls) {
+
+
+            InputStream inputStream = null;
+
+            HttpURLConnection urlConnection = null;
+
+            Integer result = 0;
+
+
+            // TODO connect to server, download and process the JSON string
+
+
+            // Now we read the file, line by line and construct the
+
+            // Json string from the information read in.
+
+            try {
+
+                /* forming th java.net.URL object */
+
+                URL url = new URL(urls[0]);
+
+                urlConnection = (HttpURLConnection) url.openConnection();
+
+
+
+                 /* optional request header */
+
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+
+
+
+                /* optional request header */
+
+                urlConnection.setRequestProperty("Accept", "application/json");
+
+
+
+                /* for Get request */
+
+                urlConnection.setRequestMethod("GET");
+
+                int statusCode = urlConnection.getResponseCode();
+
+
+
+                /* 200 represents HTTP OK */
+
+                if (statusCode == 200) {
+
+                    inputStream = new BufferedInputStream(urlConnection.getInputStream());
+
+
+                    // Convert the read in information to a Json string
+
+                    String response = convertInputStreamToString(inputStream);
+
+
+                    // now process the string using the method that we implemented in the previous exercise
+                    JSONObject obj=new JSONObject(response.replace(" ",""));
+
+                    String ele = (obj.getJSONArray("results")).toString();
+                    JSONObject obj1=new JSONObject(ele.replaceFirst("\\[",""));
+String eee=obj1.getJSONArray("address_components").toString();
+                    Log.e("resppp",eee);
+                    JSONArray arr=obj1.getJSONArray("address_components");
+                  for(int i=0;i<arr.length();i++){
+                      if(arr.getString(i).contains("postal_code"))
+                     Log.e("respppp", arr.getString(i));
+                      JSONObject obj11=new JSONObject(arr.getString(i));
+                      Log.e("resppppp", obj11.getString("long_name"));
+                      ZIP=obj11.getString("long_name");
+                      goapiihospital();
+
+
+                  }
+
+
+                    result = 1; // Successful
+
+                } else {
+
+                    result = 0; //"Failed to fetch data!";
+
+                }
+
+            } catch (Exception e) {
+
+                Log.d(TAG, e.getLocalizedMessage());
+
+            }
+
+            return result; //"Failed to fetch data!";
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //hospital
@@ -1191,13 +1420,16 @@ ApiInterface1 apiService1 =
 
                     // now process the string using the method that we implemented in the previous exercise
     JSONObject obj=new JSONObject(response.replace(" ",""));
-
+//may be said illogical but looking for faster implementation so not made jsonarrays and objects
                    String data=obj.getString("data");
                     String[] dataa=data.split("\\[");
-                    Log.e("respon",dataa[14]);
-String[] pin=dataa[14].split(",");
-                    Log.e("responzzzz",pin[11]);
-                        result = 1; // Successful
+                 for(int i=3;i<1050;i++) {
+                     Log.e("respon", dataa[i]);
+                     String[] pin = dataa[i].split("\"");
+                     Log.e("responzzzz", pin[16]);
+                     if(pin[16].replace(",","").equals(ZIP))
+                         Log.e("emergencyno",dataa[i]);
+                 }                        result = 1; // Successful
 
                 } else {
 
@@ -1653,8 +1885,30 @@ String username="",name="",myno="98";
         Call<ResponseBody> getall(@Query("points") String point,@Query("key") String apiKey1);
 
     }
+    public static class ApiClientpin {
+
+        public static final String BASE_URL ="https://maps.googleapis.com/maps/api/geocode/";
+
+        private static Retrofit retrofit = null;
+
+        public static Retrofit getClient() {
+            if (retrofit==null) {
+                retrofit = new Retrofit.Builder()
+                        .baseUrl(BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+            }
+            return retrofit;
+        }
 
 
+    }
+    public interface ApiInterfacepin {
+
+        @GET("json?")
+        Call<ResponseBody> getall(@Query("latlng") String point,@Query("key") String apiKey11);
+
+    }
 
 
 
@@ -2012,7 +2266,6 @@ Log.e("MainActivity", "Failed to pick contact");
             Intent i = new Intent(MainActivity.this, MainsettingActivity.class);
             startActivity(i);
         }
-
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
