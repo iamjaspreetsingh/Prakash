@@ -14,12 +14,48 @@
             android:id="@+id/Emergencycontacts"
             android:icon="@drawable/ic_contacts_black_24dp"
             android:title="Add Emergency Contacts" />
+        <item
+            android:id="@+id/hosp"
+            android:icon="@drawable/ic_find_replace_black_24dp"
+            android:title="Hospitals near me" />
+        <item
+            android:id="@+id/bloodb"
+            android:icon="@drawable/ic_find_replace_black_24dp"
+            android:title="Blood Banks near me" />
 
         <item
-            android:id="@+id/settingg"
-            android:icon="@drawable/ic_settings_black1_24dp"
-            android:title="Settings" />
+            android:id="@+id/testmy"
+            android:icon="@drawable/ic_question_answer_black_24dp"
+            android:title="Fake Test" />
     </group>
+    <item android:title="Other">
+        <menu>
+            <item
+                android:id="@+id/settingg"
+                android:icon="@drawable/ic_settings_black1_24dp"
+                android:title="Settings" />
+            <item
+                android:id="@+id/about"
+                android:icon="@drawable/ic_info_black_24dp"
+                android:title="About" />
+        </menu>
+    </item>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

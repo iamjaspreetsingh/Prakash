@@ -87,20 +87,24 @@ public class MainActivity extends AppCompatActivity
     private StorageReference mStorageRef;
     private static final int RESULT_PICK_CONTACT = 85;
     private ArrayList<String> stringArrayList, stringArrayList1;
-
+static String blba="No Blood Bank found";
     ListViewAdfrlist adapter;
     static String phon="",naam="";static String myLocation;
     static double mylocationa;
     static double myLocationb;int ch=0;
-String ZIP;
-
-    String TAG = "tag";
+    static String bloodloc;
+    static String hospname="",bbname="";
+static String ZIP;
+String hosp="";
+    static String bloodno="";
+    String TAG = "taggg";
     static double lat=39.7,longi=-104;
-
+static String hospp="No Hospital Found";
    static String latlong = "";//the realtime latitude longitude parameter
     private final static String API_KEY = "AIzaSyClHbZ-x92EYceOWKDSgT0NPZEBBEa_wnU";
     private final static String API_KEY1 = "AIzaSyCGZpTkUUlIYjYuJNOZMJKA6Ar4d7fE7Dc";
     double eleva = 0;
+    static String latitude="28.620660,77.08127";
    static double diffelevation = 0;
 
 
@@ -114,7 +118,7 @@ String ZIP;
     private SensorManager senSensorManager;
 float lastx=0,lasty=0,lastz=0;
     long lastupdate = System.currentTimeMillis();
-
+static String emergencyno="";
 static String flood="0";
 
 
@@ -132,7 +136,6 @@ static String flood="0";
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
 
 
@@ -657,44 +660,10 @@ int c=0;
         // Create the location request if person's last location is of disaster
 
     }
-// sends sms to emergency contacts automaticaaly with all the details of wwhere the phone was last spotted
+// sends sms to emergency contacts automaticaaly with all the details of where the phone was last spotted
     private void alertmyfriend() {
-        Intent intentt = new Intent(Intent.ACTION_VIEW);
-        intentt.setData(Uri.parse("sms:"));
-        intentt.setType("vnd.android-dir/mms-sms");
-        intentt.putExtra("sms_body", "Your friend is in danger due to an earthquake. His location is : https://www.google.com/maps/search/"+latlong+"/  & at the height of "+diffelevation+" metres from road level");
-
-        MainActivity.flood="0";
-        SharedPreferences.Editor editor=getSharedPreferences("flood",MODE_PRIVATE).edit();
-        editor.putString("flood","0");
-editor.apply();
-
-        SharedPreferences preference=getSharedPreferences("emergency",MODE_PRIVATE);
-        String phno=preference.getString("mob",null);
-        String numbers="";
-
-        if(phno!=null) {
-
-            String[] no = phno.split(",");
-            intentt.putExtra("address",numbers);
-            for (int i = 0; i < no.length; i++) {
-numbers=numbers+no[i]+";";
-
-            }
-        }
-
-
-
-
-
-
-
-
-        intentt.putExtra("address",numbers);
-        MainActivity.this.startActivity(intentt);
-
-finish();
-
+        Intent ij=new Intent(this,MainalertActivity.class);
+        startActivity(ij);
 
 
 
@@ -757,6 +726,10 @@ finish();
                 Log.v("speeed",speed+"" );
                 if (speed > 2000) {
 //TODO alert
+MainActivity.flood = "1";
+                    SharedPreferences.Editor editor = getSharedPreferences("flood", MODE_PRIVATE).edit();
+                    editor.putString("flood", "1");
+                    editor.apply();
                 }
 
                 lastx = x;
@@ -772,6 +745,10 @@ finish();
 
         if(sensorEvent.sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE){
             Log.e("temp",sensorEvent.values[0]+"");
+            if (sensorEvent.values[0]>50){ MainActivity.flood = "1";
+            SharedPreferences.Editor editor = getSharedPreferences("flood", MODE_PRIVATE).edit();
+            editor.putString("flood", "1");
+            editor.apply();}
         }
 
 
@@ -1058,6 +1035,224 @@ ApiInterface1 apiService1 =
     }
 
 
+void goapibloodbank()
+{
+    ApiInterfaceblood apiService = ApiClientblood.getClient().create(ApiInterfaceblood.class);
+//TODO
+    Call call = apiService.getall();
+    call.enqueue(new Callback() {
+        @Override
+        public void onResponse(Call call, Response response) {
+            Log.e(TAG, "success");
+            Log.e(TAG, response.raw().request().url().toString());
+            String url = response.raw().request().url().toString();
+            Log.e("blll", url);
+            BloodB mytask = new BloodB();
+            mytask.execute(url);
+
+
+        }
+
+        @Override
+        public void onFailure(Call call, Throwable t) {
+            Log.e(TAG, "failureee");
+        }
+
+
+    });
+
+}
+
+    private class BloodB extends AsyncTask<String, Void, Integer> {
+
+
+
+        public BloodB() {
+
+            super();
+
+        }
+
+
+        // The onPreExecute is executed on the main UI thread before background processing is
+
+        // started. In this method, we start the progressdialog.
+
+        @Override
+
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+
+
+            // Show the progress dialog on the screen
+
+
+        }
+
+
+        // This method is executed in the background and will return a result to onPostExecute
+
+        // method. It receives the file name as input parameter.
+
+        @Override
+
+        protected Integer doInBackground(String... urls) {
+
+
+            InputStream inputStream = null;
+
+            HttpURLConnection urlConnection = null;
+
+            Integer result = 0;
+
+
+            // TODO connect to server, download and process the JSON string
+
+
+            // Now we read the file, line by line and construct the
+
+            // Json string from the information read in.
+
+            try {
+
+                /* forming th java.net.URL object */
+
+                URL url = new URL(urls[0]);
+
+                urlConnection = (HttpURLConnection) url.openConnection();
+
+
+
+                 /* optional request header */
+
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+
+
+
+                /* optional request header */
+
+                urlConnection.setRequestProperty("Accept", "application/json");
+
+
+
+                /* for Get request */
+
+                urlConnection.setRequestMethod("GET");
+
+                int statusCode = urlConnection.getResponseCode();
+
+
+
+                /* 200 represents HTTP OK */
+
+                if (statusCode == 200) {
+
+                    inputStream = new BufferedInputStream(urlConnection.getInputStream());
+
+
+                    // Convert the read in information to a Json string
+
+                    String response = convertInputStreamToString(inputStream);
+
+Log.e("ZIPzz",ZIP);
+
+                    // now process the string using the method that we implemented in the previous exercise
+               String[] res=response.split("],");
+                    for(int i=1;i<res.length;i++)
+                    {String[] r=res[i].split(",\"");
+                       Log.e("bllll",r[6].replace("\"",""));
+                        if(r[6].replace("\"","").equals(ZIP)) {
+                            Log.e("bllloodbank", res[i]);
+                            bloodno=r[7].replace("\"","");
+                            bloodloc=r[r.length-2].replace("\"","")+","+r[r.length-1].replace("\"","");
+                            Log.e("bblloocc",bloodloc);
+                            bbname=r[1].replace("\"","");
+blba="Blood Bank Name : "+r[1].replace("\"","")+"\n\nAddress Details : "+r[5].replace("\"","")+"\n\nEmergency no. : "+r[7].replace("\"","");
+                        }
+                    }
+
+/*
+                    String ele = (obj.getJSONArray("results")).toString();
+                    JSONObject obj1=new JSONObject(ele.replaceFirst("\\[",""));
+                    String eee=obj1.getJSONArray("address_components").toString();
+                    Log.e("resppp",eee);
+                    JSONArray arr=obj1.getJSONArray("address_components");
+                    for(int i=0;i<arr.length();i++){
+                        if(arr.getString(i).contains("postal_code"))
+                            Log.e("respppp", arr.getString(i));
+                        JSONObject obj11=new JSONObject(arr.getString(i));
+                        Log.e("resppppp", obj11.getString("long_name"));
+                        ZIP=obj11.getString("long_name");
+                        goapiihospital();
+
+
+                    }*/
+
+
+                    result = 1; // Successful
+
+                } else {
+
+                    result = 0; //"Failed to fetch data!";
+
+                }
+
+            } catch (Exception e) {
+
+                Log.d(TAG, e.getLocalizedMessage());
+
+            }
+
+            return result; //"Failed to fetch data!";
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     void goapipin()
     {
@@ -1205,6 +1400,7 @@ String eee=obj1.getJSONArray("address_components").toString();
                       Log.e("resppppp", obj11.getString("long_name"));
                       ZIP=obj11.getString("long_name");
                       goapiihospital();
+                      goapibloodbank();
 
 
                   }
@@ -1419,16 +1615,24 @@ String eee=obj1.getJSONArray("address_components").toString();
 
 
                     // now process the string using the method that we implemented in the previous exercise
-    JSONObject obj=new JSONObject(response.replace(" ",""));
+    JSONObject obj=new JSONObject(response);
 //may be said illogical but looking for faster implementation so not made jsonarrays and objects
                    String data=obj.getString("data");
                     String[] dataa=data.split("\\[");
                  for(int i=3;i<1050;i++) {
                      Log.e("respon", dataa[i]);
                      String[] pin = dataa[i].split("\"");
+                     String[] pinloc = dataa[i].split(",\"");
                      Log.e("responzzzz", pin[16]);
-                     if(pin[16].replace(",","").equals(ZIP))
-                         Log.e("emergencyno",dataa[i]);
+                     if(pin[16].replace(",","").equals(ZIP)) {
+                         Log.e("emergencyno", dataa[i]);
+                         Log.e("emergencynooo",pin[17]);
+                         emergencyno=pin[17];
+                         hosp=pin[1];
+                         Log.e("emergencyname",pin[1]);
+                         hospname=pin[1].replace("\"","");
+                         hospp="Hospital Name : "+pin[1].replace("\"","")+"\n\nAddress details : "+pin[9].replace("\"","")+"\n\n Emergency no. : "+emergencyno+"\n";
+                     }
                  }                        result = 1; // Successful
 
                 } else {
@@ -1910,7 +2114,30 @@ String username="",name="",myno="98";
 
     }
 
+    public static class ApiClientblood{
 
+        public static final String BASE_URL ="https://data.gov.in/node/3287321/datastore/export/";
+
+        private static Retrofit retrofit = null;
+
+        public static Retrofit getClient() {
+            if (retrofit==null) {
+                retrofit = new Retrofit.Builder()
+                        .baseUrl(BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+            }
+            return retrofit;
+        }
+
+
+    }
+    public interface ApiInterfaceblood{
+
+        @GET("json")
+        Call<ResponseBody> getall();
+
+    }
 
 
 
@@ -2265,6 +2492,63 @@ Log.e("MainActivity", "Failed to pick contact");
         else if (id == R.id.settingg) {
             Intent i = new Intent(MainActivity.this, MainsettingActivity.class);
             startActivity(i);
+        }
+        else if (id==R.id.hosp)
+        { Intent i = new Intent(MainActivity.this, MainhospActivity.class);
+            startActivity(i);
+
+        }
+        else if (id==R.id.bloodb)
+        { Intent i = new Intent(MainActivity.this, MainbbActivity.class);
+            startActivity(i);
+
+        }
+        else if (id==R.id.testmy)
+        { MainActivity.flood="1";
+            SharedPreferences.Editor editor=getSharedPreferences("flood",MODE_PRIVATE).edit();
+            editor.putString("flood","1");
+
+            editor.apply();
+Toast.makeText(getApplicationContext(),"It is a fake test of how app works during any mishap",Toast.LENGTH_LONG).show();
+
+        }
+        else if (id==R.id.about)
+        {
+
+            LayoutInflater inflater = getLayoutInflater();
+            View alertLayout = inflater.inflate(R.layout.layoutabout, null);
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+            // this is set the view from XML inside AlertDialog
+            alert.setView(alertLayout);
+            // disallow cancel of AlertDialog on click of back button and outside touch
+            alert.setTitle("About ");
+            alert.setIcon(R.drawable.ic_question_answer_black_24dp);
+
+
+            alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+
+                }
+            });
+            AlertDialog dialog = alert.create();
+            dialog.show();
+
+
+
+
+
+
+
+
+
+
+
         }
 
 

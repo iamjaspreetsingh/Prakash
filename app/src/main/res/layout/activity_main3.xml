@@ -35,7 +35,16 @@ What should you do during and after an earthquake?\n
 1.	Check yourself and others for injuries. ...\n
 2.	Check water, gas, and electric lines for damage. ...\n
 3.	Turn on the radio. ...\n"
-            android:textAppearance="@style/TextAppearance.AppCompat" /><![CDATA[
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="67dp" /><![CDATA[
 
         "
 android:layout_centerVertical="true"

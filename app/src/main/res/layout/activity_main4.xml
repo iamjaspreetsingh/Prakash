@@ -36,7 +36,16 @@ Get to high ground – Climb to safety!\n
 \n3.	Stay away from power lines and electrical wires.\n
 As most people are well aware, the immediate impacts of flooding include loss of human life, damage to property, destruction of crops, loss of livestock, and deterioration of health conditions owing to waterborne diseases.
 \n"
-        android:textAppearance="@style/TextAppearance.AppCompat" /><![CDATA[
+        android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    <ProgressBar
+        android:id="@+id/progressBar3"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/videoView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="74dp" /><![CDATA[
 
     "
         android:layout_centerVertical="true"

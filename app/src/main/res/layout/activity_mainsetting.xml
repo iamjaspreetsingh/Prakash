@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/done"
@@ -8,80 +8,199 @@
     android:padding="9dp"
     tools:context="com.jskgmail.lifesaver.MainsettingActivity">
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
-        android:text="Name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="17sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textView66"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/editText"
-        android:layout_marginTop="26dp"
-        android:text="Mobile "
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="17sp" />
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView16"
+            android:layout_marginTop="20dp"
+            android:text="Name *"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimary"
+            android:textSize="17sp" />
 
-    <TextView
-        android:id="@+id/textView69"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        <TextView
+            android:id="@+id/textView66"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/editText"
+            android:layout_marginTop="17dp"
+            android:text="Mobile *"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimary"
+            android:textSize="17sp" />
 
-        android:layout_below="@+id/no"
-        android:layout_marginTop="26dp"
-        android:text="Username"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="17sp" />
+        <TextView
+            android:id="@+id/textView69"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView6"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_alignEnd="@+id/don" />
+            android:layout_below="@+id/no"
+            android:layout_marginTop="17dp"
+            android:text="Username *"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimary"
+            android:textSize="17sp" />
 
-    <EditText
-        android:id="@+id/user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/no" />
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/don"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView6"
+            android:ems="10"
+            android:inputType="textPersonName" />
 
-    <Button
-        android:id="@+id/don"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="50dp"
-        android:layout_marginEnd="33dp"
-        android:background="?attr/colorPrimary"
-        android:text="Done"
-        android:textColor="@color/cast_expanded_controller_text_color" />
+        <EditText
+            android:id="@+id/user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/no"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView69"
+            android:ems="10"
+            android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/no"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/editText"
-        android:layout_marginTop="47dp"
-        android:ems="10"
-        android:inputType="number"
-        android:layout_alignEnd="@+id/editText" />
-</RelativeLayout>
+        <Button
+            android:id="@+id/don"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:background="?attr/colorPrimary"
+            android:text="Done"
+            android:textColor="@color/cast_expanded_controller_text_color" />
+
+        <EditText
+            android:id="@+id/no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView66"
+            android:ems="10"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/don"
+            android:layout_alignParentStart="true"
+            android:text="ACCOUNT"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user"
+            android:layout_marginTop="25dp"
+            android:text="EMERGENCY"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView18"
+            android:layout_marginTop="13dp"
+            android:text="Contact to :"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimary"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/but"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView19"
+            android:layout_marginTop="11dp"
+            android:background="@color/common_google_signin_btn_text_dark_default"
+            android:gravity="left|center_vertical"
+            android:text="Delete my emergency contacts"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimary"
+            android:textSize="17sp" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView19"
+            android:layout_toEndOf="@+id/textView18" />
+
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/textView18"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/but"
+            android:layout_marginTop="22dp"
+            android:text="SENSORS"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
+
+        <Switch
+            android:id="@+id/switch3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView26"
+            android:layout_marginTop="12dp"
+            android:checked="true"
+            android:text="Accelerometer sensor"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimary"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView26"
+            android:layout_below="@+id/switch3"
+            android:text="for the case of accidents (recommended )" />
+
+        <Switch
+            android:id="@+id/switch4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView27"
+            android:layout_marginTop="17dp"
+            android:checked="true"
+            android:text="Temperature Sensor"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimary"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/switch4"
+            android:layout_marginTop="4dp"
+            android:text="for the case of fires" />
+
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>
