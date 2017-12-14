@@ -7,15 +7,19 @@ This app tends to work on an idea that anyone who is stuck in any natural calami
   <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge-border.png" height="64" />
 </a>
 <br><hr>
-#### WORKING <br>
+
+### WORKING <br>
 The app uses the GPS location and all the data like my emergency contact list and a parameter to decide whether there is any disaster or not in my current realtime database.<br>
 The realtime earthquake APIs are used to know if the phone's location lies in the earthquake region or not. <br>
 For the case of accident, smart sensors like accelerometer sensor or temperature sensors are used alongwith hospitals and bloodbank APIs (for India) to find the nearest one.
 The app sends the alert message (with my exact location and earest hospital details) to all my emergency contacts at once if any tragedy occurs (after 120s response time. No spamming!)<hr>
+
 ### CONCLUSION <br>
 The app is best suited for the regions where there are chances for earthquakes in spotting and rescuing them using their phone's location. It also triggers a help system during any accident (car accident, home fire etc.) after 120s wait time for response is over<hr>
 ### Note <br>
+
 ##### The app uses the APIs that are localized for India only <br>
+
 So, the app may not be as useful for other countries
 ##### After installing the app, you also need to give the permissions required in your phone to access your contacts and location 
 (You will be prompted to do so)
