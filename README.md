@@ -18,7 +18,7 @@ The app sends the alert message (with my exact location and earest hospital deta
 The app is best suited for the regions where there are chances for earthquakes in spotting and rescuing them using their phone's location. It also triggers a help system during any accident (car accident, home fire etc.) after 120s wait time for response is over<hr>
 ### Note <br>
 
-##### The app uses the APIs that are localized for India only <br>
+##### The app uses the APIs that are localized for India only taken by Govt website opendata.gov.in <br>
 
 So, the app may not be as useful for other countries
 ##### After installing the app, you also need to give the permissions required in your phone to access your contacts and location 
