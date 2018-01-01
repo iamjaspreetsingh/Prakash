@@ -7,6 +7,8 @@ This app tends to work on an idea that anyone who is stuck in any natural calami
   <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge-border.png" height="64" />
 </a>
 <br><hr>
+<img src="https://github.com/iamjaspreetsingh/lifesaver/blob/master/Screenshots/Mainnavbar.png" align="left" height="700" width="400" >
+<img src="https://github.com/iamjaspreetsingh/lifesaver/blob/master/Screenshots/Settings.png" height="700" width="400" >
 
 ### WORKING <br>
 The app uses the GPS location and all the data like my emergency contact list and checks if there is any disaster or not in my current realtime database as a background service.<br>
