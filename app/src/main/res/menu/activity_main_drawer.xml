@@ -27,6 +27,17 @@
             android:id="@+id/testmy"
             android:icon="@drawable/ic_question_answer_black_24dp"
             android:title="Fake Test" />
+
+        <item
+            android:id="@+id/dead"
+            android:icon="@drawable/ic_check_box_outline_blank_black_24dp"
+            android:title="Dead Body Detection" />
+
+        <item
+            android:id="@+id/blue"
+            android:icon="@drawable/bt"
+            android:title="Beacons" />
+
     </group>
     <item android:title="Other">
         <menu>
