@@ -358,7 +358,6 @@ int c=0;
 
 
 
-
     @Override
     public void onConnected(Bundle bundle) {
 
@@ -2484,16 +2483,15 @@ Log.e("MainActivity", "Failed to pick contact");
 
 
     }
-
     @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+    public void onBackPressed(){
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
