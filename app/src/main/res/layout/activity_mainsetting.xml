@@ -202,5 +202,13 @@
             android:layout_marginTop="4dp"
             android:text="for the case of fires" />
 
+        <Button
+            android:id="@+id/signout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/textView18"
+            android:layout_alignParentTop="true"
+            android:text="SignOut" />
+
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -1,5 +1,6 @@
 package com.jskgmail.lifesaver;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -31,6 +32,20 @@ public class MainsettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mainsetting);
         actionBar.setDisplayShowHomeEnabled(true);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+
+        Button signout=(Button)findViewById(R.id.signout);
+        signout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+
+
+            }
+        });
+
+
+
 
         Spinner currsemin = (Spinner) findViewById(R.id.spinner);
 
@@ -193,5 +208,17 @@ finish();
 
 
 
+    }
+
+
+
+
+
+
+
+    private void signOut() {
+        EmailPasswordActivity.sout=1;
+        Intent i=new Intent(MainsettingActivity.this,EmailPasswordActivity.class);
+        startActivity(i);
     }
 }
