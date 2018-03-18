@@ -2853,7 +2853,7 @@ phon=phon+phoneNo+",";
                     alert.setView(alertLayout);
                     // disallow cancel of AlertDialog on click of back button and outside touch
                     alert.setTitle("Identify Dead person ");
-                    alert.setIcon(R.drawable.ic_cast_grey);
+                    alert.setIcon(R.drawable.ic_add_alert_black_24dp);
                     alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
                         @Override

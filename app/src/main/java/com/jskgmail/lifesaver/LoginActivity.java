@@ -90,6 +90,10 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
+
+
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Sign In method
 
     private void signIn() {

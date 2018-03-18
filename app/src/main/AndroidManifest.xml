@@ -94,6 +94,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity"></activity>
+        <activity
+            android:name=".EmailPasswordActivity"
+            android:label="@string/label_emailpassword"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>
