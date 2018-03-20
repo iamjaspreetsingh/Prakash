@@ -2420,7 +2420,7 @@ String username="",name="",myno="98";
         img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(MainActivity.this,Main3Activity.class);
+                Intent i=new Intent(MainActivity.this,MainvvvvActivity.class);
                 startActivity(i);
 
 

@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/video_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:background="@android:color/black">
+
+        <com.universalvideoview.UniversalVideoView
+            android:id="@+id/videoView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            app:uvv_autoRotation="true"
+            app:uvv_fitXY="false" />
+
+        <com.universalvideoview.UniversalMediaController
+            android:id="@+id/media_controller"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            app:uvv_scalable="true" >
+
+        </com.universalvideoview.UniversalMediaController>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/introduction"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="What is an earthquake and what are its causes? \n Earthquakes are usually caused when rock underground suddenly breaks along a fault. This sudden release of energy causes the seismic waves that make the ground shake. When two blocks of rock or two plates are rubbing against each other, they stick a little. ... When the rocks break, the earthquake occurs.
+        Where is a common place for earthquakes?\n
+Earthquakes can also occur far from the edges of plates, along faults. Faults are cracks in the earth where sections of a plate (or two plates) are moving in different directions. Faults are caused by all that bumping and sliding the plates do. They are more common near the edges of the plates.
+What is the main cause of an earthquake?\n
+Earthquakes are caused by tectonic movements in the Earth's crust. The main cause is that when tectonic plates collide, one rides over the other, causing orogeny (mountain building), earthquakes and volcanoes. The boundaries between moving plates form the largest fault surfaces on Earth.
+What should you do during and after an earthquake?\n
+1.	Check yourself and others for injuries. ...\n
+2.	Check water, gas, and electric lines for damage. ...\n
+3.	Turn on the radio. ...\n"
+            android:background="@color/uvv_gray" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

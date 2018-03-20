@@ -21,7 +21,7 @@ public class MainsplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i=new Intent(MainsplashActivity.this,EmailPasswordActivity.class);
+                Intent i=new Intent(MainsplashActivity.this,MainintroActivity.class);
                 startActivity(i);
                 finish();
             }
