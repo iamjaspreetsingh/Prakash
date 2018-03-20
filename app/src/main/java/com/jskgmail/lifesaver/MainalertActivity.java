@@ -1,12 +1,20 @@
 package com.jskgmail.lifesaver;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -14,12 +22,28 @@ import android.widget.TextView;
 
 public class MainalertActivity extends AppCompatActivity {
 
+    private static final int CAMERA_REQUEST = 50;
+    private boolean flashLightStatus = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainalert);
         Button yes = (Button) findViewById(R.id.button2);
         Button no = (Button) findViewById(R.id.button3);
+
+
+        final boolean hasCameraFlash = getPackageManager().
+                hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        boolean isEnabled = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED;
+
+
+                ActivityCompat.requestPermissions(MainalertActivity.this, new String[] {android.Manifest.permission.CAMERA}, CAMERA_REQUEST);
+
+
+
+
         final ImageButton alarm = (ImageButton) findViewById(R.id.imageButton);
         final MediaPlayer alert = MediaPlayer.create(MainalertActivity.this, R.raw.siren);
         final int[] i = {120};
@@ -33,6 +57,9 @@ public class MainalertActivity extends AppCompatActivity {
 
                 time.setText(i[0] + "s");
                 i[0]--;
+                if(i[0]%2==0)
+                flashLightOn();
+                else if(i[0]>10) flashLightOff(); else flashLightOff();
             }
 
             @Override
@@ -75,6 +102,16 @@ if(MainActivity.flood.equals("1"))
                 }
             }
         });
+
+
+
+
+
+
+
+
+
+
 
     }
 
@@ -120,4 +157,57 @@ if(MainActivity.flood.equals("1"))
         Intent surf=new Intent(Intent.ACTION_DIAL,call);
         startActivity(surf);
     }
+
+
+
+
+
+    private void flashLightOn() {
+        CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+
+        try {
+            String cameraId = cameraManager.getCameraIdList()[0];
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                cameraManager.setTorchMode(cameraId, true);
+            }
+            flashLightStatus = true;
+
+        } catch (CameraAccessException e) {
+        }
+    }
+
+    private void flashLightOff() {
+        CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+
+        try {
+            String cameraId = cameraManager.getCameraIdList()[0];
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                cameraManager.setTorchMode(cameraId, false);
+            }
+            flashLightStatus = false;
+
+        } catch (CameraAccessException e) {
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode) {
+            case CAMERA_REQUEST :
+                if (grantResults.length > 0  &&  grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    }
+                break;
+        }
+    }
+
+
+
+
+
+
+
+
+
 }

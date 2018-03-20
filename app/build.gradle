@@ -45,7 +45,7 @@ dependencies {
 
 
 
-
+    compile 'org.altbeacon:android-beacon-library:2+'
     compile 'com.android.support:multidex:1.0.1'
     compile 'pub.devrel:easypermissions:1.0.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
