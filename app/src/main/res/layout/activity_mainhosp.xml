@@ -94,4 +94,13 @@
         android:text="Nearest Hospital Details :"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="16sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar5"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cardView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="76dp" />
 </RelativeLayout>

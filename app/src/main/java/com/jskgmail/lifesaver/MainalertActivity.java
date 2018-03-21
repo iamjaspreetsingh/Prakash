@@ -24,7 +24,7 @@ public class MainalertActivity extends AppCompatActivity {
 
     private static final int CAMERA_REQUEST = 50;
     private boolean flashLightStatus = false;
-
+    MediaPlayer alert;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +45,7 @@ public class MainalertActivity extends AppCompatActivity {
 
 
         final ImageButton alarm = (ImageButton) findViewById(R.id.imageButton);
-        final MediaPlayer alert = MediaPlayer.create(MainalertActivity.this, R.raw.siren);
+      alert  = MediaPlayer.create(MainalertActivity.this, R.raw.siren);
         final int[] i = {120};
         alert.start();
         final TextView time = (TextView) findViewById(R.id.textView12);

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -27,6 +28,17 @@ String TAG="HOSPt",blba;
         setContentView(R.layout.activity_mainhosp);
         TextView t=(TextView)findViewById(R.id.textView20);
         t.setText("ZIP code : "+MainActivity.ZIP);
+        ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar5);
+       if( MainActivity.hospp.equals("No Hospital Found"))
+       { progressBar.setVisibility(View.VISIBLE);
+           progressBar.setIndeterminate(true);
+       }
+        else
+       {
+           progressBar.setIndeterminate(false);
+           progressBar.setVisibility(View.GONE);
+       }
+
 
         ImageView calll=(ImageView)findViewById(R.id.imageButton2);
         ImageView dir=(ImageView)findViewById(R.id.imageButton3);

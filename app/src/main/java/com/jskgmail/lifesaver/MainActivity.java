@@ -59,6 +59,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.jskgmail.lifesaver.beaconreference.MonitoringActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -144,7 +145,6 @@ static String flood="0";
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
 
 
@@ -2543,11 +2543,15 @@ Log.e("MainActivity", "Failed to pick contact");
             startActivityForResult(intent, RESULT_PICK_CONTACT);
         }
         else if (id == R.id.settingg) {
+
             Intent i = new Intent(MainActivity.this, MainsettingActivity.class);
             startActivity(i);
         }
         else if (id==R.id.hosp)
-        { Intent i = new Intent(MainActivity.this, MainhospActivity.class);
+        {
+
+
+            Intent i = new Intent(MainActivity.this, MainhospActivity.class);
             startActivity(i);
 
         }
@@ -2558,7 +2562,8 @@ Log.e("MainActivity", "Failed to pick contact");
         }
         else if (id==R.id.blue)
         {
-
+            Intent i = new Intent(MainActivity.this, MonitoringActivity.class);
+            startActivity(i);
         }
         else if (id==R.id.testmy)
         { MainActivity.flood="1";
