@@ -57,6 +57,8 @@ setNextArrowColor(R.color.colorred);
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
         // Do something when users tap on Skip button.
+        Intent i=new Intent(MainintroActivity.this,EmailPasswordActivity.class);
+        startActivity(i);
     }
 
     @Override

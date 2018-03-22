@@ -59,6 +59,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.jskgmail.lifesaver.beaconreference.BeaconTransmitterActivity;
 import com.jskgmail.lifesaver.beaconreference.MonitoringActivity;
 
 import org.json.JSONArray;
@@ -2563,6 +2564,11 @@ Log.e("MainActivity", "Failed to pick contact");
         else if (id==R.id.blue)
         {
             Intent i = new Intent(MainActivity.this, MonitoringActivity.class);
+            startActivity(i);
+        }
+        else if (id==R.id.blueh)
+        {
+            Intent i = new Intent(MainActivity.this, BeaconTransmitterActivity.class);
             startActivity(i);
         }
         else if (id==R.id.testmy)

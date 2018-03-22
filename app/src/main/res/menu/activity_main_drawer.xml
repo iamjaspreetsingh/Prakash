@@ -37,7 +37,10 @@
             android:id="@+id/blue"
             android:icon="@drawable/bt"
             android:title="Beacons" />
-
+        <item
+            android:id="@+id/blueh"
+            android:icon="@drawable/bt"
+            android:title="Beacons broadcast" />
     </group>
     <item android:title="Other">
         <menu>

@@ -27,10 +27,16 @@ public class BeaconReferenceApplication extends Application implements Bootstrap
     private boolean haveDetectedBeaconsSinceBoot = false;
     private MonitoringActivity monitoringActivity = null;
 
+    BeaconManager beaconManager;
+    Region region;
+    private static Context context;
+    public static boolean isActive;
 
     public void onCreate() {
         super.onCreate();
-        BeaconManager beaconManager = org.altbeacon.beacon.BeaconManager.getInstanceForApplication(this);
+        context = getApplicationContext();
+
+        beaconManager =  BeaconManager.getInstanceForApplication(this);
 
         // By default the AndroidBeaconLibrary will only find AltBeacons.  If you wish to make it
         // find a different type of beacon, you must specify the byte layout for that beacon's
@@ -130,4 +136,13 @@ public class BeaconReferenceApplication extends Application implements Bootstrap
         this.monitoringActivity = activity;
     }
 
+
+    public static Context getAppContext() {
+        return context;
+    }
+
+    public BeaconManager getBeaconManager() {
+        return beaconManager;
+    }
+    public Region getRegion() {return region; }
 }
