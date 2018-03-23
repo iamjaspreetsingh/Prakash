@@ -25,7 +25,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -136,8 +135,8 @@ static String flood="0";
     private SensorManager mSensorManager;
     private Sensor TemperatureSensor;
     private String API_KEYpin="AIzaSyBCy3Ghs09Bk0YULL2SmI-F5yXTJ6KJCWg";
-
-
+    File photoFile = null;
+  String responseddd;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -2034,7 +2033,7 @@ String username="",name="",myno="98";
         retrofit2.Call<ResponseBody> getall(@Query("api_key") String code,
                                             @Query("api_secret") String monthact,
                                             // @Query("image_file") File file,
-                                            @Query("image_url") String url,
+                                            @Query("image_file") File file,
 
                                             @Query("faceset_token") String faceset
         );
@@ -2563,6 +2562,7 @@ Log.e("MainActivity", "Failed to pick contact");
         }
         else if (id==R.id.blue)
         {
+
             Intent i = new Intent(MainActivity.this, MonitoringActivity.class);
             startActivity(i);
         }
@@ -2663,20 +2663,16 @@ Toast.makeText(getApplicationContext(),"It is a fake test of how app works durin
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             // Create the File where the photo should go
-            File photoFile = null;
+
             photoFile = createImageFile();
             // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.jskgmail.lifesaver.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+
                 startActivityForResult(takePictureIntent, 1);
 
             }
 
         }
-    }
+
 
 
 
@@ -2734,7 +2730,7 @@ phon=phon+phoneNo+",";
 
         ApiInterfacedead apiService1 = ApiClientdead.getClient().create(ApiInterfacedead.class);
        //TODO
-        retrofit2.Call call = apiService1.getall("8eXIfwPbVhLUXV4xt9eW2xRSxWt74Fki","9xyBX7iWUUWu4msZbaAm6_XTRN9OiT5b","https://firebasestorage.googleapis.com/v0/b/attendance-4e350.appspot.com/o/06112011292-001.jpg?alt=media&token=a087ec2b-891c-4182-8df7-1917685aeb11","537c2b49a9a160655b9a3c707555af4b");
+        retrofit2.Call call = apiService1.getall("8eXIfwPbVhLUXV4xt9eW2xRSxWt74Fki","9xyBX7iWUUWu4msZbaAm6_XTRN9OiT5b",photoFile,"537c2b49a9a160655b9a3c707555af4b");
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -2851,40 +2847,7 @@ phon=phon+phoneNo+",";
 
                     // Convert the read in information to a Json string
 
-                    String response = convertInputStreamToString(inputStream);
-
-
-                    LayoutInflater inflater = getLayoutInflater();
-                    View alertLayout = inflater.inflate(R.layout.layoutdead, null);
-                  AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-                    TextView t=(TextView)alertLayout.findViewById(R.id.textView82);
-                    t.setText(response);
-
-                    // this is set the view from XML inside AlertDialog
-                    alert.setView(alertLayout);
-                    // disallow cancel of AlertDialog on click of back button and outside touch
-                    alert.setTitle("Identify Dead person ");
-                    alert.setIcon(R.drawable.ic_add_alert_black_24dp);
-                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    });
-
-
-                    alert.setPositiveButton("Set", new DialogInterface.OnClickListener() {
-
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-
-                        }
-                    });
-                    AlertDialog dialog = alert.create();
-                    dialog.show();
+                    responseddd = convertInputStreamToString(inputStream);
 
 
 
@@ -2977,6 +2940,39 @@ phon=phon+phoneNo+",";
 
 
 goapidead();
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.layoutdead, null);
+        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+        TextView t=(TextView)alertLayout.findViewById(R.id.textView82);
+        t.setText(responseddd);
+
+        // this is set the view from XML inside AlertDialog
+        alert.setView(alertLayout);
+        // disallow cancel of AlertDialog on click of back button and outside touch
+        alert.setTitle("Identify person ");
+        alert.setIcon(R.drawable.ic_add_alert_black_24dp);
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+
+        alert.setPositiveButton("Set", new DialogInterface.OnClickListener() {
+
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+
+            }
+        });
+        AlertDialog dialog = alert.create();
+        dialog.show();
+
+
 
 
     }

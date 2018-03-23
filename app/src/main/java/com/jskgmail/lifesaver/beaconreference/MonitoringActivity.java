@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -32,6 +33,9 @@ public class MonitoringActivity extends Activity  {
 		Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_monitoring);
+
+		Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		startActivityForResult(turnOn, 0);
 		verifyBluetooth();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
