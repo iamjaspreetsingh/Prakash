@@ -15,7 +15,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
@@ -25,6 +24,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -86,6 +86,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -93,6 +95,7 @@ import retrofit2.http.Query;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener, SensorEventListener {
 ;
+    Uri imageUri;
     private StorageReference mStorageRef;
     private static final int RESULT_PICK_CONTACT = 85;
     private ArrayList<String> stringArrayList, stringArrayList1;
@@ -2028,13 +2031,15 @@ String username="",name="",myno="98";
 
     }
     public interface ApiInterfacedead {
-
+        @FormUrlEncoded
         @POST("search")
         retrofit2.Call<ResponseBody> getall(@Query("api_key") String code,
                                             @Query("api_secret") String monthact,
                                             // @Query("image_file") File file,
-                                            @Query("image_file") File file,
+                                           @Field("image_file") File imageFile,
 
+                                        //   @Query("image_file") File file,
+                                         //   @Query("image_url") String url,
                                             @Query("faceset_token") String faceset
         );
 
@@ -2448,41 +2453,6 @@ Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
 ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
 startActivityForResult(contactPickerIntent, RESULT_PICK_CONTACT);
 }
-@Override
-protected void onActivityResult(int requestCode,int resultCode, Intent data) {
-// check whether the result is ok
-if (resultCode == RESULT_OK) {
-// Check for the request code, we might be usign multiple startActivityForReslut
-switch (requestCode) {
-case RESULT_PICK_CONTACT:
-contactPicked(data);
-break;
-}
-} else {
-Log.e("MainActivity", "Failed to pick contact");
-}
-
-/*
-              * Query the Uri and read contact details. Handle the picked contact data.
-              * @param data
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    }
     @Override
     public void onBackPressed(){
         Intent a = new Intent(Intent.ACTION_MAIN);
@@ -2584,7 +2554,7 @@ Toast.makeText(getApplicationContext(),"It is a fake test of how app works durin
         {
             dispatchTakePictureIntent();
 
-            recogniseface();
+
         }
         else if (id==R.id.about)
         {
@@ -2651,9 +2621,7 @@ Toast.makeText(getApplicationContext(),"It is a fake test of how app works durin
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            goapii();
-        }
+
         return image;
 
     }
@@ -2666,12 +2634,16 @@ Toast.makeText(getApplicationContext(),"It is a fake test of how app works durin
 
             photoFile = createImageFile();
             // Continue only if the File was successfully created
-
-                startActivityForResult(takePictureIntent, 1);
-
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.jskgmail.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(takePictureIntent, 1);
+                goapidead();
             }
 
-        }
+        }}
 
 
 
@@ -2719,7 +2691,15 @@ phon=phon+phoneNo+",";
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
 
+            case RESULT_PICK_CONTACT:
+                contactPicked(data);
+        }
+    }
 
 
     void goapidead()
@@ -2730,7 +2710,10 @@ phon=phon+phoneNo+",";
 
         ApiInterfacedead apiService1 = ApiClientdead.getClient().create(ApiInterfacedead.class);
        //TODO
-        retrofit2.Call call = apiService1.getall("8eXIfwPbVhLUXV4xt9eW2xRSxWt74Fki","9xyBX7iWUUWu4msZbaAm6_XTRN9OiT5b",photoFile,"537c2b49a9a160655b9a3c707555af4b");
+
+        Call call  = apiService1.getall("8eXIfwPbVhLUXV4xt9eW2xRSxWt74Fki","9xyBX7iWUUWu4msZbaAm6_XTRN9OiT5b",image,"537c2b49a9a160655b9a3c707555af4b");
+
+        Log.e("ddd", String.valueOf(photoFile));
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -2740,6 +2723,7 @@ phon=phon+phoneNo+",";
                 Log.e(TAG, url);
                 Dead mytask = new Dead();
                 mytask.execute(url);
+
 
 
             }
@@ -2813,7 +2797,7 @@ phon=phon+phoneNo+",";
                 /* forming th java.net.URL object */
 
                 URL url = new URL(urls[0]);
-
+                Log.e("ddddddddddd", String.valueOf(url));
                 urlConnection = (HttpURLConnection) url.openConnection();
 
 
@@ -2850,7 +2834,7 @@ phon=phon+phoneNo+",";
                     responseddd = convertInputStreamToString(inputStream);
 
 
-
+Log.e("ddddddddddd",responseddd);
 
 
 
@@ -2870,7 +2854,7 @@ phon=phon+phoneNo+",";
                 } else {
 
                     result = 0; //"Failed to fetch data!";
-
+                    Log.e("ddddddddddd","00000");
                 }
 
             } catch (Exception e) {
@@ -2882,6 +2866,7 @@ phon=phon+phoneNo+",";
             return result; //"Failed to fetch data!";
 
         }
+
 
     }
 
@@ -2939,7 +2924,7 @@ phon=phon+phoneNo+",";
 
 
 
-goapidead();
+
         LayoutInflater inflater = getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.layoutdead, null);
         AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);

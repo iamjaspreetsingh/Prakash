@@ -43,9 +43,11 @@ dependencies {
 
 
 
-
+    compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.daimajia.slider:library:1.1.5@aar'
     compile 'com.linsea:universalvideoview:1.1.0@aar'
-
+    compile 'com.nightonke:boommenu:2.1.1'
     compile 'org.altbeacon:android-beacon-library:2+'
     compile 'com.android.support:multidex:1.0.1'
     compile 'pub.devrel:easypermissions:1.0.1'
@@ -71,6 +73,8 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+
 
 
 

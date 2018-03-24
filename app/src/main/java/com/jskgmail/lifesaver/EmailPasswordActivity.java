@@ -69,7 +69,6 @@ static int sout=0;
         setContentView(R.layout.activity_emailpassword);
 
 
-
         // Views
 
         mEmailField = (EditText) findViewById(R.id.field_email);
