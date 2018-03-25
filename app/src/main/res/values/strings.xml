@@ -86,16 +86,16 @@
     <string name="apply">Apply Changes</string>
 
 
-    <string name="title_1">Hospitals</string>
-    <string name="title_3">Blood Bank</string>
+    <string name="title_1">Complaint Registration </string>
     <string name="title_2">Beacons</string>
+    <string name="title_3">Face recognition</string>
     <string name="title_4">Emergency Contacts</string>
 
-    <string name="text_1"> Find your nearest hospitals
+    <string name="text_1"> Register your problem with the most secured system
     </string>
-    <string name="text_3"> Find your nearest blood banks
+    <string name="text_2"> Find nearby beacon devices
     </string>
-    <string name="text_2"> Find Beacons
+    <string name="text_3"> Face recognition of registered persons for Details
     </string>
     <string name="text_4"> Manage your emergency contacts list
     </string>

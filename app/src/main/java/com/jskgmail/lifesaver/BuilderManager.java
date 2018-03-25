@@ -17,19 +17,34 @@ import java.util.List;
 public class BuilderManager {
 
     private static int[] imageResources = new int[]{
-            R.drawable.bbb,
-            R.drawable.hs,
-            R.drawable.hs
+            R.drawable.ambb,
+            R.drawable.pss,
+            R.drawable.firer,
+            R.drawable.wom,
+            R.drawable.earq,
+            R.drawable.chi
 
     };
+    private static String[] imagtext = new String[]{
+            "Ambulance",
+            "Police Station",
+            "Fire Brigade",
+            "Women Safety",
+            "Disaster",
+            "Child Safety"
 
-    private static int imageResourceIndex = 0;
+    };
+    private static int imageResourceIndex = 0,imgtext=0;
 
     static int getImageResource() {
         if (imageResourceIndex >= imageResources.length) imageResourceIndex = 0;
         return imageResources[imageResourceIndex++];
     }
 
+    static String getImageText() {
+        if (imgtext >= imageResources.length) imgtext = 0;
+        return imagtext[imgtext++];
+    }
     static SimpleCircleButton.Builder getSimpleCircleButtonBuilder() {
         return new SimpleCircleButton.Builder()
                 .normalImageRes(getImageResource());

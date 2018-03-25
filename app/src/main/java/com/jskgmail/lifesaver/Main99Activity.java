@@ -2,13 +2,16 @@ package com.jskgmail.lifesaver;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -18,7 +21,7 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
-import com.nightonke.boommenu.BoomButtons.TextInsideCircleButton;
+import com.nightonke.boommenu.BoomButtons.TextOutsideCircleButton;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
@@ -47,24 +50,34 @@ public class Main99Activity extends AppCompatActivity implements BaseSliderView.
 
         bmb = (BoomMenuButton) findViewById(R.id.bmb);
         assert bmb != null;
-        bmb.setButtonEnum(ButtonEnum.TextInsideCircle);
-        bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_3_3);
-        bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_3_3);
+        bmb.setButtonEnum(ButtonEnum.TextOutsideCircle);
+        bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_6_3);
+        bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_6_3);
 Log.e("ppp", ""+bmb.getPiecePlaceEnum().pieceNumber());
 
-
+        final Uri[] call = new Uri[1];
         for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
-            TextInsideCircleButton.Builder builder = new TextInsideCircleButton.Builder()
+            TextOutsideCircleButton.Builder builder = new TextOutsideCircleButton.Builder()
                     .listener(new OnBMClickListener() {
                         @Override
                         public void onBoomButtonClick(int index) {
                             // When the boom-button corresponding this builder is clicked.
+                            if(index==0)
+                            call[0] =Uri.parse("tel:"+"102");
+                             else if (index==1)call[0] =Uri.parse("tel:"+"100");
+                            else if (index==2)call[0] =Uri.parse("tel:"+"101");
+                            else if (index==3)call[0] =Uri.parse("tel:"+"181");
+                            else if (index==4)call[0] =Uri.parse("tel:"+"108");
+                            else if (index==5) call[0] =Uri.parse("tel:"+"1098");
+
+                            Intent surf=new Intent(Intent.ACTION_DIAL, call[0]);
+                            startActivity(surf);
                             Toast.makeText(Main99Activity.this, "Clicked " + index, Toast.LENGTH_SHORT).show();
                         }
                     })
 
                     .normalImageRes(BuilderManager.getImageResource())
-                    .normalText("Butter Doesn't fly!");
+                    .normalText(BuilderManager.getImageText());
             bmb.addBuilder(builder);
         }
 
@@ -111,7 +124,7 @@ Log.e("ppp", ""+bmb.getPiecePlaceEnum().pieceNumber());
         HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
         file_maps.put("Safety Tips: Earthquake",R.mipmap.earthquake);
         file_maps.put("Safety Tips: Flood",R.mipmap.flood);
-        file_maps.put("Safety Tips: Accident",R.drawable.acc);
+        file_maps.put("Safety Tips: Accidents",R.drawable.acc);
         file_maps.put("Safety Tips: Fire", R.drawable.fire);
 
         for(String name : file_maps.keySet()){
@@ -137,7 +150,30 @@ Log.e("ppp", ""+bmb.getPiecePlaceEnum().pieceNumber());
         mDemoSlider.addOnPageChangeListener(this);
 
 
-
+        ImageView ho=(ImageView)findViewById(R.id.ho);
+        ImageView bb=(ImageView)findViewById(R.id.bb);
+        ImageView ps=(ImageView)findViewById(R.id.ps);
+        ho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(Main99Activity.this,MainhospActivity.class);
+                startActivity(i);
+            }
+        });
+        bb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(Main99Activity.this,MainbbActivity.class);
+                startActivity(i);
+            }
+        });
+        ps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(Main99Activity.this,MainppActivity.class);
+                startActivity(i);
+            }
+        });
 
     }
 
@@ -160,6 +196,14 @@ Log.e("ppp", ""+bmb.getPiecePlaceEnum().pieceNumber());
         else     if(slider.getBundle().get("extra").equals("Safety Tips: Flood"))
         { Intent i=new Intent(Main99Activity.this,Main4Activity.class);
             startActivity(i);}
+        else     if(slider.getBundle().get("extra").equals("Safety Tips: Fire"))
+        { Intent i=new Intent(Main99Activity.this,Main5Activity.class);
+            startActivity(i);}
+        else     if(slider.getBundle().get("extra").equals("Safety Tips: Accidents"))
+        {  String videoId = "XpECMpNCtRE";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:"+videoId));
+            intent.putExtra("VIDEO_ID", videoId);
+            startActivity(intent);}
         Toast.makeText(this,slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
     }
 
