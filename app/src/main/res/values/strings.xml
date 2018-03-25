@@ -85,4 +85,27 @@
     <string name="start_advertising">Start Advertising</string>
     <string name="apply">Apply Changes</string>
 
+
+    <string name="title_1">Hospitals</string>
+    <string name="title_3">Blood Bank</string>
+    <string name="title_2">Beacons</string>
+    <string name="title_4">Emergency Contacts</string>
+
+    <string name="text_1"> Find your nearest hospitals
+    </string>
+    <string name="text_3"> Find your nearest blood banks
+    </string>
+    <string name="text_2"> Find Beacons
+    </string>
+    <string name="text_4"> Manage your emergency contacts list
+    </string>
+
+    <string name="text_inside_circle_button_text_normal">Text Inside Circle Button(Normal)</string>
+    <string name="text_inside_circle_button_text_highlighted">Text Inside Circle Button(Highlighted)</string>
+    <string name="text_inside_circle_button_text_unable">Text Inside Circle Button(Unable)</string>
+
+    <string name="text_outside_circle_button_text_normal">Text Outside Circle Button(Normal)</string>
+    <string name="text_outside_circle_button_text_highlighted">Text Outside Circle Button(Highlighted)</string>
+    <string name="text_outside_circle_button_text_unable">Text Outside Circle Button(Unable)</string>
+
 </resources>

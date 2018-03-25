@@ -15,4 +15,5 @@
 
     <dimen name="items_inbetween_margin">8dp</dimen>
     <dimen name="header_text_size">16sp</dimen>
+    <dimen name="card_padding">60dp</dimen>
 </resources>
