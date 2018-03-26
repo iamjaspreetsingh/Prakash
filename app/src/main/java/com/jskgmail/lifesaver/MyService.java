@@ -117,8 +117,6 @@ onDestroy();}
 
 
 
-
-
         return START_STICKY;
     }
 

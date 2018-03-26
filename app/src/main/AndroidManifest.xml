@@ -134,7 +134,8 @@
         <activity android:name=".ProblemActivity" />
         <activity android:name=".Main99Activity" />
         <activity android:name=".MainppActivity" />
-        <activity android:name=".Main5Activity"></activity>
+        <activity android:name=".Main5Activity" />
+
     </application>
 
 </manifest>

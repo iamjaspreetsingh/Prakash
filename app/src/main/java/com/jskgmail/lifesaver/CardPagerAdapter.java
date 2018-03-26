@@ -58,15 +58,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         }
 
         cardView.setMaxCardElevation(mBaseElevation * MAX_ELEVATION_FACTOR);
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (position==1)
-                {
 
-                }
-            }
-        });
         mViews.set(position, cardView);
         return view;
     }
@@ -82,6 +74,9 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         TextView contentTextView = (TextView) view.findViewById(R.id.contentTextView);
         titleTextView.setText(item.getTitle());
         contentTextView.setText(item.getText());
+
     }
+
+
 
 }

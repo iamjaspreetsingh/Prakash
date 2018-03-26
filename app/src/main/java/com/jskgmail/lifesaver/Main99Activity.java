@@ -2,6 +2,7 @@ package com.jskgmail.lifesaver;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -10,7 +11,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -19,6 +19,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.jskgmail.lifesaver.beaconreference.MonitoringActivity;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomButtons.TextOutsideCircleButton;
@@ -31,13 +32,10 @@ import java.util.HashMap;
 public class Main99Activity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
 
-    private Button mButton;
     private ViewPager mViewPager;
 
     private CardPagerAdapter mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
-    private CardFragmentPagerAdapter mFragmentCardAdapter;
-    private ShadowTransformer mFragmentCardShadowTransformer;
 
 
     private SliderLayout mDemoSlider;
@@ -72,12 +70,15 @@ Log.e("ppp", ""+bmb.getPiecePlaceEnum().pieceNumber());
 
                             Intent surf=new Intent(Intent.ACTION_DIAL, call[0]);
                             startActivity(surf);
-                            Toast.makeText(Main99Activity.this, "Clicked " + index, Toast.LENGTH_SHORT).show();
+
                         }
                     })
 
                     .normalImageRes(BuilderManager.getImageResource())
-                    .normalText(BuilderManager.getImageText());
+                    .normalText(BuilderManager.getImageText())
+                    .pieceColor(Color.WHITE).normalColor(Color.WHITE);
+
+
             bmb.addBuilder(builder);
         }
 
@@ -89,21 +90,28 @@ Log.e("ppp", ""+bmb.getPiecePlaceEnum().pieceNumber());
 
 
 
-
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
+
+
 
         mCardAdapter = new CardPagerAdapter();
         mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
         mCardAdapter.addCardItem(new CardItem(R.string.title_2, R.string.text_2));
         mCardAdapter.addCardItem(new CardItem(R.string.title_3, R.string.text_3));
         mCardAdapter.addCardItem(new CardItem(R.string.title_4, R.string.text_4));
-        mFragmentCardAdapter = new CardFragmentPagerAdapter(getSupportFragmentManager(),
-                dpToPixels(2, this));
+        mCardAdapter.addCardItem(new CardItem(R.string.title_5, R.string.text_5));
+        mCardAdapter.addCardItem(new CardItem(R.string.title_6, R.string.text_6));
+        mCardAdapter.addCardItem(new CardItem(R.string.title_7, R.string.text_7));
+        mCardAdapter.addCardItem(new CardItem(R.string.title_8, R.string.text_8));
+        mCardAdapter.addCardItem(new CardItem(R.string.title_9, R.string.text_9));
 
-        mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
-        mFragmentCardShadowTransformer = new ShadowTransformer(mViewPager, mFragmentCardAdapter);
+             Log.e( "clclclclcl", String.valueOf(mViewPager.getCurrentItem()));
+        mViewPager.setClickable(true);
 
+
+        Log.e("clcl", String.valueOf(mViewPager.hasOnClickListeners()));
         mViewPager.setAdapter(mCardAdapter);
+
         mViewPager.setPageTransformer(false, mCardShadowTransformer);
         mViewPager.setOffscreenPageLimit(3);
 
@@ -175,7 +183,43 @@ Log.e("ppp", ""+bmb.getPiecePlaceEnum().pieceNumber());
             }
         });
 
+
+        ImageView comp=(ImageView)findViewById(R.id.hoo);
+        ImageView bea=(ImageView)findViewById(R.id.bob);
+        ImageView img=(ImageView)findViewById(R.id.poss);
+        ImageView emer=(ImageView)findViewById(R.id.pos);
+
+        comp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(Main99Activity.this,ProblemActivity.class);
+                startActivity(i);
+            }
+        });
+
+        bea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(Main99Activity.this,MonitoringActivity.class);
+                startActivity(i);
+            }
+        });
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        emer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
     }
+
+
 
     public static float dpToPixels(int dp, Context context) {
         return dp * (context.getResources().getDisplayMetrics().density);
@@ -197,7 +241,7 @@ Log.e("ppp", ""+bmb.getPiecePlaceEnum().pieceNumber());
         { Intent i=new Intent(Main99Activity.this,Main4Activity.class);
             startActivity(i);}
         else     if(slider.getBundle().get("extra").equals("Safety Tips: Fire"))
-        { Intent i=new Intent(Main99Activity.this,Main5Activity.class);
+        { Intent i=new Intent(this,Main5Activity.class);
             startActivity(i);}
         else     if(slider.getBundle().get("extra").equals("Safety Tips: Accidents"))
         {  String videoId = "XpECMpNCtRE";
@@ -220,9 +264,46 @@ Log.e("ppp", ""+bmb.getPiecePlaceEnum().pieceNumber());
 
     @Override
     public void onPageSelected(int position) {
+
+
         Log.d("Slider Demo", "Page Changed: " + position);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
