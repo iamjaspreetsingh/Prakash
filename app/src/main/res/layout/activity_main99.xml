@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/grey_300">
 
         <com.daimajia.slider.library.SliderLayout
@@ -141,102 +141,151 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textSize="16sp" />
 
-        <RelativeLayout
+        <HorizontalScrollView
             android:id="@+id/rl1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView311"
-            android:background="@color/white"
-            android:padding="12dp">
+            android:layout_below="@+id/textView311">
 
-            <ImageView
-                android:id="@+id/hoo"
-                android:layout_width="50dp"
-                android:layout_height="45dp"
+            <LinearLayout
 
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="17dp"
-                android:layout_toEndOf="@+id/hoo"
-                app:srcCompat="@drawable/ic_report_problem_black_24dp" />
-
-            <ImageView
-                android:id="@+id/bob"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="17dp"
-                android:layout_toEndOf="@+id/textView25o"
-                android:foregroundGravity="center_horizontal"
-                app:srcCompat="@drawable/bt" />
-
-            <ImageView
-                android:id="@+id/poss"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-
-                android:layout_alignParentTop="true"
-                android:layout_alignStart="@+id/textView31oo"
-                android:layout_centerInParent="false"
-                android:foregroundGravity="center_horizontal"
-                app:srcCompat="@drawable/ic_face_black_24dp" />
-
-            <ImageView
-                android:id="@+id/pos"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="17dp"
-                app:srcCompat="@drawable/ic_contacts_black_24dp" />
-
-
-            <TextView
-                android:id="@+id/textView25o"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="11dp"
-                android:text="Complaint Registration"
-                android:textSize="13sp" />
 
-            <TextView
-                android:id="@+id/textView30o"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/bob"
-                android:layout_below="@+id/bob"
-                android:foregroundGravity="center_horizontal"
-                android:text="Find Beacons"
-                android:textSize="13sp" />
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="12dp">
 
-            <TextView
-                android:id="@+id/textView31oo"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginEnd="12dp"
-                android:layout_toStartOf="@+id/textView31o"
-                android:foregroundGravity="center_horizontal"
-                android:text="Face Recognition"
-                android:textSize="13sp" />
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginRight="8dp">
 
-            <TextView
-                android:id="@+id/textView31o"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:text="Emergency Contacts"
-                android:textSize="13sp" />
+                    <ImageView
+                        android:id="@+id/hoo"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+
+                        android:foregroundGravity="center_horizontal"
+                        app:srcCompat="@drawable/ic_report_problem_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/textView25o"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="Complaint Registration"
+                        android:textSize="12sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginRight="8dp">
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:foregroundGravity="center_horizontal"
+                        custom:srcCompat="@drawable/ic_streetview_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/textView31ood"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/poss"
+                        android:layout_centerHorizontal="true"
+                        android:foregroundGravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="View Prone Areas"
+                        android:textSize="12sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginRight="8dp">
+
+                    <ImageView
+                        android:id="@+id/bob"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+
+                        android:layout_centerHorizontal="true"
+                        android:foregroundGravity="center_horizontal"
+                        app:srcCompat="@drawable/bt" />
+
+                    <TextView
+                        android:id="@+id/textView30o"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+
+                        android:foregroundGravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="Find\nBeacons"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:layout_marginRight="8dp">
+
+                    <ImageView
+                        android:id="@+id/poss"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+
+                        android:foregroundGravity="center_horizontal"
+                        app:srcCompat="@drawable/ic_face_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/textView31oo"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+
+                        android:gravity="center_horizontal"
+                        android:text="Face Recognition"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginRight="8dp">
+
+                    <ImageView
+                        android:id="@+id/pos"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginEnd="11dp"
+                        android:foregroundGravity="center_horizontal"
+                        app:srcCompat="@drawable/ic_perm_contact_calendar_black_24dp" />
 
 
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/textView31o"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:foregroundGravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="Emergency Contacts"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </HorizontalScrollView>
 
         <TextView
             android:id="@+id/tty"

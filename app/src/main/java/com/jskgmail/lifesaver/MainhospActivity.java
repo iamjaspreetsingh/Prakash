@@ -1,21 +1,27 @@
 package com.jskgmail.lifesaver;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.victor.loading.rotate.RotateLoading;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import ru.dimorinny.floatingtextbutton.FloatingTextButton;
+
 public class MainhospActivity extends AppCompatActivity {
-String TAG="HOSPt",blba;
+String TAG="HOSPt";
+    private RotateLoading rotateLoading;
+    @TargetApi(Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,21 +34,27 @@ String TAG="HOSPt",blba;
         setContentView(R.layout.activity_mainhosp);
         TextView t=(TextView)findViewById(R.id.textView20);
         t.setText("ZIP code : "+MainActivity.ZIP);
-        ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar5);
-       if( MainActivity.hospp.equals("No Hospital Found"))
-       { progressBar.setVisibility(View.VISIBLE);
-           progressBar.setIndeterminate(true);
-       }
-        else
-       {
-           progressBar.setIndeterminate(false);
-           progressBar.setVisibility(View.GONE);
-       }
+
+        rotateLoading=(RotateLoading)findViewById(R.id.rotateloading);
+        rotateLoading.setLoadingColor(R.color.colorPrimary);
+
+        FloatingTextButton call=findViewById(R.id.fab);
+        FloatingTextButton dirl=findViewById(R.id.fab1);
+        TextView l=(TextView)findViewById(R.id.ll);
+        while ( MainActivity.hospp.equals("No Hospital Found")) {
+            if (MainActivity.hospp.equals("No Hospital Found")) {
+                rotateLoading.start();
+                l.setVisibility(View.VISIBLE);
+            } else {
+                rotateLoading.stop();
+                l.setVisibility(View.GONE);
+                break;
+            }
+        }
 
 
-        ImageView calll=(ImageView)findViewById(R.id.imageButton2);
-        ImageView dir=(ImageView)findViewById(R.id.imageButton3);
-calll.setOnClickListener(new View.OnClickListener() {
+
+        call.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         String[] em=MainActivity.emergencyno.split(",");
@@ -51,7 +63,8 @@ calll.setOnClickListener(new View.OnClickListener() {
         startActivity(surf);
     }
 });
-        dir.setOnClickListener(new View.OnClickListener() {
+
+        dirl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String geoUri = "http://maps.google.com/maps?q=loc:" + MainActivity.latitude;
@@ -59,8 +72,12 @@ calll.setOnClickListener(new View.OnClickListener() {
                 startActivity(intent);
             }
         });
-        TextView tt=(TextView)findViewById(R.id.textView23);
+        TextView tt=(TextView)findViewById(R.id.textView35);
         tt.setText(MainActivity.hospp);
+        TextView tt1=(TextView)findViewById(R.id.textView351);
+        tt1.setText(MainActivity.hospp1);
+        TextView tt11=(TextView)findViewById(R.id.textView3511);
+        tt11.setText(MainActivity.hospp11);
         Log.e("bllba",MainActivity.hospp);
         String b = null;
         try {
@@ -75,10 +92,6 @@ calll.setOnClickListener(new View.OnClickListener() {
 
 
     }
-
-
-
-
 
 
 

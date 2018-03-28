@@ -23,6 +23,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }
 
 dependencies {
@@ -38,10 +39,13 @@ dependencies {
 
 
 
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
 
 
 
-
+    compile 'com.victor:lib:1.0.4'
+    compile 'com.github.dimorinny:floating-text-button:0.0.4'
 
     compile 'com.squareup.picasso:picasso:2.3.2'
     compile 'com.nineoldandroids:library:2.4.0'
@@ -73,6 +77,8 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+
 
 
 

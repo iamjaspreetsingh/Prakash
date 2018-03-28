@@ -25,13 +25,18 @@
             android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
             android:textSize="17sp" />
 
-        <Spinner
+        <CheckedTextView
             android:id="@+id/spinner2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/textView29"
             android:layout_below="@+id/textView29"
-            android:layout_marginTop="11dp" />
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="11dp"
+            android:checkMark="@android:drawable/arrow_down_float"
+            android:checked="true"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView24"
@@ -158,6 +163,16 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/comp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/button5"
+            android:layout_below="@+id/textView40"
+            android:layout_marginEnd="8dp"
+            android:text="My Complaints"
+            android:textColor="@color/colorPrimaryDark" />
 
     </RelativeLayout>
 </ScrollView>

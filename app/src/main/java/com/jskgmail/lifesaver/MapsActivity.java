@@ -3,17 +3,23 @@ package com.jskgmail.lifesaver;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
   private GoogleMap mMap;
+  String TAG="MAPSREPORT";
   @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +28,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+      FirebaseDatabase database = FirebaseDatabase.getInstance();
+      DatabaseReference myRef = database.getReference("PROBLEMS");
+
+      // Read from the database
+      myRef.addValueEventListener(new ValueEventListener() {
+          @Override
+          public void onDataChange(DataSnapshot dataSnapshot) {
+              // This method is called once with the initial value and again
+              // whenever data at this location is updated.
+              String value = dataSnapshot.getValue(String.class);
+              Log.d(TAG, "Value is: " + value);
+          }
+
+          @Override
+          public void onCancelled(DatabaseError error) {
+              // Failed to read value
+              Log.w(TAG, "Failed to read value.", error.toException());
+          }
+      });
     }
 
 
@@ -42,9 +67,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Sydney and move the camera
 Log.e("zzzz"+MainActivity.mylocationa, ""+MainActivity.myLocationb);
         LatLng sydney = new LatLng(MainActivity.lat,MainActivity.longi);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker at your location"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,16));
-        Toast.makeText(getApplicationContext(),"At the height of "+MainActivity.diffelevation+" metres",Toast.LENGTH_LONG).show();
-         }
+        LatLng sydney1 = new LatLng(MainActivity.lat-1,MainActivity.longi+1);
+
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker at your location").snippet("Population: 4,627,300").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney1).title("Marker at your location").snippet("Population: 4,627,300").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,12));
+
+
+          }
 
 }

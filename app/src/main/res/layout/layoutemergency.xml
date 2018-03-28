@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="400dp">
+
+    <ru.dimorinny.floatingtextbutton.FloatingTextButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/listname"
+        android:layout_below="@id/listname"
+        android:foregroundGravity="bottom"
+        app:floating_background_color="@color/cardview_light_background"
+        app:floating_left_icon="@drawable/ic_contact_phone_black_24dp"
+        app:floating_title="ADD CONTACTS"
+        app:floating_title_color="@android:color/holo_red_dark" />
+
+    <ListView
+        android:id="@+id/listname"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/book_loading_page" />
+
+
+
+</RelativeLayout>

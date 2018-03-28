@@ -17,6 +17,7 @@
 package com.jskgmail.lifesaver;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +41,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.victor.loading.rotate.RotateLoading;
 
 public class EmailPasswordActivity extends AppCompatActivity implements
         View.OnClickListener {
@@ -59,7 +61,7 @@ static int sout=0;
     private static final int RC_SIGN_IN = 1;
 
     private boolean isUserClickedBackButton = false;
-
+private RotateLoading rotateLoading;
     FirebaseAuth.AuthStateListener mAuthListner;
     // [END declare_auth]
 
@@ -68,7 +70,7 @@ static int sout=0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emailpassword);
 
-
+        rotateLoading = (RotateLoading) findViewById(R.id.rotateloading);
         // Views
 
         mEmailField = (EditText) findViewById(R.id.field_email);
@@ -84,7 +86,13 @@ static int sout=0;
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
+        SharedPreferences.Editor editor= getSharedPreferences("keys",MODE_PRIVATE).edit();
+        editor.putString("public","public");
 
+        editor.apply();
+
+        SharedPreferences prefs = getSharedPreferences("keys",MODE_PRIVATE);
+        String restoredText = prefs.getString("public", null);
 
         SignInButton google_Btn = (SignInButton) findViewById(R.id.googleBtn);
 
@@ -149,6 +157,7 @@ static int sout=0;
 
     private void createAccount(String email, String password) {
         Log.d(TAG, "createAccount:" + email);
+        rotateLoading.start();
         if (!validateForm()) {
             return;
         }
@@ -160,6 +169,7 @@ static int sout=0;
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        rotateLoading.start();
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
@@ -167,6 +177,7 @@ static int sout=0;
                             sendEmailVerification();
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            rotateLoading.stop();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -201,6 +212,7 @@ static int sout=0;
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            rotateLoading.stop();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -233,6 +245,7 @@ static int sout=0;
     private void signIng() {
 sout=0;
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        rotateLoading.start();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -269,7 +282,7 @@ sout=0;
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
+                            rotateLoading.stop();
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithCredential:success");
 //                            FirebaseUser user = mAuth.getCurrentUser();

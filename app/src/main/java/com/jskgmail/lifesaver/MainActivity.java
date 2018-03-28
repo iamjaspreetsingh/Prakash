@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,13 +20,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -42,24 +42,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.jskgmail.lifesaver.beaconreference.BeaconTransmitterActivity;
 import com.jskgmail.lifesaver.beaconreference.MonitoringActivity;
+import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
+import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
+import com.nightonke.boommenu.BoomButtons.TextOutsideCircleButton;
+import com.nightonke.boommenu.BoomMenuButton;
+import com.nightonke.boommenu.ButtonEnum;
+import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -76,6 +76,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -91,33 +92,44 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import ru.dimorinny.floatingtextbutton.FloatingTextButton;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener, SensorEventListener {
-;
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener, SensorEventListener,BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener
+    {
+    ;
     Uri imageUri;
+
+    private ViewPager mViewPager;
+
+    private CardPagerAdapter mCardAdapter;
+    private ShadowTransformer mCardShadowTransformer;
+
+
+    private SliderLayout mDemoSlider;
+    private BoomMenuButton bmb;
     private StorageReference mStorageRef;
     private static final int RESULT_PICK_CONTACT = 85;
     private ArrayList<String> stringArrayList, stringArrayList1;
-static String blba="No Blood Bank found";
+    static String blba="No Blood Bank found",blba1,blba11;
     ListViewAdfrlist adapter;
     static String phon="",naam="";static String myLocation;
     static double mylocationa;
     static double myLocationb;int ch=0;
     static String bloodloc;
     static String hospname="",bbname="";
-static String ZIP;
-String hosp="";
+    static String ZIP;
+    String hosp="";
     static String bloodno="";
     String TAG = "taggg";
     static double lat=39.7,longi=-104;
-static String hospp="No Hospital Found";
-   static String latlong = "";//the realtime latitude longitude parameter
+    static String hospp="No Hospital Found",hospp1,hospp11;
+    static String latlong = "";//the realtime latitude longitude parameter
     private final static String API_KEY = "AIzaSyClHbZ-x92EYceOWKDSgT0NPZEBBEa_wnU";
     private final static String API_KEY1 = "AIzaSyCGZpTkUUlIYjYuJNOZMJKA6Ar4d7fE7Dc";
     double eleva = 0;
     static String latitude="28.620660,77.08127";
-   static double diffelevation = 0;
+    static double diffelevation = 0;
     File image = null;
 
     private GoogleApiClient mGoogleApiClient;
@@ -128,18 +140,18 @@ static String hospp="No Hospital Found";
     String mCurrentPhotoPath;
     private Sensor senAccelerometer;
     private SensorManager senSensorManager;
-float lastx=0,lasty=0,lastz=0;
+    float lastx=0,lasty=0,lastz=0;
     long lastupdate = System.currentTimeMillis();
-static String emergencyno="";
-static String flood="0";
-
+    static String emergencyno="";
+    static String flood="0";
+ListView l;
 
 
     private SensorManager mSensorManager;
     private Sensor TemperatureSensor;
     private String API_KEYpin="AIzaSyBCy3Ghs09Bk0YULL2SmI-F5yXTJ6KJCWg";
     File photoFile = null;
-  String responseddd;
+    String responseddd;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,108 +166,23 @@ static String flood="0";
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         senSensorManager.registerListener(this, senAccelerometer , SensorManager.SENSOR_DELAY_NORMAL);
-         TemperatureSensor = senSensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
- senSensorManager.registerListener(this,
-                    TemperatureSensor,
-                    SensorManager.SENSOR_DELAY_NORMAL);
+        TemperatureSensor = senSensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+        senSensorManager.registerListener(this,
+                TemperatureSensor,
+                SensorManager.SENSOR_DELAY_NORMAL);
 
 
+stringArrayList=new ArrayList<>();
 
-
-
-        final ListView l=(ListView)findViewById(R.id.lv);
-TextView t=(TextView)findViewById(R.id.textView4);
-        stringArrayList=new ArrayList<>();
         stringArrayList1=new ArrayList<>();
 
 
-        SharedPreferences preferenceflood=getSharedPreferences("flood",MODE_PRIVATE);
-        flood=preferenceflood.getString("flood","0");
 
-SharedPreferences preference=getSharedPreferences("emergency",MODE_PRIVATE);
-        phon=preference.getString("mob","");
-         naam=preference.getString("nam","");
-        final FloatingActionButton fab11 = (FloatingActionButton) findViewById(R.id.floatingActionButton);
-if(naam!="") {
-    fab11.setVisibility(View.GONE);
-    String[] name=naam.split(",");
-    String[] no=phon.split(",");
-    for(int i=0;i<name.length;i++) {
-        stringArrayList.add(name[i]);
-        stringArrayList1.add(no[i]);
-    }
-
-    ListViewAdfrlist adapterj = new ListViewAdfrlist(MainActivity.this, stringArrayList, stringArrayList1);
-    l.setAdapter(adapterj);
-if(adapterj.isEmpty())
-    t.setVisibility(View.GONE);
-    else
-    t.setVisibility(View.VISIBLE);
-}
-l.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-    @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-
-        LayoutInflater inflater = getLayoutInflater();
-        View alertLayout = inflater.inflate(R.layout.layoutdelete, null);
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-
-        // this is set the view from XML inside AlertDialog
-        alert.setView(alertLayout);
-        // disallow cancel of AlertDialog on click of back button and outside touch
-        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-String n=stringArrayList.get(position);
-                String p=stringArrayList1.get(position);
-stringArrayList.remove(position);
-                stringArrayList1.remove(position);
-
-                ListViewAdfrlist adapterj = new ListViewAdfrlist(MainActivity.this, stringArrayList, stringArrayList1);
-                l.setAdapter(adapterj);
-                SharedPreferences.Editor editor=getSharedPreferences("emergency",MODE_PRIVATE).edit();
-                editor.putString("mob",phon.replace(p+",",""));
-                editor.putString("nam",naam.replace(n+",",""));
-                editor.apply();
-
-
-
-
-            }
-        });
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog dialog = alert.create();
-        dialog.show();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        return false;
-    }
-});
 
 // for adding a username and no at start only
-DatabaseFriend db = new DatabaseFriend(getApplicationContext());
+        DatabaseFriend db = new DatabaseFriend(getApplicationContext());
         List<Friends> contacts = db.getAllContacts();
-int c=0;
+        int c=0;
         for (Friends cn : contacts) {
             c++;
 
@@ -282,31 +209,9 @@ int c=0;
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Uri call=Uri.parse("tel:+911123093054");
-                Intent surf=new Intent(Intent.ACTION_DIAL,call);
-                startActivity(surf);
-
-          }
-        });
 
 
 
-
-        fab11.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-                startActivityForResult(intent, RESULT_PICK_CONTACT);
-
-
-
-            }
-        });
 
 
 
@@ -324,8 +229,6 @@ int c=0;
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        go11();
 
 
 
@@ -346,9 +249,349 @@ int c=0;
 
         String[] perms = { android.Manifest.permission.ACCESS_FINE_LOCATION,  };
         if(RC_LOCATION!=0)
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, Arrays.asList(perms))) {
-            new AppSettingsDialog.Builder(this).build().show();
+            if (EasyPermissions.somePermissionPermanentlyDenied(this, Arrays.asList(perms))) {
+                new AppSettingsDialog.Builder(this).build().show();
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        bmb = (BoomMenuButton) findViewById(R.id.bmb);
+        assert bmb != null;
+        bmb.setButtonEnum(ButtonEnum.TextOutsideCircle);
+        bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_6_3);
+        bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_6_3);
+        Log.e("ppp", ""+bmb.getPiecePlaceEnum().pieceNumber());
+
+        final Uri[] call = new Uri[1];
+        for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
+            TextOutsideCircleButton.Builder builder = new TextOutsideCircleButton.Builder()
+                    .listener(new OnBMClickListener() {
+                        @Override
+                        public void onBoomButtonClick(int index) {
+                            // When the boom-button corresponding this builder is clicked.
+                            if(index==0)
+                                call[0] =Uri.parse("tel:"+"102");
+                            else if (index==1)call[0] =Uri.parse("tel:"+"100");
+                            else if (index==2)call[0] =Uri.parse("tel:"+"101");
+                            else if (index==3)call[0] =Uri.parse("tel:"+"181");
+                            else if (index==4)call[0] =Uri.parse("tel:"+"108");
+                            else if (index==5) call[0] =Uri.parse("tel:"+"1098");
+
+                            Intent surf=new Intent(Intent.ACTION_DIAL, call[0]);
+                            startActivity(surf);
+
+                        }
+                    })
+
+                    .normalImageRes(BuilderManager.getImageResource())
+                    .normalText(BuilderManager.getImageText())
+                    .pieceColor(Color.WHITE).normalColor(Color.WHITE);
+
+
+            bmb.addBuilder(builder);
         }
+
+
+
+
+
+        mDemoSlider = (SliderLayout)findViewById(R.id.slider);
+
+
+
+        mViewPager = (ViewPager) findViewById(R.id.viewPager);
+
+
+
+        mCardAdapter = new CardPagerAdapter();
+        mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
+        mCardAdapter.addCardItem(new CardItem(R.string.title_2, R.string.text_2));
+        mCardAdapter.addCardItem(new CardItem(R.string.title_3, R.string.text_3));
+        mCardAdapter.addCardItem(new CardItem(R.string.title_4, R.string.text_4));
+        mCardAdapter.addCardItem(new CardItem(R.string.title_5, R.string.text_5));
+        mCardAdapter.addCardItem(new CardItem(R.string.title_6, R.string.text_6));
+        mCardAdapter.addCardItem(new CardItem(R.string.title_7, R.string.text_7));
+        mCardAdapter.addCardItem(new CardItem(R.string.title_8, R.string.text_8));
+        mCardAdapter.addCardItem(new CardItem(R.string.title_9, R.string.text_9));
+
+        Log.e( "clclclclcl", String.valueOf(mViewPager.getCurrentItem()));
+        mViewPager.setClickable(true);
+
+
+        Log.e("clcl", String.valueOf(mViewPager.hasOnClickListeners()));
+        mViewPager.setAdapter(mCardAdapter);
+
+        mViewPager.setPageTransformer(false, mCardShadowTransformer);
+        mViewPager.setOffscreenPageLimit(3);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
+        file_maps.put("Safety Tips: Earthquake",R.mipmap.earthquake);
+        file_maps.put("Safety Tips: Flood",R.mipmap.flood);
+        file_maps.put("Safety Tips: Accidents",R.drawable.acc);
+        file_maps.put("Safety Tips: Fire", R.drawable.fire);
+
+        for(String name : file_maps.keySet()){
+            TextSliderView textSliderView = new TextSliderView(this);
+            // initialize a SliderLayout
+            textSliderView
+                    .description(name)
+                    .image(file_maps.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(this);
+
+            //add your extra information
+            textSliderView.bundle(new Bundle());
+            textSliderView.getBundle()
+                    .putString("extra",name);
+
+            mDemoSlider.addSlider(textSliderView);
+        }
+        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+        mDemoSlider.setDuration(4000);
+        mDemoSlider.addOnPageChangeListener(this);
+
+
+        ImageView ho=(ImageView)findViewById(R.id.ho);
+        ImageView bb=(ImageView)findViewById(R.id.bb);
+        ImageView ps=(ImageView)findViewById(R.id.ps);
+        ho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(MainActivity.this,MainhospActivity.class);
+                startActivity(i);
+            }
+        });
+        bb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(MainActivity.this,MainbbActivity.class);
+                startActivity(i);
+            }
+        });
+        ps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(MainActivity.this,MainppActivity.class);
+                startActivity(i);
+            }
+        });
+
+
+        ImageView comp=(ImageView)findViewById(R.id.hoo);
+        ImageView bea=(ImageView)findViewById(R.id.bob);
+        ImageView img=(ImageView)findViewById(R.id.poss);
+        ImageView emer=(ImageView)findViewById(R.id.pos);
+
+        comp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(MainActivity.this,ProblemActivity.class);
+                startActivity(i);
+            }
+        });
+
+        bea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(MainActivity.this,MonitoringActivity.class);
+                startActivity(i);
+            }
+        });
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        emer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+stringArrayList=new ArrayList<>();
+stringArrayList1=new ArrayList<>();
+                LayoutInflater inflater = getLayoutInflater();
+                View alertLayout = inflater.inflate(R.layout.layoutemergency, null);
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+
+                // this is set the view from XML inside AlertDialog
+                alert.setView(alertLayout);
+                // disallow cancel of AlertDialog on click of back button and outside touch
+                alert.setTitle("Emergency Contacts ");
+                alert.setIcon(R.drawable.ic_contacts_black_24dp);
+                l=alertLayout.findViewById(R.id.listname);
+                FloatingTextButton fab11=alertLayout.findViewById(R.id.floatingActionButton);
+
+                fab11.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+                        startActivityForResult(intent, RESULT_PICK_CONTACT);
+
+
+
+
+                    }
+                });
+
+
+                SharedPreferences preferenceflood=getSharedPreferences("flood",MODE_PRIVATE);
+                flood=preferenceflood.getString("flood","0");
+
+                SharedPreferences preference=getSharedPreferences("emergency",MODE_PRIVATE);
+                phon=preference.getString("mob","");
+                naam=preference.getString("nam","");
+                 if(naam!="") {
+
+                    String[] name=naam.split(",");
+                    String[] no=phon.split(",");
+                    for(int i=0;i<name.length;i++) {
+                        stringArrayList.add(name[i]);
+                        stringArrayList1.add(no[i]);
+                    }
+
+
+
+
+                    ListViewAdfrlist adapterj = new ListViewAdfrlist(MainActivity.this, stringArrayList, stringArrayList1);
+                    l.setAdapter(adapterj);
+
+                }
+                else {
+
+                 }
+                l.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                        LayoutInflater inflater = getLayoutInflater();
+                        View alertLayout = inflater.inflate(R.layout.layoutdelete, null);
+
+                        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+
+                        // this is set the view from XML inside AlertDialog
+                        alert.setView(alertLayout);
+                        // disallow cancel of AlertDialog on click of back button and outside touch
+                        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String n=stringArrayList.get(position);
+                                String p=stringArrayList1.get(position);
+                                stringArrayList.remove(position);
+                                stringArrayList1.remove(position);
+
+                                ListViewAdfrlist adapterj = new ListViewAdfrlist(MainActivity.this, stringArrayList, stringArrayList1);
+                                l.setAdapter(adapterj);
+                                SharedPreferences.Editor editor=getSharedPreferences("emergency",MODE_PRIVATE).edit();
+                                editor.putString("mob",phon.replace(p+",",""));
+                                editor.putString("nam",naam.replace(n+",",""));
+                                editor.apply();
+
+
+
+
+                            }
+                        });
+                        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        AlertDialog dialog = alert.create();
+                        dialog.show();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        return false;
+                    }
+                });
+
+                alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                    }
+                });
+                AlertDialog dialog = alert.create();
+                dialog.show();
+
+
+
+
+
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -393,11 +636,11 @@ int c=0;
 
             goapii();
             goapipin();
-            go();
+
             startService();
             startLocationUpdates();
 
-            } else {
+        } else {
             Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
         }
     }
@@ -434,22 +677,20 @@ int c=0;
 
     protected void startLocationUpdates1() {
 
-                        mLocationRequest = LocationRequest.create()
-                                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                                .setInterval(100000)
-                                .setFastestInterval(10000);
-                        // Request location updates
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(100000)
+                .setFastestInterval(10000);
+        // Request location updates
 
-                        if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            // TODO: Consider calling
-                            //    ActivityCompat#requestPermissions
-                            // here to request the missing permissions, and then overriding
-                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                            //                                          int[] grantResults)
-                            // to handle the case where the user grants the permission. See the documentation
-                            // for ActivityCompat#requestPermissions for more details.
-
-
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
 
 
 
@@ -458,14 +699,16 @@ int c=0;
 
 
 
-                            return;
-                        }
-
-                        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, MainActivity.this);
-                        Log.d("reque", "--->>>>");
 
 
-                        finish();
+            return;
+        }
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, MainActivity.this);
+        Log.d("reque", "--->>>>");
+
+
+        finish();
 
 
 
@@ -567,102 +810,51 @@ int c=0;
 
 
 
- {
+        {
 
 
-     mLocationRequest = LocationRequest.create()
-             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-             .setInterval(1000)
-             .setFastestInterval(1000);
-     // Request location updates
+            mLocationRequest = LocationRequest.create()
+                    .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                    .setInterval(1000)
+                    .setFastestInterval(1000);
+            // Request location updates
 
-     if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-         // TODO: Consider calling
-         //    ActivityCompat#requestPermissions
-         // here to request the missing permissions, and then overriding
-         //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-         //                                          int[] grantResults)
-         // to handle the case where the user grants the permission. See the documentation
-         // for ActivityCompat#requestPermissions for more details.
-         return;
-     }
-     LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, MainActivity.this);
-     Log.d("reque", "--->>>>");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-
-
-     DatabaseReference myRef99 = database.getReference(myno);
-
-    DatabaseReference myref = myRef99.child("flood");
-
-    final String TAG = "qqqq";
-    myref.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            // This method is called once with the initial value and again
-            // whenever data at this location is updated.
-            String value = dataSnapshot.getValue(String.class);
-            Log.e(TAG, "Value is: " + value);
-            if(value.equals("0"))
-            {
-
-                flood = "0";
-                SharedPreferences.Editor editor=getSharedPreferences("flood",MODE_PRIVATE).edit();
-                editor.putString("flood","0");
-
-                editor.apply();
-
+            if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
             }
-            if (value.equals("1"))//earthquake in the area so update
-            {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, MainActivity.this);
+            Log.d("reque", "--->>>>");
 
-                flood = "1";
-                SharedPreferences.Editor editor=getSharedPreferences("flood",MODE_PRIVATE).edit();
-                editor.putString("flood","1");
 
-                editor.apply();
-                alertmyfriend();
-                finish();}
+if (flood.equals("1"))
+    alertmyfriend();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
         }
-
-        @Override
-        public void onCancelled(DatabaseError error) {
-            // Failed to read value
-            Log.w(TAG, "Failed to read value.", error.toException());
-        }
-    });
-
-
-
-
-}
 
 
 
@@ -670,7 +862,7 @@ int c=0;
         // Create the location request if person's last location is of disaster
 
     }
-// sends sms to emergency contacts automaticaaly with all the details of where the phone was last spotted
+    // sends sms to emergency contacts automaticaaly with all the details of where the phone was last spotted
     private void alertmyfriend() {
         Intent ij=new Intent(this,MainalertActivity.class);
         startActivity(ij);
@@ -700,6 +892,7 @@ int c=0;
 
     @Override
     public void onStop() {
+        mDemoSlider.stopAutoCycle();
         super.onStop();
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
@@ -711,7 +904,7 @@ int c=0;
         latlong=location.getLatitude()+","+location.getLongitude();
         lat=location.getLatitude();
         longi=location.getLongitude();
-        go();
+
 
     }
 
@@ -736,7 +929,7 @@ int c=0;
                 Log.v("speeed",speed+"" );
                 if (speed > 2000) {
 //TODO alert
-MainActivity.flood = "1";
+                    MainActivity.flood = "1";
                     SharedPreferences.Editor editor = getSharedPreferences("flood", MODE_PRIVATE).edit();
                     editor.putString("flood", "1");
                     editor.apply();
@@ -756,9 +949,9 @@ MainActivity.flood = "1";
         if(sensorEvent.sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE){
             Log.e("temp",sensorEvent.values[0]+"");
             if (sensorEvent.values[0]>50){ MainActivity.flood = "1";
-            SharedPreferences.Editor editor = getSharedPreferences("flood", MODE_PRIVATE).edit();
-            editor.putString("flood", "1");
-            editor.apply();}
+                SharedPreferences.Editor editor = getSharedPreferences("flood", MODE_PRIVATE).edit();
+                editor.putString("flood", "1");
+                editor.apply();}
         }
 
 
@@ -774,7 +967,7 @@ MainActivity.flood = "1";
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-Log.e("accuracyyy",""+accuracy);
+        Log.e("accuracyyy",""+accuracy);
     }
 
 
@@ -883,7 +1076,7 @@ Log.e("accuracyyy",""+accuracy);
                     Log.e("lat",elv);
                     Log.e("longi",elv1);
 
-                   String latlongnew=elv+","+elv1;
+                    String latlongnew=elv+","+elv1;
                     ApiInterface apiService =
                             ApiClient.getClient().create(ApiInterface.class);
 //TODO
@@ -1014,7 +1207,7 @@ Log.e("accuracyyy",""+accuracy);
             return;
         }
         Log.e(TAG, "whyy");
-ApiInterface1 apiService1 =
+        ApiInterface1 apiService1 =
                 ApiClient.getClient1().create(ApiInterface1.class);
 //TODO
         Call call1 = apiService1.getall(latlong, API_KEY1);
@@ -1045,33 +1238,33 @@ ApiInterface1 apiService1 =
     }
 
 
-void goapibloodbank()
-{
-    ApiInterfaceblood apiService = ApiClientblood.getClient().create(ApiInterfaceblood.class);
+    void goapibloodbank()
+    {
+        ApiInterfaceblood apiService = ApiClientblood.getClient().create(ApiInterfaceblood.class);
 //TODO
-    Call call = apiService.getall();
-    call.enqueue(new Callback() {
-        @Override
-        public void onResponse(Call call, Response response) {
-            Log.e(TAG, "success");
-            Log.e(TAG, response.raw().request().url().toString());
-            String url = response.raw().request().url().toString();
-            Log.e("blll", url);
-            BloodB mytask = new BloodB();
-            mytask.execute(url);
+        Call call = apiService.getall();
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Log.e(TAG, "success");
+                Log.e(TAG, response.raw().request().url().toString());
+                String url = response.raw().request().url().toString();
+                Log.e("blll", url);
+                BloodB mytask = new BloodB();
+                mytask.execute(url);
 
 
-        }
+            }
 
-        @Override
-        public void onFailure(Call call, Throwable t) {
-            Log.e(TAG, "failureee");
-        }
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.e(TAG, "failureee");
+            }
 
 
-    });
+        });
 
-}
+    }
 
     private class BloodB extends AsyncTask<String, Void, Integer> {
 
@@ -1165,20 +1358,22 @@ void goapibloodbank()
 
                     String response = convertInputStreamToString(inputStream);
 
-Log.e("ZIPzz",ZIP);
+                    Log.e("ZIPzz",ZIP);
 
                     // now process the string using the method that we implemented in the previous exercise
-               String[] res=response.split("],");
+                    String[] res=response.split("],");
                     for(int i=1;i<res.length;i++)
                     {String[] r=res[i].split(",\"");
-                       Log.e("bllll",r[6].replace("\"",""));
+                        Log.e("bllll",r[6].replace("\"",""));
                         if(r[6].replace("\"","").equals(ZIP)) {
                             Log.e("bllloodbank", res[i]);
                             bloodno=r[7].replace("\"","");
                             bloodloc=r[r.length-2].replace("\"","")+","+r[r.length-1].replace("\"","");
                             Log.e("bblloocc",bloodloc);
                             bbname=r[1].replace("\"","");
-blba="Blood Bank Name : "+r[1].replace("\"","")+"\n\nAddress Details : "+r[5].replace("\"","")+"\n\nEmergency no. : "+r[7].replace("\"","");
+                            blba=""+r[1].replace("\"","");
+                            blba1=""+r[5].replace("\"","");
+                            blba11=""+r[7].replace("\"","");
                         }
                     }
 
@@ -1400,20 +1595,20 @@ blba="Blood Bank Name : "+r[1].replace("\"","")+"\n\nAddress Details : "+r[5].re
 
                     String ele = (obj.getJSONArray("results")).toString();
                     JSONObject obj1=new JSONObject(ele.replaceFirst("\\[",""));
-String eee=obj1.getJSONArray("address_components").toString();
+                    String eee=obj1.getJSONArray("address_components").toString();
                     Log.e("resppp",eee);
                     JSONArray arr=obj1.getJSONArray("address_components");
-                  for(int i=0;i<arr.length();i++){
-                      if(arr.getString(i).contains("postal_code"))
-                     Log.e("respppp", arr.getString(i));
-                      JSONObject obj11=new JSONObject(arr.getString(i));
-                      Log.e("resppppp", obj11.getString("long_name"));
-                      ZIP=obj11.getString("long_name");
-                      goapiihospital();
-                      goapibloodbank();
+                    for(int i=0;i<arr.length();i++){
+                        if(arr.getString(i).contains("postal_code"))
+                            Log.e("respppp", arr.getString(i));
+                        JSONObject obj11=new JSONObject(arr.getString(i));
+                        Log.e("resppppp", obj11.getString("long_name"));
+                        ZIP=obj11.getString("long_name");
+                        goapiihospital();
+                        goapibloodbank();
 
 
-                  }
+                    }
 
 
                     result = 1; // Successful
@@ -1512,7 +1707,7 @@ String eee=obj1.getJSONArray("address_components").toString();
                 Log.e(TAG, "success");
                 Log.e(TAG, response.raw().request().url().toString());
                 String url = response.raw().request().url().toString();
-               Hospitalprocessor mytask = new Hospitalprocessor();
+                Hospitalprocessor mytask = new Hospitalprocessor();
                 mytask.execute(url);
 
 
@@ -1625,25 +1820,27 @@ String eee=obj1.getJSONArray("address_components").toString();
 
 
                     // now process the string using the method that we implemented in the previous exercise
-    JSONObject obj=new JSONObject(response);
+                    JSONObject obj=new JSONObject(response);
 //may be said illogical but looking for faster implementation so not made jsonarrays and objects
-                   String data=obj.getString("data");
+                    String data=obj.getString("data");
                     String[] dataa=data.split("\\[");
-                 for(int i=3;i<1050;i++) {
-                     Log.e("respon", dataa[i]);
-                     String[] pin = dataa[i].split("\"");
-                     String[] pinloc = dataa[i].split(",\"");
-                     Log.e("responzzzz", pin[16]);
-                     if(pin[16].replace(",","").equals(ZIP)) {
-                         Log.e("emergencyno", dataa[i]);
-                         Log.e("emergencynooo",pin[17]);
-                         emergencyno=pin[17];
-                         hosp=pin[1];
-                         Log.e("emergencyname",pin[1]);
-                         hospname=pin[1].replace("\"","");
-                         hospp="Hospital Name : "+pin[1].replace("\"","")+"\n\nAddress details : "+pin[9].replace("\"","")+"\n\n Emergency no. : "+emergencyno+"\n";
-                     }
-                 }                        result = 1; // Successful
+                    for(int i=3;i<1050;i++) {
+                        Log.e("respon", dataa[i]);
+                        String[] pin = dataa[i].split("\"");
+                        String[] pinloc = dataa[i].split(",\"");
+                        Log.e("responzzzz", pin[16]);
+                        if(pin[16].replace(",","").equals(ZIP)) {
+                            Log.e("emergencyno", dataa[i]);
+                            Log.e("emergencynooo",pin[17]);
+                            emergencyno=pin[17];
+                            hosp=pin[1];
+                            Log.e("emergencyname",pin[1]);
+                            hospname=pin[1].replace("\"","");
+                            hospp=""+pin[1].replace("\"","");
+                            hospp1=""+pin[9].replace("\"","");
+                            hospp11=""+emergencyno;
+                        }
+                    }                        result = 1; // Successful
 
                 } else {
 
@@ -1865,8 +2062,8 @@ String eee=obj1.getJSONArray("address_components").toString();
 
                         //the condition to check if the person is inside the house during earthquake
 
-              if(diffelevation>2)
-                  Log.e("Alert","you are at risk");
+                        if(diffelevation>2)
+                            Log.e("Alert","you are at risk");
 
                         result = 1; // Successful
                     }
@@ -1938,75 +2135,7 @@ String eee=obj1.getJSONArray("address_components").toString();
 
 
 
-    void go(){
 
-
-
-
-
-        DatabaseFriend db = new DatabaseFriend(getApplicationContext());
-        List<Friends> contacts = db.getAllContacts();
-String username="",name="",myno="98";
-        for (Friends cn : contacts) {
-            if(!(cn.getName().equals("")))
-            {
-
-                username=cn.getName();
-                name=cn.getNameD();
-                myno=cn.getNameDD();
-                Log.e("numbermy",myno);
-            }
-
-        }
-
-
-
-
-
-
-
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-
-
-        DatabaseReference myRef99 = database.getReference(myno);
-
-
-        myRef99.child("gps").setValue(latlong+"");
-
-
-        myRef99.child("user").setValue(username);
-
-        myRef99.child("myno").setValue(myno);
-
-        myRef99.child("friendno").setValue(MainActivity.phon);
-        SharedPreferences preferenceflood=getSharedPreferences("flood",MODE_PRIVATE);
-        flood=preferenceflood.getString("flood","0");
-        myRef99.child("flood").setValue(flood);
-        myRef99.child("elevation").setValue(diffelevation);
-
-        final String TAG="qqqq";
-        myRef99.child("gps").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-
-
-
-
-    }
 
 
 
@@ -2036,10 +2165,10 @@ String username="",name="",myno="98";
         retrofit2.Call<ResponseBody> getall(@Query("api_key") String code,
                                             @Query("api_secret") String monthact,
                                             // @Query("image_file") File file,
-                                           @Field("image_file") File imageFile,
+                                            @Field("image_file") File imageFile,
 
-                                        //   @Query("image_file") File file,
-                                         //   @Query("image_url") String url,
+                                            //   @Query("image_file") File file,
+                                            //   @Query("image_url") String url,
                                             @Query("faceset_token") String faceset
         );
 
@@ -2374,85 +2503,15 @@ String username="",name="",myno="98";
 
 
 
-    private void go11() {
-        ImageView img2=(ImageView)findViewById(R.id.imageView) ;
-
-        ImageView img1=(ImageView)findViewById(R.id.imageView3) ;
-        FirebaseApp.initializeApp(this);
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference  riversRef = mStorageRef.child("earthquake.jpg");
-
-
-        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
-
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        Glide.with(this)
-                .using(new FirebaseImageLoader())
-                .load(riversRef)
-                .into(img1);
-
-        StorageReference  riversRef1 = mStorageRef.child("flood.jpg");
-        riversRef1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-  }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
-
-
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        Glide.with(this)
-                .using(new FirebaseImageLoader())
-                .load(riversRef1)
-                .into(img2);
-
-        img1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(MainActivity.this,MainvvvvActivity.class);
-                startActivity(i);
-
-
-            }
-        });
-
-        img2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(MainActivity.this,Main4Activity.class);
-                startActivity(i);
-
-
-            }
-        });
 
 
 
+    public void pickContact(View v)
+    {
+        Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+        startActivityForResult(contactPickerIntent, RESULT_PICK_CONTACT);
     }
-
-
-        public void pickContact(View v)
-{
-Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
-ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-startActivityForResult(contactPickerIntent, RESULT_PICK_CONTACT);
-}
     @Override
     public void onBackPressed(){
         Intent a = new Intent(Intent.ACTION_MAIN);
@@ -2547,7 +2606,7 @@ startActivityForResult(contactPickerIntent, RESULT_PICK_CONTACT);
             editor.putString("flood","1");
 
             editor.apply();
-Toast.makeText(getApplicationContext(),"It is a fake test of how app works during any mishap",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"It is a fake test of how app works during any mishap",Toast.LENGTH_LONG).show();
 
         }
         else if (id==R.id.dead)
@@ -2639,7 +2698,7 @@ Toast.makeText(getApplicationContext(),"It is a fake test of how app works durin
                         "com.jskgmail.android.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-            startActivityForResult(takePictureIntent, 1);
+                startActivityForResult(takePictureIntent, 1);
                 goapidead();
             }
 
@@ -2650,7 +2709,7 @@ Toast.makeText(getApplicationContext(),"It is a fake test of how app works durin
 
 
     private void contactPicked(Intent data) {
-        ListView l=(ListView)findViewById(R.id.lv);
+
         Cursor cursor = null;
         try {
             String phoneNo = null ;
@@ -2668,24 +2727,22 @@ Toast.makeText(getApplicationContext(),"It is a fake test of how app works durin
             name = cursor.getString(nameIndex);
             Log.d("name",name);
             Log.d("phno",phoneNo);
-naam=naam+name+",";
-phon=phon+phoneNo+",";
+            naam=naam+name+",";
+            phon=phon+phoneNo+",";
             SharedPreferences.Editor editor=getSharedPreferences("emergency",MODE_PRIVATE).edit();
             editor.putString("mob",phon);
             editor.putString("nam",naam);
             editor.apply();
             stringArrayList.add(name);
             stringArrayList1.add(phoneNo);
-            FloatingActionButton fab11=(FloatingActionButton)findViewById(R.id.floatingActionButton);
-            fab11.setVisibility(View.GONE);
-            TextView t=(TextView)findViewById(R.id.textView4);
 
-                t.setVisibility(View.VISIBLE);
+
+
 
             adapter=new ListViewAdfrlist(MainActivity.this,stringArrayList,stringArrayList1);
             l.setAdapter(adapter);
 // Set the value to the textviews
- } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -2709,7 +2766,7 @@ phon=phon+phoneNo+",";
 
 
         ApiInterfacedead apiService1 = ApiClientdead.getClient().create(ApiInterfacedead.class);
-       //TODO
+        //TODO
 
         Call call  = apiService1.getall("8eXIfwPbVhLUXV4xt9eW2xRSxWt74Fki","9xyBX7iWUUWu4msZbaAm6_XTRN9OiT5b",image,"537c2b49a9a160655b9a3c707555af4b");
 
@@ -2834,7 +2891,7 @@ phon=phon+phoneNo+",";
                     responseddd = convertInputStreamToString(inputStream);
 
 
-Log.e("ddddddddddd",responseddd);
+                    Log.e("ddddddddddd",responseddd);
 
 
 
@@ -2961,6 +3018,71 @@ Log.e("ddddddddddd",responseddd);
 
 
     }
+    public static float dpToPixels(int dp, Context context) {
+        return dp * (context.getResources().getDisplayMetrics().density);
+    }
+
+
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+        if(slider.getBundle().get("extra").equals("Safety Tips: Earthquake"))
+        { Intent i=new Intent(MainActivity.this,Main3Activity.class);
+            startActivity(i);}
+        else     if(slider.getBundle().get("extra").equals("Safety Tips: Flood"))
+        { Intent i=new Intent(MainActivity.this,Main4Activity.class);
+            startActivity(i);}
+        else     if(slider.getBundle().get("extra").equals("Safety Tips: Fire"))
+        { Intent i=new Intent(this,Main5Activity.class);
+            startActivity(i);}
+        else     if(slider.getBundle().get("extra").equals("Safety Tips: Accidents"))
+        {  String videoId = "XpECMpNCtRE";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:"+videoId));
+            intent.putExtra("VIDEO_ID", videoId);
+            startActivity(intent);}
+        Toast.makeText(this,slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
+    }
+
+
+
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+    @Override
+    public void onPageSelected(int position) {
+
+
+        Log.d("Slider Demo", "Page Changed: " + position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

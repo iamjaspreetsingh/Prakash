@@ -1,13 +1,16 @@
 package com.jskgmail.lifesaver;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -213,6 +216,34 @@ Log.e("ppp", ""+bmb.getPiecePlaceEnum().pieceNumber());
         emer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                LayoutInflater inflater = getLayoutInflater();
+                View alertLayout = inflater.inflate(R.layout.layoutemergency, null);
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(Main99Activity.this);
+
+                // this is set the view from XML inside AlertDialog
+                alert.setView(alertLayout);
+                // disallow cancel of AlertDialog on click of back button and outside touch
+                alert.setTitle("Emergency Contacts ");
+                alert.setIcon(R.drawable.ic_contacts_black_24dp);
+
+                alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                    }
+                });
+                AlertDialog dialog = alert.create();
+                dialog.show();
+
+
+
+
+
 
             }
         });
