@@ -211,16 +211,5 @@
         app:floating_title="Directions"
         app:floating_title_color="@android:color/holo_red_dark" />
 
-    <TextView
-        android:id="@+id/ll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rotateloading"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="6dp"
-        android:elevation="20dp"
-        android:text="Finding Nearest Hospital...."
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
-        android:textSize="16sp" />
+
 </RelativeLayout>

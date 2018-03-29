@@ -40,14 +40,14 @@ String TAG="HOSPt";
 
         FloatingTextButton call=findViewById(R.id.fab);
         FloatingTextButton dirl=findViewById(R.id.fab1);
-        TextView l=(TextView)findViewById(R.id.ll);
+
         while ( MainActivity.hospp.equals("No Hospital Found")) {
             if (MainActivity.hospp.equals("No Hospital Found")) {
                 rotateLoading.start();
-                l.setVisibility(View.VISIBLE);
+
             } else {
                 rotateLoading.stop();
-                l.setVisibility(View.GONE);
+
                 break;
             }
         }

@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.view.View;
 import android.widget.TextView;
 
+import com.jetradar.desertplaceholder.DesertPlaceholder;
 import com.jskgmail.lifesaver.R;
 
 import org.altbeacon.beacon.Beacon;
@@ -23,11 +25,21 @@ public class RangingActivity extends Activity implements BeaconConsumer {
     private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
     MediaPlayer alert;
     float last=0;
+    DesertPlaceholder desertPlaceholder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranging);
 
+         desertPlaceholder= (DesertPlaceholder) findViewById(R.id.placeholder);
+        desertPlaceholder.setOnButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do stuff
+
+            }
+        });
+desertPlaceholder.setVisibility(View.VISIBLE);
         Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(turnOn, 0);
 
@@ -35,7 +47,7 @@ public class RangingActivity extends Activity implements BeaconConsumer {
 
 
         beaconManager.bind(this);
-        logToDisplay("No Beacons found nearby.....");
+
 
     }
 
@@ -117,6 +129,9 @@ logToDisplayd(firstBeacon.getDistance());
                 last=(float)line;
             }
         });
+
+
+        desertPlaceholder.setVisibility(View.GONE);
     }
 
 }

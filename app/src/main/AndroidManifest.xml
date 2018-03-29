@@ -136,14 +136,12 @@
         <activity android:name=".beaconreference.BeaconTransmitterActivity" />
         <activity android:name=".ProblemActivity">
             <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.jskgmail.lifesaver.MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jskgmail.lifesaver.MainActivity" />
         </activity>
-
         <activity android:name=".Main99Activity" />
         <activity android:name=".MainppActivity" />
         <activity android:name=".Main5Activity" />
-
     </application>
 
 </manifest>

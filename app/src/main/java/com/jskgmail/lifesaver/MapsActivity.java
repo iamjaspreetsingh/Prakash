@@ -16,37 +16,31 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.victor.loading.rotate.RotateLoading;
+
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
   private GoogleMap mMap;
   String TAG="MAPSREPORT";
+    private ArrayList<String> GPS;
+    private ArrayList<String> PROB;
+    private ArrayList<String> DESC;
+    private RotateLoading rotateLoading;
+  int pos=0;
   @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+       rotateLoading=findViewById(R.id.rotateloading);
+       rotateLoading.setLoadingColor(R.color.colorPrimary);
+
+      rotateLoading.start();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-      FirebaseDatabase database = FirebaseDatabase.getInstance();
-      DatabaseReference myRef = database.getReference("PROBLEMS");
 
-      // Read from the database
-      myRef.addValueEventListener(new ValueEventListener() {
-          @Override
-          public void onDataChange(DataSnapshot dataSnapshot) {
-              // This method is called once with the initial value and again
-              // whenever data at this location is updated.
-              String value = dataSnapshot.getValue(String.class);
-              Log.d(TAG, "Value is: " + value);
-          }
-
-          @Override
-          public void onCancelled(DatabaseError error) {
-              // Failed to read value
-              Log.w(TAG, "Failed to read value.", error.toException());
-          }
-      });
     }
 
 
@@ -64,15 +58,73 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
 
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("PROBLEMS");
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GPS=new ArrayList<>();
+                PROB=new ArrayList<>();
+                DESC=new ArrayList<>();
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren())
+                {  for (DataSnapshot dataSnapshot2:dataSnapshot1.getChildren())
+                {if (dataSnapshot2.getKey().equals("GPS")) {
+                    Log.e("GPSSSSSSS", String.valueOf(dataSnapshot2.getValue()));
+                    GPS.add(String.valueOf(dataSnapshot2.getValue()));
+
+
+                }
+                    if (dataSnapshot2.getKey().equals("Prob")) {
+                        Log.e("GPSSSSSSS", String.valueOf(dataSnapshot2.getValue()));
+                        PROB.add(String.valueOf(dataSnapshot2.getValue()));
+
+
+                    }
+                    if (dataSnapshot2.getKey().equals("Description")) {
+                        Log.e("GPSSSSSSS", String.valueOf(dataSnapshot2.getValue()));
+                        DESC.add(String.valueOf(dataSnapshot2.getValue()));
+
+
+                    }
+                }
+
+                }
+                for (int i=0;i<GPS.size();i++)
+                {  String latlong[]=GPS.get(i).split(",");
+                    double lat= Double.parseDouble(latlong[0]);
+                    double longi= Double.parseDouble(latlong[1]);
+                    LatLng sydney = new LatLng(lat,longi);
+
+                    mMap.addMarker(new MarkerOptions().position(sydney).title(PROB.get(i)).snippet(DESC.get(i)).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+                }
+                rotateLoading.stop();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+
+
+
+
+
+
         // Add a marker in Sydney and move the camera
 Log.e("zzzz"+MainActivity.mylocationa, ""+MainActivity.myLocationb);
-        LatLng sydney = new LatLng(MainActivity.lat,MainActivity.longi);
-        LatLng sydney1 = new LatLng(MainActivity.lat-1,MainActivity.longi+1);
+        LatLng sydney1 = new LatLng(MainActivity.lat,MainActivity.longi);
 
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker at your location").snippet("Population: 4,627,300").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
-        mMap.addMarker(new MarkerOptions().position(sydney1).title("Marker at your location").snippet("Population: 4,627,300").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,12));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney1,12));
 
 
           }

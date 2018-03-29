@@ -18,6 +18,7 @@ package com.jskgmail.lifesaver;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -47,7 +48,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
         View.OnClickListener {
 
     private static final String TAG = "EmailPassword";
-
+static Uri mypicc;
     private EditText mEmailField;
     private EditText mPasswordField;
 
@@ -86,12 +87,12 @@ private RotateLoading rotateLoading;
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
-        SharedPreferences.Editor editor= getSharedPreferences("keys",MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor= getSharedPreferences("acckeys",MODE_PRIVATE).edit();
         editor.putString("public","public");
 
         editor.apply();
 
-        SharedPreferences prefs = getSharedPreferences("keys",MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
         String restoredText = prefs.getString("public", null);
 
         SignInButton google_Btn = (SignInButton) findViewById(R.id.googleBtn);
@@ -103,7 +104,6 @@ private RotateLoading rotateLoading;
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-
                     startActivity(new Intent(EmailPasswordActivity.this, MainActivity.class));
                 }
             }
@@ -264,6 +264,16 @@ sout=0;
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
+                SharedPreferences.Editor editor= getSharedPreferences("acckeys",MODE_PRIVATE).edit();
+                editor.putString("username",""+account.getGivenName());
+                 mypicc=account.getPhotoUrl();
+                 editor.putString("uri",mypicc.toString());
+                editor.putString("uid",""+account.getId());
+                editor.putString("email",""+account.getEmail());
+                editor.apply();
+                Log.e("usernameeeeeeggg", String.valueOf(""+account.getId()));
+
+
             } else {
                 Toast.makeText(EmailPasswordActivity.this, "Sign In Error", Toast.LENGTH_LONG).show();
             }
@@ -283,6 +293,7 @@ sout=0;
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             rotateLoading.stop();
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithCredential:success");
 //                            FirebaseUser user = mAuth.getCurrentUser();
@@ -380,6 +391,12 @@ sout=0;
         if (user != null) {
             Intent i=new Intent(EmailPasswordActivity.this,MainActivity.class);
             startActivity(i);
+            SharedPreferences.Editor editor= getSharedPreferences("acckeys",MODE_PRIVATE).edit();
+            editor.putString("username",""+user.getDisplayName());
+            editor.putString("uid",""+user.getUid());
+            editor.putString("email",""+user.getEmail());
+            editor.apply();
+            Log.e("usernameeeeee", user.getUid());
             findViewById(R.id.email_password_buttons).setVisibility(View.GONE);
             findViewById(R.id.email_password_fields).setVisibility(View.GONE);
             findViewById(R.id.signed_in_buttons).setVisibility(View.VISIBLE);

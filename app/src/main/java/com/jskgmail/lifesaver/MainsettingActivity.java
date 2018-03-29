@@ -1,26 +1,37 @@
 package com.jskgmail.lifesaver;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainsettingActivity extends AppCompatActivity {
     static String username="unknown",myno="087987879879",name="unknown";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +43,70 @@ public class MainsettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mainsetting);
         actionBar.setDisplayShowHomeEnabled(true);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        final ImageView imgProfilePicture=findViewById(R.id.imageView3);
+        SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
+String imgstring=prefs.getString("uri", "");
+
+        Uri mypic=Uri.parse(imgstring);
+        Glide.with(getApplicationContext()).load(mypic).asBitmap()
+                .error(R.drawable.ic_person_outline_black_24dp)
+                .into(new BitmapImageViewTarget(imgProfilePicture) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(getApplicationContext().getResources(),
+                                Bitmap.createScaledBitmap(resource, 50, 50, false));
+                        drawable.setCircular(true);
+                        imgProfilePicture.setImageDrawable(drawable);
+                    }
+                });
+        final String username = prefs.getString("username", "");
+        String email = prefs.getString("email", "");
+
+        final TextView nam=findViewById(R.id.textView2);
+        TextView id=findViewById(R.id.textView4);
+        nam.setText(username);
+        id.setText(email);
+        ImageView edit=findViewById(R.id.edit);
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                LayoutInflater inflater = getLayoutInflater();
+                View alertLayout = inflater.inflate(R.layout.layoutchange, null);
+                final EditText namee=(EditText)alertLayout.findViewById(R.id.editText);
+namee.setText(username);
+                AlertDialog.Builder alert = new AlertDialog.Builder(MainsettingActivity.this);
+
+                // this is set the view from XML inside AlertDialog
+                alert.setView(alertLayout);
+                // disallow cancel of AlertDialog on click of back button and outside touch
+                alert.setTitle("My Account ");
+                alert.setIcon(R.drawable.ic_person_outline_black_24dp);
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                alert.setPositiveButton("Set", new DialogInterface.OnClickListener() {
 
 
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences.Editor editor= getSharedPreferences("acckeys",MODE_PRIVATE).edit();
+                        editor.putString("username",""+namee.getText().toString());
+                        editor.apply();
+                        nam.setText(namee.getText().toString());
+
+
+                    }
+                });
+                AlertDialog dialog = alert.create();
+                dialog.show();
+
+            }
+        });
         Button signout=(Button)findViewById(R.id.signout);
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,55 +229,13 @@ Button but=(Button)findViewById(R.id.but);
 
 
 
-        final EditText user=(EditText)findViewById(R.id.user);
-        Button don=(Button)findViewById(R.id.don);
-       final EditText no=(EditText)findViewById(R.id.no);
-        final EditText name1=(EditText)findViewById(R.id.editText);
-        DatabaseFriend db = new DatabaseFriend(getApplicationContext());
-        List<Friends> contacts = db.getAllContacts();
-
-        for (Friends cn : contacts) {
-           if(!(cn.getName().equals("")))
-           {
-               user.setText(cn.getName());
-name1.setText(cn.getNameD());
-               no.setText(cn.getNameDD());
-               username=cn.getName();
-               name=cn.getNameD();
-               myno=cn.getNameDD();
-           }
-
-        }
 
 
 
 
 
-        don.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                username=user.getText().toString();
-                myno=no.getText().toString();
-                name=name1.getText().toString();
-                DatabaseFriend db = new DatabaseFriend(getApplicationContext());
-
-                List<Friends> contacts = db.getAllContacts();
-
-                for (Friends cn : contacts) {
-                    if(!(cn.getName().equals("")))
-                    db.deleteContact(cn);
-                }
 
 
-                db.addContact(new Friends(username,name1.getText().toString(),myno));
-
-
-
-
-finish();
-            }
-        });
 
 
 

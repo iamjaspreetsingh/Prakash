@@ -18,8 +18,9 @@
 
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textView40"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="18dp"
+            android:paddingStart="2dp"
             android:text="What's the problem * :"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
@@ -154,24 +155,29 @@
 
         <TextView
             android:id="@+id/textView40"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/textView29"
-            android:layout_marginTop="14dp"
+            android:layout_below="@+id/compmy"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
             android:text="Complaint Registration Desk"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="17sp" />
 
-        <TextView
-            android:id="@+id/comp"
+        <CheckedTextView
+            android:id="@+id/compmy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/button5"
-            android:layout_below="@+id/textView40"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
             android:layout_marginEnd="8dp"
-            android:text="My Complaints"
+            android:layout_marginTop="6dp"
+            android:background="@color/book_loading_page"
+            android:drawableLeft="@drawable/ic_account_circle_black_24dp"
+            android:text=" Manage my complaints"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/colorPrimaryDark" />
 
     </RelativeLayout>

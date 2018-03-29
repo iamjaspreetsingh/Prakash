@@ -2,7 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".beaconreference.RangingActivity">
+    <com.jetradar.desertplaceholder.DesertPlaceholder
+        android:id="@+id/placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:dp_buttonText="No Beacons found"
+        app:dp_message="Nothing To Show" />
 
     <TextView
         android:id="@+id/rangingText"

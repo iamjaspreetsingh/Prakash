@@ -37,14 +37,14 @@ public class MainbbActivity extends AppCompatActivity {
 
         FloatingTextButton call = findViewById(R.id.fab);
         FloatingTextButton dirl = findViewById(R.id.fab1);
-        TextView l = (TextView) findViewById(R.id.ll);
+
         while (MainActivity.blba.equals("No BloodBank Found")) {
             if (MainActivity.blba.equals("No BloodBank Found")) {
                 rotateLoading.start();
-                l.setVisibility(View.VISIBLE);
+
             } else {
                 rotateLoading.stop();
-                l.setVisibility(View.GONE);
+
                 break;
             }
         }

@@ -38,6 +38,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -411,11 +412,18 @@ stringArrayList=new ArrayList<>();
         });
 
 
-        ImageView comp=(ImageView)findViewById(R.id.hoo);
-        ImageView bea=(ImageView)findViewById(R.id.bob);
-        ImageView img=(ImageView)findViewById(R.id.poss);
-        ImageView emer=(ImageView)findViewById(R.id.pos);
-
+        LinearLayout comp=findViewById(R.id.hoo);
+        LinearLayout viewc=findViewById(R.id.imageView7);
+        LinearLayout bea=findViewById(R.id.bob);
+        LinearLayout img=findViewById(R.id.poss);
+        LinearLayout emer=findViewById(R.id.pos);
+viewc.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        Intent i=new Intent(MainActivity.this,MapsActivity.class);
+        startActivity(i);
+    }
+});
         comp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -434,6 +442,7 @@ stringArrayList=new ArrayList<>();
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
             }
         });
@@ -454,10 +463,11 @@ stringArrayList1=new ArrayList<>();
                 alert.setIcon(R.drawable.ic_contacts_black_24dp);
                 l=alertLayout.findViewById(R.id.listname);
                 FloatingTextButton fab11=alertLayout.findViewById(R.id.floatingActionButton);
-
+final TextView textView=alertLayout.findViewById(R.id.text);
                 fab11.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        textView.setVisibility(View.INVISIBLE);
                         Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
                         startActivityForResult(intent, RESULT_PICK_CONTACT);
 
@@ -476,6 +486,7 @@ stringArrayList1=new ArrayList<>();
                 naam=preference.getString("nam","");
                  if(naam!="") {
 
+                     textView.setVisibility(View.INVISIBLE);
                     String[] name=naam.split(",");
                     String[] no=phon.split(",");
                     for(int i=0;i<name.length;i++) {
@@ -636,8 +647,8 @@ stringArrayList1=new ArrayList<>();
 
             goapii();
             goapipin();
-
-            startService();
+            go();
+            //startService();
             startLocationUpdates();
 
         } else {
@@ -833,22 +844,28 @@ stringArrayList1=new ArrayList<>();
             Log.d("reque", "--->>>>");
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if (flood.equals("1"))
-    alertmyfriend();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+                        alertmyfriend();
 
 
 
@@ -864,8 +881,8 @@ if (flood.equals("1"))
     }
     // sends sms to emergency contacts automaticaaly with all the details of where the phone was last spotted
     private void alertmyfriend() {
-        Intent ij=new Intent(this,MainalertActivity.class);
-        startActivity(ij);
+  //      Intent ij=new Intent(this,MainalertActivity.class);
+    //    startActivity(ij);
 
 
 
@@ -904,7 +921,7 @@ if (flood.equals("1"))
         latlong=location.getLatitude()+","+location.getLongitude();
         lat=location.getLatitude();
         longi=location.getLongitude();
-
+        go();
 
     }
 
@@ -1358,18 +1375,18 @@ if (flood.equals("1"))
 
                     String response = convertInputStreamToString(inputStream);
 
-                    Log.e("ZIPzz",ZIP);
+
 
                     // now process the string using the method that we implemented in the previous exercise
                     String[] res=response.split("],");
                     for(int i=1;i<res.length;i++)
                     {String[] r=res[i].split(",\"");
-                        Log.e("bllll",r[6].replace("\"",""));
+
                         if(r[6].replace("\"","").equals(ZIP)) {
-                            Log.e("bllloodbank", res[i]);
+
                             bloodno=r[7].replace("\"","");
                             bloodloc=r[r.length-2].replace("\"","")+","+r[r.length-1].replace("\"","");
-                            Log.e("bblloocc",bloodloc);
+
                             bbname=r[1].replace("\"","");
                             blba=""+r[1].replace("\"","");
                             blba1=""+r[5].replace("\"","");
@@ -1596,13 +1613,10 @@ if (flood.equals("1"))
                     String ele = (obj.getJSONArray("results")).toString();
                     JSONObject obj1=new JSONObject(ele.replaceFirst("\\[",""));
                     String eee=obj1.getJSONArray("address_components").toString();
-                    Log.e("resppp",eee);
                     JSONArray arr=obj1.getJSONArray("address_components");
                     for(int i=0;i<arr.length();i++){
-                        if(arr.getString(i).contains("postal_code"))
-                            Log.e("respppp", arr.getString(i));
+
                         JSONObject obj11=new JSONObject(arr.getString(i));
-                        Log.e("resppppp", obj11.getString("long_name"));
                         ZIP=obj11.getString("long_name");
                         goapiihospital();
                         goapibloodbank();
@@ -1825,16 +1839,11 @@ if (flood.equals("1"))
                     String data=obj.getString("data");
                     String[] dataa=data.split("\\[");
                     for(int i=3;i<1050;i++) {
-                        Log.e("respon", dataa[i]);
                         String[] pin = dataa[i].split("\"");
                         String[] pinloc = dataa[i].split(",\"");
-                        Log.e("responzzzz", pin[16]);
                         if(pin[16].replace(",","").equals(ZIP)) {
-                            Log.e("emergencyno", dataa[i]);
-                            Log.e("emergencynooo",pin[17]);
                             emergencyno=pin[17];
                             hosp=pin[1];
-                            Log.e("emergencyname",pin[1]);
                             hospname=pin[1].replace("\"","");
                             hospp=""+pin[1].replace("\"","");
                             hospp1=""+pin[9].replace("\"","");
@@ -2058,7 +2067,6 @@ if (flood.equals("1"))
                             eleva =  Double.valueOf(elv)-eleva;
                         else  eleva = eleva + Double.valueOf(elv);
                         }                      Log.e("elelelele", String.valueOf(eleva));
-                        Log.e("differelelelele", String.valueOf(diffelevation));
 
                         //the condition to check if the person is inside the house during earthquake
 
@@ -2135,7 +2143,40 @@ if (flood.equals("1"))
 
 
 
+    void go(){
 
+
+
+
+
+        DatabaseFriend db = new DatabaseFriend(getApplicationContext());
+        List<Friends> contacts = db.getAllContacts();
+        String username="",name="",myno="98";
+        for (Friends cn : contacts) {
+            if(!(cn.getName().equals("")))
+            {
+
+                username=cn.getName();
+                name=cn.getNameD();
+                myno=cn.getNameDD();
+                Log.e("numbermy",myno);
+            }
+
+        }
+
+
+
+
+
+
+
+        SharedPreferences preferenceflood=getSharedPreferences("flood",MODE_PRIVATE);
+        flood=preferenceflood.getString("flood","0");
+
+
+
+
+    }
 
 
 

@@ -46,7 +46,8 @@ dependencies {
 
     compile 'com.victor:lib:1.0.4'
     compile 'com.github.dimorinny:floating-text-button:0.0.4'
-
+    compile 'com.github.jetradarmobile.desertplaceholder:desertplaceholder:1.2.4'
+    compile 'com.getkeepsafe.taptargetview:taptargetview:1.10.0'
     compile 'com.squareup.picasso:picasso:2.3.2'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.5@aar'
@@ -72,11 +73,12 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:10.0.1'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.github.apl-devs:appintro:v4.2.3'
-
+    compile 'de.hdodenhof:circleimageview:2.2.0'
     testCompile 'junit:junit:4.12'
 }
 
 apply plugin: 'com.google.gms.google-services'
+
 
 
 

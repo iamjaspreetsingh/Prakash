@@ -1,78 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/done"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="9dp"
+    android:layout_height="700dp"
+    android:background="@color/grey_100"
+
     tools:context="com.jskgmail.lifesaver.MainsettingActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="700dp">
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView16"
-            android:layout_marginTop="20dp"
-            android:text="Name *"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textColor="@color/colorPrimary"
-            android:textSize="17sp" />
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView26"
-            android:layout_alignBottom="@+id/textView26"
-            android:layout_alignStart="@+id/signout"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textView18"
-            android:layout_below="@+id/textView6"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <Button
-            android:id="@+id/don"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:background="?attr/colorPrimary"
-            android:text="Done"
-            android:textColor="@color/cast_expanded_controller_text_color" />
+            android:background="@color/colorPrimary">
 
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/don"
-            android:layout_alignParentStart="true"
-            android:text="ACCOUNT"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="18dp"
+                app:srcCompat="@drawable/ic_person_outline_black_24dp" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/imageView3"
+                android:layout_marginTop="9dp"
+                android:gravity="center_horizontal"
+                android:text="Name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/book_loading_page"
+                android:textSize="21sp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView2"
+                android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
+                android:text="Emailid"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/book_loading_background"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/textView4"
+                android:layout_marginBottom="7dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_edit_black_24dp" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView6"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="53dp"
+            android:layout_below="@+id/relativeLayout"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="24dp"
             android:text="EMERGENCY"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorPrimaryDark"
@@ -82,8 +88,9 @@
             android:id="@+id/textView19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView18"
             android:layout_below="@+id/textView18"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="12dp"
             android:text="Contact to :"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorPrimary"
@@ -91,15 +98,14 @@
 
         <Button
             android:id="@+id/but"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView19"
+            android:layout_below="@+id/spinner"
             android:layout_marginTop="11dp"
-            android:background="@color/common_google_signin_btn_text_dark_default"
+            android:background="@color/grey_100"
             android:gravity="left|center_vertical"
-            android:text="Delete my emergency contacts"
+            android:text="   Delete my emergency contacts"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorPrimary"
             android:textSize="17sp" />
@@ -119,18 +125,18 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/but"
             android:layout_marginTop="22dp"
-            android:text="SENSORS"
+            android:text="   SENSORS"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
 
         <Switch
             android:id="@+id/switch3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true"
+            android:layout_alignStart="@+id/textView19"
             android:layout_below="@+id/textView26"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="12dp"
             android:checked="true"
             android:text="Accelerometer sensor"
@@ -142,18 +148,18 @@
             android:id="@+id/textView27"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textView26"
+            android:layout_alignStart="@+id/switch3"
             android:layout_below="@+id/switch3"
             android:text="for the case of accidents (recommended )" />
 
         <Switch
             android:id="@+id/switch4"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true"
+            android:layout_alignStart="@+id/textView27"
             android:layout_below="@+id/textView27"
-            android:layout_marginTop="17dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="14dp"
             android:checked="true"
             android:text="Temperature Sensor"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -164,18 +170,23 @@
             android:id="@+id/textView28"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_alignStart="@+id/switch4"
             android:layout_below="@+id/switch4"
-            android:layout_marginTop="4dp"
             android:text="for the case of fires" />
 
         <Button
             android:id="@+id/signout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/textView18"
-            android:layout_alignParentTop="true"
-            android:text="SignOut" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView28"
+            android:layout_marginTop="26dp"
+            android:background="@color/grey_100"
+            android:gravity="left|center_vertical"
+            android:text="   Logout of this app"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimary"
+            android:textSize="17sp" />
 
     </RelativeLayout>
-</android.support.v4.widget.NestedScrollView>
+</ScrollView>

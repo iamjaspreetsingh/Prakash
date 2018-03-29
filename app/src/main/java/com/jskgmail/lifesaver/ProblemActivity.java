@@ -1,6 +1,7 @@
 package com.jskgmail.lifesaver;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -34,6 +34,11 @@ int problem=0;
         final CheckedTextView spinner=findViewById(R.id.spinner2);
         final EditText desc=findViewById(R.id.editText2);
         final EditText name=findViewById(R.id.editText3);
+        SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
+        String username = prefs.getString("username", "");
+
+        final String uid= prefs.getString("uid", "");
+        name.setText(username);
         final EditText mob=findViewById(R.id.editText4);
         final EditText addr=findViewById(R.id.editText5);
         final String[] problems = {"Click here and select "};
@@ -207,21 +212,22 @@ spinner.setText(problems[0]);
         don.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DatabaseReference myRef = database.getReference("PROBLEMS");
 
-                DatabaseReference myRef = database.getReference(String.valueOf(mob.getText().toString()));
+                DatabaseReference myRef1 = myRef.child(uid);
 
-                myRef.child("GPS").setValue(MainActivity.lat+","+MainActivity.longi);
-                myRef.child("Prob").setValue(problems[0]);
-                myRef.child("Description").setValue(desc.getText().toString());
-                myRef.child("Name").setValue(name.getText().toString());
-                myRef.child("Mobile").setValue(mob.getText().toString());
-                myRef.child("Address").setValue(addr.getText().toString());
+                myRef1.child("GPS").setValue(MainActivity.lat+","+MainActivity.longi);
+                myRef1.child("Prob").setValue(problems[0]);
+                myRef1.child("Description").setValue(desc.getText().toString());
+                myRef1.child("Name").setValue(name.getText().toString());
+                myRef1.child("Mobile").setValue(mob.getText().toString());
+                myRef1.child("Address").setValue(addr.getText().toString());
 
             }
         });
 
 
-        TextView comp=findViewById(R.id.comp);
+        CheckedTextView comp=findViewById(R.id.compmy);
 }
 
 
