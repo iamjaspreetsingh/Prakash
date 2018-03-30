@@ -88,8 +88,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -99,7 +97,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener, SensorEventListener,BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener
     {
     ;
-    Uri imageUri;
+    Uri photoURI;
 
     private ViewPager mViewPager;
 
@@ -2201,12 +2199,12 @@ if (flood.equals("1"))
 
     }
     public interface ApiInterfacedead {
-        @FormUrlEncoded
+
         @POST("search")
         retrofit2.Call<ResponseBody> getall(@Query("api_key") String code,
                                             @Query("api_secret") String monthact,
                                             // @Query("image_file") File file,
-                                            @Field("image_file") File imageFile,
+                                            @Query("image_base64") String img_uri,
 
                                             //   @Query("image_file") File file,
                                             //   @Query("image_url") String url,
@@ -2617,25 +2615,8 @@ if (flood.equals("1"))
             Intent i = new Intent(MainActivity.this, MainsettingActivity.class);
             startActivity(i);
         }
-        else if (id==R.id.hosp)
-        {
 
 
-            Intent i = new Intent(MainActivity.this, MainhospActivity.class);
-            startActivity(i);
-
-        }
-        else if (id==R.id.bloodb)
-        { Intent i = new Intent(MainActivity.this, MainbbActivity.class);
-            startActivity(i);
-
-        }
-        else if (id==R.id.blue)
-        {
-
-            Intent i = new Intent(MainActivity.this, MonitoringActivity.class);
-            startActivity(i);
-        }
         else if (id==R.id.blueh)
         {
             Intent i = new Intent(MainActivity.this, BeaconTransmitterActivity.class);
@@ -2735,7 +2716,7 @@ if (flood.equals("1"))
             photoFile = createImageFile();
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
+                photoURI = FileProvider.getUriForFile(this,
                         "com.jskgmail.android.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
@@ -2809,7 +2790,7 @@ if (flood.equals("1"))
         ApiInterfacedead apiService1 = ApiClientdead.getClient().create(ApiInterfacedead.class);
         //TODO
 
-        Call call  = apiService1.getall("8eXIfwPbVhLUXV4xt9eW2xRSxWt74Fki","9xyBX7iWUUWu4msZbaAm6_XTRN9OiT5b",image,"537c2b49a9a160655b9a3c707555af4b");
+        Call call  = apiService1.getall("8eXIfwPbVhLUXV4xt9eW2xRSxWt74Fki","9xyBX7iWUUWu4msZbaAm6_XTRN9OiT5b",photoURI.toString(),"537c2b49a9a160655b9a3c707555af4b");
 
         Log.e("ddd", String.valueOf(photoFile));
         call.enqueue(new Callback() {

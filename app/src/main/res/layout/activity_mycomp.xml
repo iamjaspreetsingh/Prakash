@@ -4,31 +4,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="4dp"
-    android:layout_marginRight="3dp"
-    android:padding="1dp"
-    tools:context="com.jskgmail.lifesaver.MainhospActivity">
+    tools:context="com.jskgmail.lifesaver.Mycomp">
 
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView6"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/fab"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="12dp"
-        android:layout_marginTop="21dp"
-        android:text="PIN :"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/cardView5"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="18dp"
+        android:elevation="5dp"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="4dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/textView23111"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="4dp"
+                android:text="Address Details"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignStart="@+id/textView23111"
+                android:layout_below="@+id/textView23111"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="4dp"
+                android:text="N.A."
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView20"
-        android:layout_marginTop="26dp"
+        android:layout_alignEnd="@+id/cardView5"
+        android:layout_below="@+id/textView38"
+        android:layout_marginTop="11dp"
         android:elevation="5dp"
         app:cardCornerRadius="3dp"
         app:cardElevation="4dp">
@@ -46,14 +78,14 @@
 
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="4dp"
-                android:text="BloodBank Name"
+                android:text="Problem"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
                 android:textSize="16sp" />
 
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/pro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -67,7 +99,6 @@
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
-
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView5"
@@ -94,14 +125,14 @@
 
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="4dp"
-                android:text="Address Details"
+                android:text="Description of problem"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
                 android:textSize="16sp" />
 
 
             <TextView
-                android:id="@+id/textView351"
+                android:id="@+id/des"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -117,12 +148,13 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardView6"
+        android:id="@+id/cardView66"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/cardView5"
-        android:layout_marginRight="3dp"
+        android:layout_alignBottom="@+id/rotateloading1"
+        android:layout_alignEnd="@+id/cardView6"
+        android:layout_below="@+id/cardView6"
+        android:layout_marginEnd="3dp"
         android:layout_marginTop="12dp"
         android:elevation="5dp"
         app:cardCornerRadius="3dp"
@@ -134,26 +166,26 @@
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/textView23111"
+                android:id="@+id/textView2311"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
 
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="4dp"
-                android:text="Emergency Contact No."
+                android:text="Contact no."
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
                 android:textSize="16sp" />
 
 
             <TextView
-                android:id="@+id/textView3511"
+                android:id="@+id/no"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_alignStart="@+id/textView23111"
-                android:layout_below="@+id/textView23111"
+                android:layout_alignStart="@+id/textView2311"
+                android:layout_below="@+id/textView2311"
                 android:layout_marginBottom="6dp"
                 android:layout_marginTop="4dp"
                 android:text="N.A."
@@ -171,21 +203,24 @@
         android:layout_alignBaseline="@+id/textView20"
         android:layout_alignBottom="@+id/textView20"
         android:layout_alignParentStart="true"
-        android:text="Nearest BloodBank Details :"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="8dp"
+        android:text="My Complaints :"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp" />
 
 
     <com.victor.loading.rotate.RotateLoading
-        android:id="@+id/rotateloading"
+        android:id="@+id/rotateloading1"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_centerInParent="true"
 
         android:elevation="20dp"
-        app:loading_color="#ffffff"
+        app:loading_color="#303F9F"
         app:loading_width="5dp" />
+
     <ru.dimorinny.floatingtextbutton.FloatingTextButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -195,21 +230,8 @@
         android:layout_marginBottom="13dp"
         android:layout_marginRight="5dp"
         app:floating_background_color="@color/cardview_light_background"
-        app:floating_left_icon="@drawable/calll"
-        app:floating_title="Call"
+        app:floating_left_icon="@drawable/ic_remove_circle_outline_black_24dp"
+        app:floating_title="Remove Complaint"
         app:floating_title_color="@android:color/holo_red_dark" />
-    <ru.dimorinny.floatingtextbutton.FloatingTextButton
-        android:id="@+id/fab1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="13dp"
-        android:layout_marginLeft="5dp"
-        app:floating_background_color="@color/cardview_light_background"
-        app:floating_left_icon="@drawable/loc"
-        app:floating_title="Directions"
-        app:floating_title_color="@android:color/holo_red_dark" />
-
 
 </RelativeLayout>

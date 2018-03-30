@@ -271,6 +271,7 @@ sout=0;
                 editor.putString("uid",""+account.getId());
                 editor.putString("email",""+account.getEmail());
                 editor.apply();
+
                 Log.e("usernameeeeeeggg", String.valueOf(""+account.getId()));
 
 

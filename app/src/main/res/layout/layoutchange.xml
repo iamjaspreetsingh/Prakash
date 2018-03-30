@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
+</LinearLayout>
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
@@ -12,15 +18,16 @@
         android:layout_marginTop="13dp"
         android:text="Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/cast_intro_overlay_background_color"
         android:textSize="17sp" />
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView6"
         android:layout_below="@+id/textView6"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="6dp"
         android:ems="10"
         android:inputType="textPersonName" />

@@ -12,6 +12,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,7 +47,7 @@ public class MainsettingActivity extends AppCompatActivity {
         final ImageView imgProfilePicture=findViewById(R.id.imageView3);
         SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
 String imgstring=prefs.getString("uri", "");
-
+        Log.e("dddd",imgstring);
         Uri mypic=Uri.parse(imgstring);
         Glide.with(getApplicationContext()).load(mypic).asBitmap()
                 .error(R.drawable.ic_person_outline_black_24dp)
@@ -81,7 +82,7 @@ namee.setText(username);
                 alert.setView(alertLayout);
                 // disallow cancel of AlertDialog on click of back button and outside touch
                 alert.setTitle("My Account ");
-                alert.setIcon(R.drawable.ic_person_outline_black_24dp);
+                alert.setIcon(R.drawable.ic_person_outline_rblack_24dp);
                 alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
                     @Override
@@ -147,6 +148,43 @@ namee.setText(username);
 
             }
         });
+
+
+        Spinner sens = (Spinner) findViewById(R.id.spinner3);
+
+        List<String> category2 = new ArrayList<String>();
+        category2.add("Normal");
+        category2.add("Ultra Sensitive");
+        category2.add("Low");
+
+
+
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, category2);
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        sens.setAdapter(dataAdapter2);
+
+        sens.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+
+
+
+
         final Switch acc=(Switch)findViewById(R.id.switch3);
         final Switch temp=(Switch)findViewById(R.id.switch4);
 
@@ -226,12 +264,6 @@ Button but=(Button)findViewById(R.id.but);
                 Toast.makeText(getApplicationContext(),"Long click on emergency contact which you want to delete in main screen",Toast.LENGTH_LONG).show();
             }
         });
-
-
-
-
-
-
 
 
 

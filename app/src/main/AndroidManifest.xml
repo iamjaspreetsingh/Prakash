@@ -142,6 +142,7 @@
         <activity android:name=".Main99Activity" />
         <activity android:name=".MainppActivity" />
         <activity android:name=".Main5Activity" />
+        <activity android:name=".Mycomp"></activity>
     </application>
 
 </manifest>

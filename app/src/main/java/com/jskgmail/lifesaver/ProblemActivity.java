@@ -1,16 +1,21 @@
 package com.jskgmail.lifesaver;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -208,6 +213,7 @@ spinner.setText(problems[0]);
         });
 
 spinner.setText(problems[0]);
+        final RelativeLayout r=findViewById(R.id.r);
         Button don=findViewById(R.id.button5);
         don.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -223,11 +229,29 @@ spinner.setText(problems[0]);
                 myRef1.child("Mobile").setValue(mob.getText().toString());
                 myRef1.child("Address").setValue(addr.getText().toString());
 
+
+                Toast toast = new Toast(getApplicationContext());
+                ImageView view1 = new ImageView(getApplicationContext());
+                view1.setImageResource(R.mipmap.done);
+                toast.setView(view1);
+                toast.setGravity(Gravity.BOTTOM, 0, 0);
+                toast.show();
+
+
+
+                finish();
             }
         });
 
 
         CheckedTextView comp=findViewById(R.id.compmy);
+        comp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(ProblemActivity.this,Mycomp.class);
+                startActivity(intent);
+            }
+        });
 }
 
 
