@@ -93,7 +93,7 @@
                 android:layout_below="@+id/textView23"
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="6dp"
-                android:text="TextView"
+                android:text="Not registered yet"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="16sp" />
 

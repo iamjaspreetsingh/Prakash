@@ -80,6 +80,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -89,7 +92,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 import ru.dimorinny.floatingtextbutton.FloatingTextButton;
 
@@ -2720,13 +2725,12 @@ if (flood.equals("1"))
                         "com.jskgmail.android.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, 1);
-                goapidead();
+                startActivityForResult(takePictureIntent, 111);
+
+
             }
 
         }}
-
-
 
 
 
@@ -2777,6 +2781,14 @@ if (flood.equals("1"))
 
             case RESULT_PICK_CONTACT:
                 contactPicked(data);
+
+            case 111:
+                if (resultCode == RESULT_OK) {
+
+                    uploadFile(photoURI,photoFile);
+                }
+
+
         }
     }
 
@@ -2978,11 +2990,68 @@ if (flood.equals("1"))
 
 
 
+        public interface FileUploadService {
+            @Multipart
+            @POST("search")
+            Call<ResponseBody> upload(
+                    @Part("api_key") RequestBody description,
+                    @Part("api_secret") RequestBody description1,
+                    @Part MultipartBody.Part file,
+                    @Part("faceset_token") RequestBody description2
+            );
+        }
+
+        private void uploadFile(Uri fileuri,File image) {
+        Log.e("upl fileuri", String.valueOf(fileuri));
+        Log.e("upl fileimage", String.valueOf(image));
+
+            FileUploadService service =
+                    ServiceGenerator.createService(FileUploadService.class);
+            RequestBody requestFile =
+                    RequestBody.create(
+                            MediaType.parse(getContentResolver().getType(fileuri)),
+                            image
+                    );
+
+
+            // add another part within the multipart request
+
+            RequestBody description =
+                    RequestBody.create(
+                            okhttp3.MultipartBody.FORM, "8eXIfwPbVhLUXV4xt9eW2xRSxWt74Fki");
+            RequestBody description1 =
+                    RequestBody.create(
+                            okhttp3.MultipartBody.FORM, "9xyBX7iWUUWu4msZbaAm6_XTRN9OiT5b");
+            // MultipartBody.Part is used to send also the actual file name
+            MultipartBody.Part body =
+                    MultipartBody.Part.createFormData("image_file", image.getName(), requestFile);
+
+
+            RequestBody description2 =
+                    RequestBody.create(
+                            okhttp3.MultipartBody.FORM, "537c2b49a9a160655b9a3c707555af4b");
+
+            // finally, execute the request
+            Call<ResponseBody> call = service.upload(description,description1, body,description2);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call,
+                                       Response<ResponseBody> response) {
 
 
 
 
 
+                    Log.e("Uploaddd", "success");
+                    Log.e("Uploadd", response.toString());
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e("Upload error:", t.getMessage());
+                }
+            });
+        }
 
 
 

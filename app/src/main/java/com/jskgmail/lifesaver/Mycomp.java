@@ -3,7 +3,9 @@ package com.jskgmail.lifesaver;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -11,6 +13,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.victor.loading.rotate.RotateLoading;
+
+import ru.dimorinny.floatingtextbutton.FloatingTextButton;
 
 public class Mycomp extends AppCompatActivity {
 private RotateLoading rotateLoading;
@@ -28,7 +32,7 @@ private RotateLoading rotateLoading;
         final TextView add=findViewById(R.id.add);
         final String uid= prefs.getString("uid", "");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("PROBLEMS");
+        final DatabaseReference myRef = database.getReference("PROBLEMS");
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
@@ -49,7 +53,6 @@ private RotateLoading rotateLoading;
                     if (dataSnapshot2.getKey().equals("Prob")) {
                     pro.setText(""+dataSnapshot2.getValue());
 
-
                 }
                     if (dataSnapshot2.getKey().equals("Description")) {
                         des.setText(""+dataSnapshot2.getValue());
@@ -57,6 +60,7 @@ private RotateLoading rotateLoading;
                     }
                     if (dataSnapshot2.getKey().equals("Address")) {
                         add.setText(""+dataSnapshot2.getValue());
+
                     }
                     if (dataSnapshot2.getKey().equals("Mobile")) {
                         mob.setText(""+dataSnapshot2.getValue());
@@ -78,8 +82,54 @@ private RotateLoading rotateLoading;
         });
 
 
+        FloatingTextButton floatingTextButton=findViewById(R.id.fab);
+        floatingTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
 
+
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
+                        for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren())
+                        {
+                            if(uid.equals( String.valueOf(dataSnapshot1.getKey())))
+                            {
+                                DatabaseReference myRef1 = myRef.child(uid);
+                                myRef1.removeValue();
+                                finish();
+                                Toast.makeText(getApplicationContext(),"Your complaint is removed",Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+
+                        rotateLoading.stop();
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+
+                    }
+                });
+
+
+
+
+
+
+
+
+
+
+
+            }
+        });
 
 
 
