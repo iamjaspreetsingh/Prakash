@@ -1,13 +1,13 @@
 package com.jskgmail.lifesaver;
 
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.VideoView;
+
+import com.pierfrancescosoffritti.youtubeplayer.player.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayer;
+import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayerInitListener;
+import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayerView;
 
 public class Main4Activity extends AppCompatActivity {
 
@@ -21,13 +21,32 @@ public class Main4Activity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayShowHomeEnabled(true);
         setContentView(R.layout.activity_main4);
-        go();
+       go1();
     }
+void go1()
+{
+    YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player_view);
 
+    youTubePlayerView.initialize(new YouTubePlayerInitListener() {
+        @Override
+        public void onInitSuccess(final YouTubePlayer initializedYouTubePlayer) {
+            initializedYouTubePlayer.addListener(new AbstractYouTubePlayerListener() {
+                @Override
+                public void onReady() {
+                    String videoId = "43M5mZuzHF8";
+                    initializedYouTubePlayer.loadVideo(videoId, 0);
+                }
+            });
+        }
+    }, true);
+
+
+
+}
 
 
     private void go() {
-VideoView v=(VideoView)findViewById(R.id.videoView) ;
+/*VideoView v=(VideoView)findViewById(R.id.videoView) ;
         final ProgressBar p=(ProgressBar)findViewById(R.id.progressBar3);
         v.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -41,7 +60,7 @@ VideoView v=(VideoView)findViewById(R.id.videoView) ;
         v.setVideoPath(s);
         v.requestFocus();
         v.start();
-
+*/
 
     }
 

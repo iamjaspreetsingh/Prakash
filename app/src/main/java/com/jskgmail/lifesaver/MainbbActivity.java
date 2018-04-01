@@ -38,16 +38,11 @@ public class MainbbActivity extends AppCompatActivity {
         FloatingTextButton call = findViewById(R.id.fab);
         FloatingTextButton dirl = findViewById(R.id.fab1);
 
-        while (MainActivity.blba.equals("No BloodBank Found")) {
+
             if (MainActivity.blba.equals("No BloodBank Found")) {
                 rotateLoading.start();
 
-            } else {
-                rotateLoading.stop();
-
-                break;
             }
-        }
 
         call.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +51,7 @@ public class MainbbActivity extends AppCompatActivity {
                 Uri call = Uri.parse("tel:" + em[0]);
                 Intent surf = new Intent(Intent.ACTION_DIAL, call);
                 startActivity(surf);
+
             }
         });
         dirl.setOnClickListener(new View.OnClickListener() {

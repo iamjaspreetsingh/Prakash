@@ -1,5 +1,6 @@
 package com.jskgmail.lifesaver;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,7 +17,8 @@ public class MainintroActivity extends AppIntro {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        askForPermissions(new String[]{android.Manifest.permission.CAMERA}, 2); // OR
+        askForPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1); // OR
+        askForPermissions(new String[]{Manifest.permission.SEND_SMS, Manifest.permission.CALL_PHONE, Manifest.permission.READ_CONTACTS}, 2);
         // Note here that we DO NOT use setContentView();
 
         // Add your slide fragments here.
@@ -25,14 +27,15 @@ public class MainintroActivity extends AppIntro {
 
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest.
-        addSlide(AppIntroFragment.newInstance("title", "description", R.drawable.bt, R.color.colorred));
-        addSlide(AppIntroFragment.newInstance("titxxxxxxle", "description", R.drawable.bt, R.color.colorred));
+        addSlide(AppIntroFragment.newInstance("Welcome to PRAKASH app", "The 24/7 bodyguard that protects and saves you from any mishap ", R.drawable.mobbb, Color.parseColor("#10a7ff")));
+        addSlide(AppIntroFragment.newInstance("Your location", "Find nearest hospitals,blood banks and police stations to your location", R.drawable.hospii,Color.parseColor("#10a7ff")));
+        addSlide(AppIntroFragment.newInstance("Your contacts", "Manages your emergency contacts and sends alert automatically in case of any problem detected", R.drawable.third, Color.parseColor("#10a7ff")));
 
         // OPTIONAL METHODS
         // Override bar/separator color.
 
 
-        addSlide(AppIntroFragment.newInstance("txcxcxitle", "description", R.drawable.bt, R.color.colorred));
+        addSlide(AppIntroFragment.newInstance("Your complaints", "The blockchain based complaint system for problem registered by user", R.drawable.fourt, Color.parseColor("#10a7ff")));
 
         // OPTIONAL METHODS
         // Override bar/separator color.
@@ -43,6 +46,7 @@ setBackButtonVisibilityWithDone(true);
         showSkipButton(true);
         setProgressButtonEnabled(true);
 setNextArrowColor(R.color.colorred);
+setGoBackLock(false);
 
         // Turn vibration on and set intensity.
         // NOTE: you will probably need to ask VIBRATE permission in Manifest.
@@ -57,7 +61,7 @@ setNextArrowColor(R.color.colorred);
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
         // Do something when users tap on Skip button.
-        Intent i=new Intent(MainintroActivity.this,Main99Activity.class);
+        Intent i=new Intent(MainintroActivity.this,EmailPasswordActivity.class);
         startActivity(i);
     }
 

@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.ActionBar;
@@ -20,10 +21,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -33,6 +34,7 @@ import java.util.List;
 
 public class MainsettingActivity extends AppCompatActivity {
     static String username="unknown",myno="087987879879",name="unknown";
+    RelativeLayout rl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,7 @@ public class MainsettingActivity extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         final ImageView imgProfilePicture=findViewById(R.id.imageView3);
+        rl=findViewById(R.id.rl);
         SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
 String imgstring=prefs.getString("uri", "");
         Log.e("dddd",imgstring);
@@ -156,19 +159,44 @@ namee.setText(username);
         category2.add("Normal");
         category2.add("Ultra Sensitive");
         category2.add("Low");
-
+        SharedPreferences pref = getSharedPreferences("sensitivity",MODE_PRIVATE);
+        final String[] sensitivity = {pref.getString("no", "2")};
 
 
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, category2);
         dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         sens.setAdapter(dataAdapter2);
+        if (sensitivity[0].equals("1"))
+            sens.setSelection(0);//normal
+        else   if (sensitivity[0].equals("2"))
+            sens.setSelection(1);//ultra
+        else
+        if (sensitivity[0].equals("3"))
+            sens.setSelection(2);
 
         sens.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                SharedPreferences.Editor editor=getSharedPreferences("sensitivity",MODE_PRIVATE).edit();
+                editor.putString("no", String.valueOf((position+1)));
 
+                editor.apply();
+                if (position!=Integer.parseInt(sensitivity[0])-1) {
+                    if (position == 0) {
+                        Snackbar.make(rl, "You will be warned in case of sudden change in sensors ", Snackbar.LENGTH_LONG).show();
+                        MyService.myaccelerometer = 8000;
+                    } else if (position == 1) {
+                        Snackbar.make(rl, "You can just shake your phone when you find any problem", Snackbar.LENGTH_LONG).show();
+                        MyService.myaccelerometer = 4000;
+                    } else if (position == 2) {
+                        Snackbar.make(rl, "You will get alerts only when very quick change in sensors occur", Snackbar.LENGTH_LONG).show();
+
+                        MyService.myaccelerometer = 13000;
+                    }
+                }
+                sensitivity[0] = String.valueOf(position+1);
 
             }
 
@@ -261,7 +289,10 @@ Button but=(Button)findViewById(R.id.but);
         but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Long click on emergency contact which you want to delete in main screen",Toast.LENGTH_LONG).show();
+
+
+
+                Snackbar.make(rl,"Long click on emergency contact which you want to delete ",Snackbar.LENGTH_LONG).show();
             }
         });
 

@@ -49,7 +49,7 @@ public class MainalertActivity extends AppCompatActivity {
         final int[] i = {120};
         alert.start();
         final TextView time = (TextView) findViewById(R.id.textView12);
-        new CountDownTimer(120000, 1000) {
+        new CountDownTimer(6000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -64,7 +64,8 @@ public class MainalertActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-if(MainActivity.flood.equals("1"))
+
+                if(MainActivity.flood.equals("1"))
                 go();
             }
         }.start();
@@ -85,6 +86,8 @@ if(MainActivity.flood.equals("1"))
 
                 editor.apply();
                 alert.stop();
+                flashLightOff();
+
 
                 finish();
             }

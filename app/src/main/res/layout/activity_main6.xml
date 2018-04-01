@@ -22,15 +22,15 @@
             android:elevation="5dp"
             app:cardCornerRadius="3dp"
             app:cardElevation="4dp">
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
 
-            android:layout_marginTop="17dp"
-            android:padding="5dp"
-            android:text="What is an earthquake and what are its causes?\n
+                android:layout_marginTop="17dp"
+                android:padding="5dp"
+                android:text="What is an earthquake and what are its causes?\n
         Earthquakes are usually caused when rock underground suddenly breaks along a fault. This sudden release of energy causes the seismic waves that make the ground shake. When two blocks of rock or two plates are rubbing against each other, they stick a little. ... When the rocks break, the earthquake occurs.
         Where is a common place for earthquakes?\n
 Earthquakes can also occur far from the edges of plates, along faults. Faults are cracks in the earth where sections of a plate (or two plates) are moving in different directions. Faults are caused by all that bumping and sliding the plates do. They are more common near the edges of the plates.
@@ -40,7 +40,7 @@ What should you do during and after an earthquake?\n
 1.	Check yourself and others for injuries. ...\n
 2.	Check water, gas, and electric lines for damage. ...\n
 3.	Turn on the radio. ...\n"
-            android:textAppearance="@style/TextAppearance.AppCompat" />
+                android:textAppearance="@style/TextAppearance.AppCompat" />
 
         </android.support.v7.widget.CardView>
     </RelativeLayout>

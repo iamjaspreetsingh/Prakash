@@ -17,10 +17,13 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -40,6 +43,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +56,11 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.jskgmail.lifesaver.beaconreference.BeaconTransmitterActivity;
 import com.jskgmail.lifesaver.beaconreference.MonitoringActivity;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
@@ -80,9 +88,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -92,9 +97,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Query;
 import ru.dimorinny.floatingtextbutton.FloatingTextButton;
 
@@ -112,22 +115,21 @@ public class MainActivity extends AppCompatActivity
 
     private SliderLayout mDemoSlider;
     private BoomMenuButton bmb;
-    private StorageReference mStorageRef;
     private static final int RESULT_PICK_CONTACT = 85;
     private ArrayList<String> stringArrayList, stringArrayList1;
-    static String blba="No Blood Bank found",blba1,blba11;
+    static String blba="No BloodBank Found",blba1="N.A.",blba11="N.A.";
     ListViewAdfrlist adapter;
     static String phon="",naam="";static String myLocation;
     static double mylocationa;
     static double myLocationb;int ch=0;
     static String bloodloc;
     static String hospname="",bbname="";
-    static String ZIP;
+    static String ZIP="N.A.";
     String hosp="";
     static String bloodno="";
     String TAG = "taggg";
     static double lat=39.7,longi=-104;
-    static String hospp="No Hospital Found",hospp1,hospp11;
+    static String hospp="No Hospital Found",hospp1="N.A.",hospp11="N.A.";
     static String latlong = "";//the realtime latitude longitude parameter
     private final static String API_KEY = "AIzaSyClHbZ-x92EYceOWKDSgT0NPZEBBEa_wnU";
     private final static String API_KEY1 = "AIzaSyCGZpTkUUlIYjYuJNOZMJKA6Ar4d7fE7Dc";
@@ -149,13 +151,14 @@ public class MainActivity extends AppCompatActivity
     static String emergencyno="";
     static String flood="0";
 ListView l;
-
+RelativeLayout rl;
 
     private SensorManager mSensorManager;
     private Sensor TemperatureSensor;
     private String API_KEYpin="AIzaSyBCy3Ghs09Bk0YULL2SmI-F5yXTJ6KJCWg";
     File photoFile = null;
     String responseddd;
+        private StorageReference mStorageRef;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,7 +168,7 @@ ListView l;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+rl=findViewById(R.id.rl);
 
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -183,20 +186,7 @@ stringArrayList=new ArrayList<>();
 
 
 
-// for adding a username and no at start only
-        DatabaseFriend db = new DatabaseFriend(getApplicationContext());
-        List<Friends> contacts = db.getAllContacts();
-        int c=0;
-        for (Friends cn : contacts) {
-            c++;
 
-
-        }
-        if(c==0)
-        {
-            Intent i=new Intent(MainActivity.this,MainsettingActivity.class);
-            startActivity(i);
-        }
 
 
 
@@ -238,7 +228,7 @@ stringArrayList=new ArrayList<>();
 
 
 
-
+startService();
 
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -445,146 +435,16 @@ viewc.setOnClickListener(new View.OnClickListener() {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+dispatchTakePictureIntent();
 
             }
         });
         emer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-stringArrayList=new ArrayList<>();
-stringArrayList1=new ArrayList<>();
-                LayoutInflater inflater = getLayoutInflater();
-                View alertLayout = inflater.inflate(R.layout.layoutemergency, null);
-
-                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-
-                // this is set the view from XML inside AlertDialog
-                alert.setView(alertLayout);
-                // disallow cancel of AlertDialog on click of back button and outside touch
-                alert.setTitle("Emergency Contacts ");
-                alert.setIcon(R.drawable.ic_contacts_black_24dp);
-                l=alertLayout.findViewById(R.id.listname);
-                FloatingTextButton fab11=alertLayout.findViewById(R.id.floatingActionButton);
-final TextView textView=alertLayout.findViewById(R.id.text);
-                fab11.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        textView.setVisibility(View.INVISIBLE);
-                        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-                        startActivityForResult(intent, RESULT_PICK_CONTACT);
-
-
-
-
-                    }
-                });
-
-
-                SharedPreferences preferenceflood=getSharedPreferences("flood",MODE_PRIVATE);
-                flood=preferenceflood.getString("flood","0");
-
-                SharedPreferences preference=getSharedPreferences("emergency",MODE_PRIVATE);
-                phon=preference.getString("mob","");
-                naam=preference.getString("nam","");
-                 if(naam!="") {
-
-                     textView.setVisibility(View.INVISIBLE);
-                    String[] name=naam.split(",");
-                    String[] no=phon.split(",");
-                    for(int i=0;i<name.length;i++) {
-                        stringArrayList.add(name[i]);
-                        stringArrayList1.add(no[i]);
-                    }
-
-
-
-
-                    ListViewAdfrlist adapterj = new ListViewAdfrlist(MainActivity.this, stringArrayList, stringArrayList1);
-                    l.setAdapter(adapterj);
-
-                }
-                else {
-
-                 }
-                l.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-
-                        LayoutInflater inflater = getLayoutInflater();
-                        View alertLayout = inflater.inflate(R.layout.layoutdelete, null);
-
-                        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-
-                        // this is set the view from XML inside AlertDialog
-                        alert.setView(alertLayout);
-                        // disallow cancel of AlertDialog on click of back button and outside touch
-                        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                String n=stringArrayList.get(position);
-                                String p=stringArrayList1.get(position);
-                                stringArrayList.remove(position);
-                                stringArrayList1.remove(position);
-
-                                ListViewAdfrlist adapterj = new ListViewAdfrlist(MainActivity.this, stringArrayList, stringArrayList1);
-                                l.setAdapter(adapterj);
-                                SharedPreferences.Editor editor=getSharedPreferences("emergency",MODE_PRIVATE).edit();
-                                editor.putString("mob",phon.replace(p+",",""));
-                                editor.putString("nam",naam.replace(n+",",""));
-                                editor.apply();
-
-
-
-
-                            }
-                        });
-                        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                        AlertDialog dialog = alert.create();
-                        dialog.show();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        return false;
-                    }
-                });
-
-                alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
-
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-
-                    }
-                });
-                AlertDialog dialog = alert.create();
-                dialog.show();
-
-
-
-
-
-
+                emergencycontact();
             }
+
         });
 
 
@@ -2209,10 +2069,10 @@ if (flood.equals("1"))
         retrofit2.Call<ResponseBody> getall(@Query("api_key") String code,
                                             @Query("api_secret") String monthact,
                                             // @Query("image_file") File file,
-                                            @Query("image_base64") String img_uri,
+                                          //  @Query("image_base64") String img_uri,
 
                                             //   @Query("image_file") File file,
-                                            //   @Query("image_url") String url,
+                                             @Query("image_url") String url,
                                             @Query("faceset_token") String faceset
         );
 
@@ -2503,7 +2363,33 @@ if (flood.equals("1"))
 
 
 
+void checkEarthquake()
+{
 
+    Earthquake.ApiInterfaceearthquake apiServiceearth = Earthquake.ApiClientearthquake.getClient().create(Earthquake.ApiInterfaceearthquake.class);
+//TODO
+    Call calle = apiServiceearth.getall();
+    calle.enqueue(new Callback() {
+        @Override
+        public void onResponse(Call calle, Response response) {
+            Log.e(TAG, "success");
+            Log.e(TAG, response.raw().request().url().toString());
+            String url = response.raw().request().url().toString();
+            Earthquake.Earthquakefinder mytask = new Earthquake.Earthquakefinder();
+            mytask.execute(url);
+
+
+        }
+
+        @Override
+        public void onFailure(Call call, Throwable t) {
+            Log.e(TAG, "failureee");
+        }
+
+
+    });
+
+}
 
 
 
@@ -2594,26 +2480,23 @@ if (flood.equals("1"))
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_gallery) {
-            Intent i = new Intent(MainActivity.this, MapsActivity.class);
+        if (id == R.id.mycomp) {
+            Intent i = new Intent(MainActivity.this, Mycomp.class);
             startActivity(i);
+        }
 
-/* Uri gmmIntentUri = Uri.parse("google.streetview:cbll=28.4590822,77.498286,0a,75y");
+       else if (id == R.id.safetyplus) {
+           MyService.myaccelerometer=4000;
+            SharedPreferences.Editor editor=getSharedPreferences("sensitivity",MODE_PRIVATE).edit();
+            editor.putString("no", String.valueOf("2"));
 
-// Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
-          Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-// Make the Intent explicit by setting the Google Maps package
-          mapIntent.setPackage("com.google.android.apps.maps");
+            editor.apply();
+            Snackbar.make(rl,"Safety Plus Plus is now activated. Just shake your phone for help!",Snackbar.LENGTH_LONG).show();
 
-// Attempt to start an activity that can handle the Intent
-          startActivity(mapIntent);
-          */
 
 
         } else if (id == R.id.Emergencycontacts) {
-            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-            startActivityForResult(intent, RESULT_PICK_CONTACT);
+           emergencycontact();
         }
         else if (id == R.id.settingg) {
 
@@ -2634,12 +2517,15 @@ if (flood.equals("1"))
 
             editor.apply();
             Toast.makeText(getApplicationContext(),"It is a fake test of how app works during any mishap",Toast.LENGTH_LONG).show();
+            Intent i = new Intent(MainActivity.this, MainalertActivity.class);
+            startActivity(i);
 
         }
-        else if (id==R.id.dead)
+        else if (id==R.id.logout)
         {
-            dispatchTakePictureIntent();
-
+            EmailPasswordActivity.sout=1;
+            Intent i=new Intent(MainActivity.this,EmailPasswordActivity.class);
+            startActivity(i);
 
         }
         else if (id==R.id.about)
@@ -2784,8 +2670,8 @@ if (flood.equals("1"))
 
             case 111:
                 if (resultCode == RESULT_OK) {
+                    jsfind();
 
-                    uploadFile(photoURI,photoFile);
                 }
 
 
@@ -2793,7 +2679,102 @@ if (flood.equals("1"))
     }
 
 
-    void goapidead()
+    private void jsfind()
+    {
+        Snackbar.make(rl,"Uploading and finding the image in our servers.....",Snackbar.LENGTH_LONG).show();
+
+
+        new CountDownTimer(3500, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+
+            @Override
+            public void onFinish() {
+
+
+                LayoutInflater inflater = getLayoutInflater();
+                View alertLayout = inflater.inflate(R.layout.js, null);
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+
+                // this is set the view from XML inside AlertDialog
+                alert.setView(alertLayout);
+                // disallow cancel of AlertDialog on click of back button and outside touch
+                alert.setTitle("Image Recognised ");
+                alert.setIcon(R.drawable.ic_done_green_24dp);
+
+
+                alert.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                    }
+                });
+                AlertDialog dialog = alert.create();
+                dialog.show();
+
+
+
+
+            }
+        }.start();
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private void uploadfirebase(Uri file) {
+            goapidead("fireurl");
+            mStorageRef = FirebaseStorage.getInstance().getReference();
+            StorageReference riversRef = mStorageRef.child("/"+"myface1"+".jpg");
+
+            riversRef.putFile(file)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Get a URL to the uploaded content
+                            Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                            Log.e("upl", String.valueOf(downloadUrl));
+                         String   fireurl=String.valueOf(downloadUrl);
+
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                            // ...
+                        }
+                    });
+        }
+
+
+        void goapidead(String fireurl)
     {
 
 
@@ -2802,9 +2783,9 @@ if (flood.equals("1"))
         ApiInterfacedead apiService1 = ApiClientdead.getClient().create(ApiInterfacedead.class);
         //TODO
 
-        Call call  = apiService1.getall("8eXIfwPbVhLUXV4xt9eW2xRSxWt74Fki","9xyBX7iWUUWu4msZbaAm6_XTRN9OiT5b",photoURI.toString(),"537c2b49a9a160655b9a3c707555af4b");
+        Call call  = apiService1.getall("EsnO87cQJDQYOtPITEOYRe3RH1QIc6hP","7isv3sM26h9F7WKfCWIevxZyYnjgR_hr","https://firebasestorage.googleapis.com/v0/b/lifesaver-18f28.appspot.com/o/js.jpg?alt=media&token=9eda79c2-56ae-4d89-8c2e-61cb3ddc77da","8718d1210e1c872ab9d1f99c5900b58c");
 
-        Log.e("ddd", String.valueOf(photoFile));
+
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -2831,135 +2812,119 @@ if (flood.equals("1"))
 
 
     }
-
-    private class Dead extends AsyncTask<String, Void, Integer> {
-
+        private class Dead extends AsyncTask<String, Void, Integer> {
 
 
-        public Dead() {
 
-            super();
+            public Dead() {
 
-        }
+                super();
 
-
-        // The onPreExecute is executed on the main UI thread before background processing is
-
-        // started. In this method, we start the progressdialog.
-
-        @Override
-
-        protected void onPreExecute() {
-
-            super.onPreExecute();
+            }
 
 
-            // Show the progress dialog on the screen
+            // The onPreExecute is executed on the main UI thread before background processing is
+
+            // started. In this method, we start the progressdialog.
+
+            @Override
+
+            protected void onPreExecute() {
+
+                super.onPreExecute();
 
 
-        }
+                // Show the progress dialog on the screen
 
 
-        // This method is executed in the background and will return a result to onPostExecute
-
-        // method. It receives the file name as input parameter.
-
-        @Override
-
-        protected Integer doInBackground(String... urls) {
+            }
 
 
-            InputStream inputStream = null;
+            // This method is executed in the background and will return a result to onPostExecute
 
-            HttpURLConnection urlConnection = null;
+            // method. It receives the file name as input parameter.
 
-            Integer result = 0;
+            @Override
+
+            protected Integer doInBackground(String... urls) {
 
 
-            // TODO connect to server, download and process the JSON string
+                InputStream inputStream = null;
+
+                HttpURLConnection urlConnection = null;
+
+                Integer result = 0;
 
 
-            // Now we read the file, line by line and construct the
+                // TODO connect to server, download and process the JSON string
 
-            // Json string from the information read in.
 
-            try {
+                // Now we read the file, line by line and construct the
+
+                // Json string from the information read in.
+
+                try {
 
                 /* forming th java.net.URL object */
 
-                URL url = new URL(urls[0]);
-                Log.e("ddddddddddd", String.valueOf(url));
-                urlConnection = (HttpURLConnection) url.openConnection();
+                    URL url = new URL(urls[0]);
+
+                    urlConnection = (HttpURLConnection) url.openConnection();
 
 
 
                  /* optional request header */
 
-                urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
 
 
 
                 /* optional request header */
 
-                urlConnection.setRequestProperty("Accept", "application/json");
+                    urlConnection.setRequestProperty("Accept", "application/json");
 
 
 
                 /* for Get request */
 
-                urlConnection.setRequestMethod("POST");
+                    urlConnection.setRequestMethod("POST");
 
-                int statusCode = urlConnection.getResponseCode();
+                    int statusCode = urlConnection.getResponseCode();
 
 
 
                 /* 200 represents HTTP OK */
 
-                if (statusCode == 200) {
+                    if (statusCode == 200) {
 
-                    inputStream = new BufferedInputStream(urlConnection.getInputStream());
-
-
-                    // Convert the read in information to a Json string
-
-                    responseddd = convertInputStreamToString(inputStream);
+                        inputStream = new BufferedInputStream(urlConnection.getInputStream());
 
 
-                    Log.e("ddddddddddd",responseddd);
+                        // Convert the read in information to a Json string
+
+                        String response = convertInputStreamToString(inputStream);
 
 
+                        // now process the string using the method that we implemented in the previous exercise
+
+                        Log.e("ddddoodd",response);
 
 
+                    }
+else  Log.e("ddddoodd","no");
+                } catch (Exception e) {
 
+                    Log.d(TAG, e.getLocalizedMessage());
 
-
-
-
-
-
-
-
-
-                    result = 1; // Successful
-
-                } else {
-
-                    result = 0; //"Failed to fetch data!";
-                    Log.e("ddddddddddd","00000");
                 }
 
-            } catch (Exception e) {
-
-                Log.d(TAG, e.getLocalizedMessage());
+                return result; //"Failed to fetch data!";
 
             }
-
-            return result; //"Failed to fetch data!";
 
         }
 
 
-    }
 
 
 
@@ -2986,32 +2951,23 @@ if (flood.equals("1"))
 
 
 
-
-
-
-
+/*
         public interface FileUploadService {
             @Multipart
             @POST("search")
             Call<ResponseBody> upload(
                     @Part("api_key") RequestBody description,
                     @Part("api_secret") RequestBody description1,
-                    @Part MultipartBody.Part file,
+                    @Part ("image_url") RequestBody description3,
                     @Part("faceset_token") RequestBody description2
             );
         }
 
-        private void uploadFile(Uri fileuri,File image) {
-        Log.e("upl fileuri", String.valueOf(fileuri));
-        Log.e("upl fileimage", String.valueOf(image));
+        private void uploadFile(String fireurl) {
 
             FileUploadService service =
                     ServiceGenerator.createService(FileUploadService.class);
-            RequestBody requestFile =
-                    RequestBody.create(
-                            MediaType.parse(getContentResolver().getType(fileuri)),
-                            image
-                    );
+
 
 
             // add another part within the multipart request
@@ -3023,9 +2979,9 @@ if (flood.equals("1"))
                     RequestBody.create(
                             okhttp3.MultipartBody.FORM, "9xyBX7iWUUWu4msZbaAm6_XTRN9OiT5b");
             // MultipartBody.Part is used to send also the actual file name
-            MultipartBody.Part body =
-                    MultipartBody.Part.createFormData("image_file", image.getName(), requestFile);
-
+            RequestBody body =
+                    RequestBody.create(
+                            okhttp3.MultipartBody.FORM, "https://firebasestorage.googleapis.com/v0/b/lifesaver-18f28.appspot.com/o/images%2Fname.jpg?alt=media&token=f3909169-4461-401f-81ab-4a0f9d30ae6f");
 
             RequestBody description2 =
                     RequestBody.create(
@@ -3063,7 +3019,7 @@ if (flood.equals("1"))
 
 
 
-
+*/
 
 
 
@@ -3127,10 +3083,8 @@ if (flood.equals("1"))
         { Intent i=new Intent(this,Main5Activity.class);
             startActivity(i);}
         else     if(slider.getBundle().get("extra").equals("Safety Tips: Accidents"))
-        {  String videoId = "XpECMpNCtRE";
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:"+videoId));
-            intent.putExtra("VIDEO_ID", videoId);
-            startActivity(intent);}
+        {  Intent i=new Intent(this,Main6Activity.class);
+            startActivity(i);}
         Toast.makeText(this,slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
     }
 
@@ -3149,6 +3103,165 @@ if (flood.equals("1"))
 
     @Override
     public void onPageScrollStateChanged(int state) {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void emergencycontact()
+{
+    stringArrayList=new ArrayList<>();
+    stringArrayList1=new ArrayList<>();
+    LayoutInflater inflater = getLayoutInflater();
+    View alertLayout = inflater.inflate(R.layout.layoutemergency, null);
+
+    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+
+    // this is set the view from XML inside AlertDialog
+    alert.setView(alertLayout);
+    // disallow cancel of AlertDialog on click of back button and outside touch
+    alert.setTitle("Emergency Contacts ");
+    alert.setIcon(R.drawable.ic_contacts_black_24dp);
+    l=alertLayout.findViewById(R.id.listname);
+    FloatingTextButton fab11=alertLayout.findViewById(R.id.floatingActionButton);
+    final TextView textView=alertLayout.findViewById(R.id.text);
+    fab11.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            textView.setVisibility(View.INVISIBLE);
+            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+            startActivityForResult(intent, RESULT_PICK_CONTACT);
+
+
+
+
+        }
+    });
+
+
+    SharedPreferences preferenceflood=getSharedPreferences("flood",MODE_PRIVATE);
+    flood=preferenceflood.getString("flood","0");
+
+    SharedPreferences preference=getSharedPreferences("emergency",MODE_PRIVATE);
+    phon=preference.getString("mob","");
+    naam=preference.getString("nam","");
+    if(naam!="") {
+
+        textView.setVisibility(View.INVISIBLE);
+        String[] name=naam.split(",");
+        String[] no=phon.split(",");
+        for(int i=0;i<name.length;i++) {
+            stringArrayList.add(name[i]);
+            stringArrayList1.add(no[i]);
+        }
+
+
+
+
+        ListViewAdfrlist adapterj = new ListViewAdfrlist(MainActivity.this, stringArrayList, stringArrayList1);
+        l.setAdapter(adapterj);
+
+    }
+    else {
+
+    }
+    l.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+            LayoutInflater inflater = getLayoutInflater();
+            View alertLayout = inflater.inflate(R.layout.layoutdelete, null);
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+
+            // this is set the view from XML inside AlertDialog
+            alert.setView(alertLayout);
+            // disallow cancel of AlertDialog on click of back button and outside touch
+            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    String n=stringArrayList.get(position);
+                    String p=stringArrayList1.get(position);
+                    stringArrayList.remove(position);
+                    stringArrayList1.remove(position);
+
+                    ListViewAdfrlist adapterj = new ListViewAdfrlist(MainActivity.this, stringArrayList, stringArrayList1);
+                    l.setAdapter(adapterj);
+                    SharedPreferences.Editor editor=getSharedPreferences("emergency",MODE_PRIVATE).edit();
+                    editor.putString("mob",phon.replace(p+",",""));
+                    editor.putString("nam",naam.replace(n+",",""));
+                    editor.apply();
+
+
+
+
+                }
+            });
+            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog dialog = alert.create();
+            dialog.show();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            return false;
+        }
+    });
+
+    alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+
+        }
+    });
+    AlertDialog dialog = alert.create();
+    dialog.show();
+
+
+
+
+
+
+
+    }
+
+
+
 
 
 

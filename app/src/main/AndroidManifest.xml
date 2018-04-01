@@ -139,10 +139,27 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jskgmail.lifesaver.MainActivity" />
         </activity>
-        <activity android:name=".Main99Activity" />
         <activity android:name=".MainppActivity" />
-        <activity android:name=".Main5Activity" />
-        <activity android:name=".Mycomp"></activity>
+        <activity android:name=".Main5Activity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.jskgmail.lifesaver.MainActivity" />
+        </activity>
+        <activity android:name=".Mycomp">
+
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.jskgmail.lifesaver.MainActivity" />
+
+        </activity>
+
+        <activity android:name=".Main6Activity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jskgmail.lifesaver.MainActivity" />
+
+        </activity>
     </application>
 
 </manifest>

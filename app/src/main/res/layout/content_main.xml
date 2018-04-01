@@ -10,6 +10,7 @@
     tools:showIn="@layout/app_bar_main">
 
     <RelativeLayout
+        android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/grey_300">
@@ -174,11 +175,11 @@
                 android:padding="12dp">
 
                 <LinearLayout
-                    android:layout_width="80dp"
                     android:id="@+id/hoo"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="8dp">
+                    android:layout_marginRight="8dp"
+                    android:orientation="vertical">
 
                     <ImageView
 
@@ -197,12 +198,13 @@
                         android:text="Complaint Desk"
                         android:textSize="12sp" />
                 </LinearLayout>
+
                 <LinearLayout
-                    android:layout_width="80dp"
                     android:id="@+id/imageView7"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="8dp">
+                    android:layout_marginRight="8dp"
+                    android:orientation="vertical">
 
                     <ImageView
 
@@ -223,12 +225,13 @@
                         android:text="View Complaints"
                         android:textSize="12sp" />
                 </LinearLayout>
+
                 <LinearLayout
+                    android:id="@+id/bob"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/bob"
-                    android:orientation="vertical"
-                    android:layout_marginRight="8dp">
+                    android:layout_marginRight="8dp"
+                    android:orientation="vertical">
 
                     <ImageView
 
@@ -251,12 +254,12 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/poss"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:id="@+id/poss"
-                    android:layout_marginRight="8dp">
+                    android:orientation="vertical">
 
                     <ImageView
 
@@ -278,11 +281,11 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="80dp"
                     android:id="@+id/pos"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="8dp">
+                    android:layout_marginRight="8dp"
+                    android:orientation="vertical">
 
                     <ImageView
 
@@ -329,14 +332,13 @@
             android:layout_below="@+id/tty"
             android:layout_gravity="bottom"
             android:clipToPadding="false"
+            android:elevation="7dp"
             android:overScrollMode="never"
             android:paddingBottom="30dp"
             android:paddingEnd="@dimen/card_padding"
             android:paddingLeft="@dimen/card_padding"
             android:paddingRight="@dimen/card_padding"
             android:paddingStart="@dimen/card_padding" />
-
-
 
 
     </RelativeLayout>

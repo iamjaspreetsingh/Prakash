@@ -74,10 +74,13 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.github.apl-devs:appintro:v4.2.3'
     compile 'de.hdodenhof:circleimageview:2.2.0'
+    compile 'com.github.PierfrancescoSoffritti:AndroidYouTubePlayer:4.1.7'
     testCompile 'junit:junit:4.12'
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+
 
 
 

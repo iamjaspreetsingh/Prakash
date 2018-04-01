@@ -1,14 +1,14 @@
 
 package com.jskgmail.lifesaver;
 
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.VideoView;
+
+import com.pierfrancescosoffritti.youtubeplayer.player.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayer;
+import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayerInitListener;
+import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayerView;
 
 public class Main3Activity extends AppCompatActivity {
 
@@ -21,26 +21,24 @@ public class Main3Activity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayShowHomeEnabled(true);
         setContentView(R.layout.activity_main3);
-        go();
+        go1();
     }
-    private void go() {
-        final ProgressBar p=(ProgressBar)findViewById(R.id.progressBar2);
-        VideoView v=(VideoView)findViewById(R.id.videoView2) ;
-v.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-    @Override
-    public void onPrepared(MediaPlayer mp) {
-        p.setVisibility(View.GONE);
-    }
-});
-String s="https://firebasestorage.googleapis.com/v0/b/lifesaver-18f28.appspot.com/o/earthquake.mp4?alt=media&token=98993371-823d-4b81-adc7-d9d87ec841a9";
-        Uri uri=Uri.parse(s);
-        v.setVideoURI(uri);
-         v.setVisibility(View.VISIBLE);
-         v.setVideoPath(s);
-        v.requestFocus();
-        v.start();
+    void go1()
+    {
+        YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player_view);
 
-
+        youTubePlayerView.initialize(new YouTubePlayerInitListener() {
+            @Override
+            public void onInitSuccess(final YouTubePlayer initializedYouTubePlayer) {
+                initializedYouTubePlayer.addListener(new AbstractYouTubePlayerListener() {
+                    @Override
+                    public void onReady() {
+                        String videoId = "BLEPakj1YTY";
+                        initializedYouTubePlayer.loadVideo(videoId, 0);
+                    }
+                });
+            }
+        }, true);
 
 
 

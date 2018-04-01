@@ -127,11 +127,13 @@ logToDisplayd(firstBeacon.getDistance());
 
 
                 last=(float)line;
+                desertPlaceholder.setVisibility(View.GONE);
+
             }
         });
 
 
-        desertPlaceholder.setVisibility(View.GONE);
+
     }
 
 }
