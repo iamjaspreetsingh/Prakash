@@ -3,6 +3,12 @@
 
     <group android:checkableBehavior="single">
 
+
+        <item
+            android:id="@+id/mycacc"
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="My Account" />
+
                 <item
                     android:id="@+id/mycomp"
                     android:icon="@drawable/ic_verified_user_black_24dp"

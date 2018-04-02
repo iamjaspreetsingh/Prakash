@@ -160,7 +160,7 @@ namee.setText(username);
         category2.add("Ultra Sensitive");
         category2.add("Low");
         SharedPreferences pref = getSharedPreferences("sensitivity",MODE_PRIVATE);
-        final String[] sensitivity = {pref.getString("no", "2")};
+        final String[] sensitivity = {pref.getString("no", "1")};
 
 
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, category2);

@@ -79,8 +79,8 @@ desertPlaceholder.setVisibility(View.VISIBLE);
                  Beacon firstBeacon = beacons.iterator().next();
 
 
+                  logToDisplay( firstBeacon.toString(), firstBeacon.getDistance());
 
-                 logToDisplay("The beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.");
 logToDisplayd(firstBeacon.getDistance());
 
 
@@ -97,11 +97,13 @@ logToDisplayd(firstBeacon.getDistance());
         } catch (RemoteException e) {   }
     }
 
-    private void logToDisplay(final String line) {
+    private void logToDisplay(final String beacon, final double dist) {
         runOnUiThread(new Runnable() {
             public void run() {
-                TextView editText = (TextView) RangingActivity.this.findViewById(R.id.rangingText);
-                editText.setText(line+"\n");
+                TextView id = (TextView) RangingActivity.this.findViewById(R.id.rangingText);
+                TextView dista = (TextView) RangingActivity.this.findViewById(R.id.rangingText2);
+                id.setText(beacon);
+                dista.setText(""+(float)dist+"metres");
 
             }
         });

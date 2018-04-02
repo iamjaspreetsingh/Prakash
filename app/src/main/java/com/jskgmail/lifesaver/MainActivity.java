@@ -40,6 +40,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -222,6 +223,15 @@ stringArrayList=new ArrayList<>();
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
+        String pub = prefs.getString("public", null);
+        if (pub!=null)
+        {
+          View header=navigationView.getHeaderView(0) ;
+          TextView textView=header.findViewById(R.id.text);
+          textView.setText("Balance: 5 eth");
+        }
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -2485,7 +2495,14 @@ void checkEarthquake()
             startActivity(i);
         }
 
-       else if (id == R.id.safetyplus) {
+        else if (id == R.id.mycacc) {
+            mybaccount();
+
+
+
+        }
+
+        else if (id == R.id.safetyplus) {
            MyService.myaccelerometer=4000;
             SharedPreferences.Editor editor=getSharedPreferences("sensitivity",MODE_PRIVATE).edit();
             editor.putString("no", String.valueOf("2"));
@@ -3264,7 +3281,67 @@ void emergencycontact()
 
 
 
+void mybaccount()
+{
+    LayoutInflater inflater = getLayoutInflater();
+    View alertLayout = inflater.inflate(R.layout.mybacc, null);
+    final EditText pubkey=(EditText)alertLayout.findViewById(R.id.editText6);
+    final EditText prikey=(EditText)alertLayout.findViewById(R.id.editText7);
+    final TextView bal=alertLayout.findViewById(R.id.textView46);
+    final TextView create=alertLayout.findViewById(R.id.textView48);
+    AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
+    // this is set the view from XML inside AlertDialog
+    alert.setView(alertLayout);
+    // disallow cancel of AlertDialog on click of back button and outside touch
+    alert.setTitle("My Account ");
+    alert.setIcon(R.drawable.ic_account_circle_black_24dp);
+
+    SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
+    String pub = prefs.getString("public", null);
+if (pub!=null)
+{
+
+    bal.setText("Real eth");
+    pubkey.setText(pub);
+}
+    String pri = prefs.getString("private", null);
+if (pri!=null)
+    prikey.setText(pri);
+
+    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+        }
+    });
+create.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        Intent i=new Intent(MainActivity.this,WebetherActivity.class);
+        startActivity(i);
+    }
+});
+
+    alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+            SharedPreferences.Editor editor= getSharedPreferences("acckeys",MODE_PRIVATE).edit();
+            editor.putString("public",pubkey.getText().toString());
+            editor.putString("private",prikey.getText().toString());
+
+            editor.apply();
+
+        }
+    });
+    AlertDialog dialog = alert.create();
+    dialog.show();
+
+}
 
 
 

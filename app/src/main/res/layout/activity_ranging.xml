@@ -4,10 +4,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".beaconreference.RangingActivity">
+
     <com.jetradar.desertplaceholder.DesertPlaceholder
         android:id="@+id/placeholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:dp_buttonText="No Beacons found"
         app:dp_message="Nothing To Show" />
 
@@ -15,14 +17,26 @@
         android:id="@+id/rangingText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="67dp"
+        android:layout_alignStart="@+id/textView36"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="96dp"
         android:ems="10"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="16sp">
+        android:textSize="17sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/rangingText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView36"
+        android:layout_below="@+id/textView36"
+        android:layout_marginEnd="10dp"
+        android:ems="10"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="17sp">
 
     </TextView>
 
@@ -36,6 +50,31 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
         android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/cm"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="18dp"
+        android:text="Beacon ID:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/colorPrimary"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/textView36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView17"
+        android:layout_below="@+id/rangingText"
+        android:layout_marginTop="20dp"
+        android:text="Distance:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/colorPrimary"
+        android:textSize="17sp" />
 
 
 </RelativeLayout>

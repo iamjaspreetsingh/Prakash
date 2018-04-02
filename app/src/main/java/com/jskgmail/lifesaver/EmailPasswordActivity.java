@@ -25,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -77,6 +78,14 @@ private RotateLoading rotateLoading;
         mEmailField = (EditText) findViewById(R.id.field_email);
         mPasswordField = (EditText) findViewById(R.id.field_password);
 
+        Button skip=findViewById(R.id.button4);
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(EmailPasswordActivity.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
         // Buttons
         findViewById(R.id.email_sign_in_button).setOnClickListener(this);
         findViewById(R.id.email_create_account_button).setOnClickListener(this);
@@ -87,13 +96,6 @@ private RotateLoading rotateLoading;
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
-        SharedPreferences.Editor editor= getSharedPreferences("acckeys",MODE_PRIVATE).edit();
-        editor.putString("public","public");
-
-        editor.apply();
-
-        SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
-        String restoredText = prefs.getString("public", null);
 
         SignInButton google_Btn = (SignInButton) findViewById(R.id.googleBtn);
 
