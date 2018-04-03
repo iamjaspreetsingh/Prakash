@@ -13,68 +13,98 @@
         app:dp_buttonText="No Beacons found"
         app:dp_message="Nothing To Show" />
 
-    <TextView
-        android:id="@+id/rangingText"
+    <RelativeLayout
+        android:id="@+id/rl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textView36"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="96dp"
-        android:ems="10"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="17sp">
+        android:layout_height="match_parent">
 
-    </TextView>
+        <TextView
+            android:id="@+id/cm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentTop="false"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/rectangle"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:padding="6dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
+            android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/rangingText2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView36"
-        android:layout_below="@+id/textView36"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="17sp">
+        <TextView
+            android:id="@+id/textView53"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="36dp"
+            android:text="Beacon ID:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
 
-    </TextView>
+        <TextView
+            android:id="@+id/rangingtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView53"
+            android:layout_below="@+id/textView53"
+            android:layout_marginTop="4dp"
+            android:text="454545"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/cm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rangingText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="144dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
-        android:textSize="24sp" />
+        <TextView
+            android:id="@+id/textView55"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/rangingtext"
+            android:layout_below="@+id/rangingtext"
+            android:layout_marginTop="9dp"
+            android:text="Beacon Type:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/cm"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="18dp"
-        android:text="Beacon ID:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@color/colorPrimary"
-        android:textSize="17sp" />
+        <TextView
+            android:id="@+id/textView57"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/rangingtext2"
+            android:layout_below="@+id/rangingtext2"
+            android:layout_marginTop="9dp"
+            android:text="Distance:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/textView36"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView17"
-        android:layout_below="@+id/rangingText"
-        android:layout_marginTop="20dp"
-        android:text="Distance:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@color/colorPrimary"
-        android:textSize="17sp" />
+        <TextView
+            android:id="@+id/rangingtext2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView55"
+            android:layout_below="@+id/textView55"
+            android:layout_marginTop="4dp"
+            android:text="Alt Beacon"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="16sp" />
 
+        <TextView
+            android:id="@+id/rangingtext3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView57"
+            android:layout_below="@+id/textView57"
+            android:layout_marginTop="4dp"
+            android:text="2m"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

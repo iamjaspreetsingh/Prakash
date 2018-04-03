@@ -13,6 +13,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.jskgmail.lifesaver.beaconreference.BeaconTransmitterActivity1;
+
 /**
  * Created by TutorialsPoint7 on 8/23/2016.
  */
@@ -130,7 +132,7 @@ onDestroy();}
                     SharedPreferences.Editor editor = getSharedPreferences("flood", MODE_PRIVATE).edit();
                     editor.putString("flood", "1");
                     editor.apply();
-                    Intent intent=new Intent(MyService.this,MainalertActivity.class);
+                    Intent intent=new Intent(MyService.this,BeaconTransmitterActivity1.class);
                     startActivity(intent);
                 }
 

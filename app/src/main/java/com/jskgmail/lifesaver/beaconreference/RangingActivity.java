@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jetradar.desertplaceholder.DesertPlaceholder;
@@ -26,11 +27,12 @@ public class RangingActivity extends Activity implements BeaconConsumer {
     MediaPlayer alert;
     float last=0;
     DesertPlaceholder desertPlaceholder;
+    RelativeLayout rl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranging);
-
+rl=findViewById(R.id.rl);
          desertPlaceholder= (DesertPlaceholder) findViewById(R.id.placeholder);
         desertPlaceholder.setOnButtonClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +44,7 @@ public class RangingActivity extends Activity implements BeaconConsumer {
 desertPlaceholder.setVisibility(View.VISIBLE);
         Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(turnOn, 0);
-
+        rl.setVisibility(View.INVISIBLE);
         alert = MediaPlayer.create(RangingActivity.this, R.raw.beep);
 
 
@@ -60,7 +62,7 @@ desertPlaceholder.setVisibility(View.VISIBLE);
     @Override 
     protected void onPause() {
         super.onPause();
-        if (beaconManager.isBound(this)) beaconManager.setBackgroundMode(true);
+        if (beaconManager.isBound(this)) beaconManager.setBackgroundMode(false);
     }
 
     @Override 
@@ -100,9 +102,10 @@ logToDisplayd(firstBeacon.getDistance());
     private void logToDisplay(final String beacon, final double dist) {
         runOnUiThread(new Runnable() {
             public void run() {
-                TextView id = (TextView) RangingActivity.this.findViewById(R.id.rangingText);
-                TextView dista = (TextView) RangingActivity.this.findViewById(R.id.rangingText2);
-                id.setText(beacon);
+                rl.setVisibility(View.VISIBLE);
+                TextView id = (TextView) RangingActivity.this.findViewById(R.id.rangingtext);
+                TextView dista = (TextView) RangingActivity.this.findViewById(R.id.rangingtext3);
+                id.setText(beacon.replace("type altbeacon","").replace("id2:","\nid2:").replace("id3:","\nid3:"));
                 dista.setText(""+(float)dist+"metres");
 
             }

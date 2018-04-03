@@ -64,6 +64,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.jskgmail.lifesaver.beaconreference.BeaconTransmitterActivity;
+import com.jskgmail.lifesaver.beaconreference.BeaconTransmitterActivity1;
 import com.jskgmail.lifesaver.beaconreference.MonitoringActivity;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
@@ -126,19 +127,20 @@ public class MainActivity extends AppCompatActivity
     static double mylocationa;
     static double myLocationb;int ch=0;
     static String bloodloc;
-    static String hospname="",bbname="";
+    public static String hospname="";
+        public static String bbname="";
     static String ZIP="N.A.";
    static String hosp="";
-    static String bloodno="";
+    public static String bloodno="";
     String TAG = "taggg";
     static double lat=39.7,longi=-104;
     static String hospp="No Hospital Found",hospp1="N.A.",hospp11="N.A.";
-    static String latlong = "";//the realtime latitude longitude parameter
+    public static String latlong = "";//the realtime latitude longitude parameter
     private final static String API_KEY = "AIzaSyClHbZ-x92EYceOWKDSgT0NPZEBBEa_wnU";
     private final static String API_KEY1 = "AIzaSyCGZpTkUUlIYjYuJNOZMJKA6Ar4d7fE7Dc";
     double eleva = 0;
     static String latitude="28.620660,77.08127";
-    static double diffelevation = 0;
+    public static double diffelevation = 0;
     File image = null;
 
     private GoogleApiClient mGoogleApiClient;
@@ -151,8 +153,8 @@ public class MainActivity extends AppCompatActivity
     private SensorManager senSensorManager;
     float lastx=0,lasty=0,lastz=0;
     long lastupdate = System.currentTimeMillis();
-    static String emergencyno="";
-    static String flood="0";
+    public static String emergencyno="";
+    public static String flood="0";
 ListView l;
 RelativeLayout rl;
 
@@ -448,7 +450,17 @@ viewc.setOnClickListener(new View.OnClickListener() {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-dispatchTakePictureIntent();
+                int CAMERA_REQUEST = 50;
+
+                boolean isEnabled = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_GRANTED;
+
+
+                ActivityCompat.requestPermissions(MainActivity.this, new String[] {android.Manifest.permission.CAMERA}, CAMERA_REQUEST);
+
+
+
+                dispatchTakePictureIntent();
 
             }
         });
@@ -2537,7 +2549,7 @@ void checkEarthquake()
 
             editor.apply();
             Toast.makeText(getApplicationContext(),"It is a fake test of how app works during any mishap",Toast.LENGTH_LONG).show();
-            Intent i = new Intent(MainActivity.this, MainalertActivity.class);
+            Intent i = new Intent(MainActivity.this, BeaconTransmitterActivity1.class);
             startActivity(i);
 
         }
