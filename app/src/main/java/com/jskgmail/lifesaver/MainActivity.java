@@ -40,6 +40,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -99,6 +100,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import ru.dimorinny.floatingtextbutton.FloatingTextButton;
 
@@ -126,7 +128,7 @@ public class MainActivity extends AppCompatActivity
     static String bloodloc;
     static String hospname="",bbname="";
     static String ZIP="N.A.";
-    String hosp="";
+   static String hosp="";
     static String bloodno="";
     String TAG = "taggg";
     static double lat=39.7,longi=-104;
@@ -225,14 +227,15 @@ stringArrayList=new ArrayList<>();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
-        String pub = prefs.getString("public", null);
-        if (pub!=null)
-        {
-          View header=navigationView.getHeaderView(0) ;
+        String bal = prefs.getString("balance", "N.A.");
+
+        View header=navigationView.getHeaderView(0) ;
           TextView textView=header.findViewById(R.id.text);
-          textView.setText("Balance: 5 eth");
-        }
+          textView.setText("BALANCE: "+bal);
+
         navigationView.setNavigationItemSelectedListener(this);
+
+        accountdetail();
 
 
 
@@ -1708,7 +1711,6 @@ if (flood.equals("1"))
 
                     // now process the string using the method that we implemented in the previous exercise
                     JSONObject obj=new JSONObject(response);
-//may be said illogical but looking for faster implementation so not made jsonarrays and objects
                     String data=obj.getString("data");
                     String[] dataa=data.split("\\[");
                     for(int i=3;i<1050;i++) {
@@ -2497,6 +2499,7 @@ void checkEarthquake()
 
         else if (id == R.id.mycacc) {
             mybaccount();
+            accountdetail();
 
 
 
@@ -3284,38 +3287,42 @@ void emergencycontact()
 void mybaccount()
 {
     LayoutInflater inflater = getLayoutInflater();
-    View alertLayout = inflater.inflate(R.layout.mybacc, null);
+    final View alertLayout = inflater.inflate(R.layout.mybacc, null);
     final EditText pubkey=(EditText)alertLayout.findViewById(R.id.editText6);
     final EditText prikey=(EditText)alertLayout.findViewById(R.id.editText7);
     final TextView bal=alertLayout.findViewById(R.id.textView46);
+    final Button done=alertLayout.findViewById(R.id.button6);
+
     final TextView create=alertLayout.findViewById(R.id.textView48);
-    AlertDialog.Builder alert = new AlertDialog.Builder(this);
+    final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
     // this is set the view from XML inside AlertDialog
     alert.setView(alertLayout);
-    // disallow cancel of AlertDialog on click of back button and outside touch
-    alert.setTitle("My Account ");
-    alert.setIcon(R.drawable.ic_account_circle_black_24dp);
 
     SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
     String pub = prefs.getString("public", null);
 if (pub!=null)
 {
 
-    bal.setText("Real eth");
+
     pubkey.setText(pub);
 }
+
+
+    SharedPreferences prefs1 = getSharedPreferences("acckeys",MODE_PRIVATE);
+    String ball = prefs1.getString("balance", "N.A.");
+
+
+    bal.setText("BALANCE: "+ball);
+
+
+
+
     String pri = prefs.getString("private", null);
 if (pri!=null)
     prikey.setText(pri);
 
-    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-
-        }
-    });
 create.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
@@ -3323,22 +3330,21 @@ create.setOnClickListener(new View.OnClickListener() {
         startActivity(i);
     }
 });
+    final AlertDialog dialog = alert.create();
 
-    alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+done.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        SharedPreferences.Editor editor= getSharedPreferences("acckeys",MODE_PRIVATE).edit();
+        editor.putString("public",pubkey.getText().toString());
+        editor.putString("private",prikey.getText().toString());
 
+        editor.apply();
+        dialog.dismiss();
 
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
+    }
+});
 
-            SharedPreferences.Editor editor= getSharedPreferences("acckeys",MODE_PRIVATE).edit();
-            editor.putString("public",pubkey.getText().toString());
-            editor.putString("private",prikey.getText().toString());
-
-            editor.apply();
-
-        }
-    });
-    AlertDialog dialog = alert.create();
     dialog.show();
 
 }
@@ -3347,6 +3353,64 @@ create.setOnClickListener(new View.OnClickListener() {
 
 
 
+        void accountdetail()
+        {
+            SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
+            String publ = prefs.getString("public", null);
+            ApiInterfacecomp apiService =ApiClientcomp.getClient().create(ApiInterfacecomp.class);
+//TODO
+            Call call = apiService.getall(publ);
+            call.enqueue(new Callback() {
+                @Override
+                public void onResponse(Call call, Response response) {
+
+                    String url = response.raw().request().url().toString();
+                    Log.e("compether", url);
+                    Complaint mytask = new Complaint();
+                    mytask.execute(url);
+
+
+                }
+
+                @Override
+                public void onFailure(Call call, Throwable t) {
+
+                }
+
+
+            });
+
+        }
+
+
+
+
+        public static class ApiClientcomp {
+
+            public static final String BASE_URL ="http://54.169.130.29:3000/";
+
+            private static Retrofit retrofit = null;
+
+            public static Retrofit getClient() {
+                if (retrofit==null) {
+                    retrofit = new Retrofit.Builder()
+                            .baseUrl(BASE_URL)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+                }
+                return retrofit;
+            }
+
+        }
+        public interface ApiInterfacecomp {
+            @GET("getbalance/{p1}")
+            retrofit2.Call<ResponseBody> getall(
+
+                    @Path("p1") String pubkey
+            );
+
+
+        }
 
 
 
@@ -3354,17 +3418,156 @@ create.setOnClickListener(new View.OnClickListener() {
 
 
 
+        private class Complaint extends AsyncTask<String, Void, Integer> {
 
 
 
+            public Complaint() {
+
+                super();
+
+            }
+
+
+            // The onPreExecute is executed on the main UI thread before background processing is
+
+            // started. In this method, we start the progressdialog.
+
+            @Override
+
+            protected void onPreExecute() {
+
+                super.onPreExecute();
+
+
+                // Show the progress dialog on the screen
+
+
+            }
+
+
+            // This method is executed in the background and will return a result to onPostExecute
+
+            // method. It receives the file name as input parameter.
+
+            @Override
+
+            protected Integer doInBackground(String... urls) {
+
+
+                InputStream inputStream = null;
+
+                HttpURLConnection urlConnection = null;
+
+                Integer result = 0;
+
+
+                // TODO connect to server, download and process the JSON string
+
+
+                // Now we read the file, line by line and construct the
+
+                // Json string from the information read in.
+
+                try {
+
+                /* forming th java.net.URL object */
+
+                    URL url = new URL(urls[0]);
+
+                    urlConnection = (HttpURLConnection) url.openConnection();
 
 
 
+                 /* optional request header */
+
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
 
 
 
+                /* optional request header */
+
+                    urlConnection.setRequestProperty("Accept", "application/json");
 
 
+
+                /* for Get request */
+
+                    urlConnection.setRequestMethod("GET");
+
+                    int statusCode = urlConnection.getResponseCode();
+
+
+
+                /* 200 represents HTTP OK */
+
+                    if (statusCode == 200) {
+
+                        inputStream = new BufferedInputStream(urlConnection.getInputStream());
+
+
+                        // Convert the read in information to a Json string
+
+                        String response = convertInputStreamToString(inputStream);
+
+
+                        Log.e("compbalanceee",response.replace("\"",""));
+                        String[] a=response.replace("\"","").replace(" ","").split("");
+                        Log.e("compbalanceee", String.valueOf(a.length));
+
+                        String bal="N.A.";
+                        if (a.length==21)
+                            bal=a[1]+""+a[2]+"."+a[3]+""+a[4]+""+a[5]+" eth";
+                        else if (a.length==20)
+                            bal=a[1]+"."+a[2]+""+a[3]+""+a[4]+""+a[5]+" eth";
+
+                        else  if (a.length==22)
+                            bal=a[1]+""+a[2]+""+a[3]+"."+a[4]+""+a[5]+" eth";
+
+                        SharedPreferences.Editor editor= getSharedPreferences("acckeys",MODE_PRIVATE).edit();
+                        editor.putString("balance",bal);
+
+                        editor.apply();
+
+
+
+                        result = 1; // Successful
+
+                    } else {
+
+                        result = 0; //"Failed to fetch data!";
+
+                    }
+
+                } catch (Exception e) {
+
+
+
+                }
+
+                return result; //"Failed to fetch data!";
+
+            }
+
+        }
+
+
+
+@Override
+        protected void onResume()
+{
+    super.onResume();
+    accountdetail();
+    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+    SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
+    String bal = prefs.getString("balance", "N.A.");
+
+    View header=navigationView.getHeaderView(0) ;
+    TextView textView=header.findViewById(R.id.text);
+    textView.setText("BALANCE: "+bal);
+
+    navigationView.setNavigationItemSelectedListener(this);
+}
 
 
 }

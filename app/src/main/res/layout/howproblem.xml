@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="4dp">
 
     <TextView
         android:id="@+id/textView43"
@@ -67,10 +68,12 @@
         android:id="@+id/textView47"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView45"
         android:layout_below="@+id/textView45"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:background="@color/cardview_light_background"
+        android:background="@drawable/rectangle"
         android:foregroundGravity="center_horizontal"
         android:gravity="center_horizontal"
         android:padding="7dp"

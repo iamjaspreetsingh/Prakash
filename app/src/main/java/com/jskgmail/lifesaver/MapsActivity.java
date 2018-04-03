@@ -1,8 +1,13 @@
 package com.jskgmail.lifesaver;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -34,6 +39,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
        rotateLoading=findViewById(R.id.rotateloading);
        rotateLoading.setLoadingColor(R.color.colorPrimary);
+      FloatingActionButton fab=findViewById(R.id.floatingActionButton2);
+      fab.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Intent i=new Intent(MapsActivity.this,Searchcomplaint.class);
+              startActivity(i);
+          }
+      });
+      final RelativeLayout rl=findViewById(R.id.rl);
+
+      fab.setOnLongClickListener(new View.OnLongClickListener() {
+          @Override
+          public boolean onLongClick(View view) {
+              Snackbar.make(rl,"View complaints under ethereum transactions",Snackbar.LENGTH_LONG).show();
+
+              return false;
+          }
+      });
 
       rotateLoading.start();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.

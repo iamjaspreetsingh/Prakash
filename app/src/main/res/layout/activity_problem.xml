@@ -63,7 +63,7 @@
             android:layout_marginTop="13dp"
             android:ems="10"
             android:hint="The problem you are facing"
-            android:inputType="textPersonName" />
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/textView33"

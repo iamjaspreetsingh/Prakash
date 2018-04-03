@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -218,16 +217,13 @@ rl=findViewById(R.id.r);
                     public void onClick(DialogInterface dialog, int which) {
                         problems[0] =("");
                         if (!checkedTextView.isChecked()) problems[0] =problems[0] +("Food Shortage");
-                         if (!checkedTextView1.isChecked()) problems[0] =problems[0] +(" Water Shortage");
-                          if (!checkedTextView2.isChecked()) problems[0] =problems[0] +(" Electricity Supply");
-                          if (!checkedTextView3.isChecked()) problems[0] =problems[0] +(" Sewage Problem");
-                         if (!checkedTextView4.isChecked()) problems[0] =problems[0] +(" Shelter Problem");
-                         if (!checkedTextView5.isChecked()) problems[0] =problems[0] +(" Any other");
-                        if (problems[0].equals(""))problems[0]="Click here and select ";
+                         if (!checkedTextView1.isChecked()) problems[0] =problems[0] +("Water Shortage");
+                          if (!checkedTextView2.isChecked()) problems[0] =problems[0] +("Electricity Supply");
+                          if (!checkedTextView3.isChecked()) problems[0] =problems[0] +("Sewage Problem");
+                         if (!checkedTextView4.isChecked()) problems[0] =problems[0] +("Shelter Problem");
+                         if (!checkedTextView5.isChecked()) problems[0] =problems[0] +("Any other");
+                        if (problems[0].equals(""))problems[0]="Click here and select";
 spinner.setText(problems[0]);
-
-
-
 
 
 
@@ -313,9 +309,13 @@ spinner.setText(problems[0]);
 
                 SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
                 String pub = prefs.getString("public", null);
+
+                String bal1 = prefs.getString("balance", "N.A.");
+
+                bal.setText("BALANCE: "+bal1);
                 if (pub!=null)
                 {
-                    bal.setText("Real eth");
+
                     pubkey.setText(pub);
                 }
                 String pri = prefs.getString("private", null);
@@ -344,7 +344,6 @@ spinner.setText(problems[0]);
                             editor.apply();
 
                            registertransaction(desc.getText().toString(),name.getText().toString(),mob.getText().toString());
-
 
 
 
@@ -393,7 +392,7 @@ spinner.setText(problems[0]);
 
                 String url = response.raw().request().url().toString();
                 Log.e("compno", url);
-                BloodB mytask = new BloodB();
+                BloodB1 mytask = new BloodB1();
                 mytask.execute(url);
 
 
@@ -437,7 +436,6 @@ void registertransaction(String descr,String nam,String mob)
         });
 
     }
-
     public static class ApiClientcomp {
 
         public static final String BASE_URL ="http://54.169.130.29:3000/";
@@ -480,11 +478,11 @@ void registertransaction(String descr,String nam,String mob)
 
 
     }
-    private class BloodB extends AsyncTask<String, Void, Integer> {
+    private class BloodB1 extends AsyncTask<String, Void, Integer> {
 
 
 
-        public BloodB() {
+        public BloodB1() {
 
             super();
 
@@ -575,8 +573,7 @@ void registertransaction(String descr,String nam,String mob)
                         Log.e("complaintno", response);
                         int compno=Integer.parseInt(response.replace("\"", "")) ;
 
-                        Snackbar.make(rl, "Your complaint no." + (compno) + " is being processed.Check its status in My Complaints", Snackbar.LENGTH_LONG).show();
-                    SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
+                        Toast.makeText(getApplicationContext(), "Your complaint no." + (compno) + " is being processed.Check its status in My Complaints", Toast.LENGTH_LONG).show();
 
                     SharedPreferences.Editor editor= getSharedPreferences("acckeys",MODE_PRIVATE).edit();
                     editor.putString("my_compno", String.valueOf(compno));
@@ -609,37 +606,7 @@ void registertransaction(String descr,String nam,String mob)
 
     }
 
-   /* private void go(String comp) {
 
-        LayoutInflater inflater = getLayoutInflater();
-        View alertLayout = inflater.inflate(R.layout.simpletextlayout, null);
-        final TextView text=(EditText)alertLayout.findViewById(R.id.textView49);
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-        // this is set the view from XML inside AlertDialog
-        alert.setView(alertLayout);
-        // disallow cancel of AlertDialog on click of back button and outside touch
-        alert.setTitle("Complaint Registration ");
-        alert.setIcon(R.drawable.ic_account_balance_black_24dp);
-      text.setText(comp);
-
-
-        alert.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-
-            }
-        });
-        AlertDialog dialog = alert.create();
-        dialog.show();
-
-
-    }
-*/
     private class Complaint extends AsyncTask<String, Void, Integer> {
 
 
@@ -731,12 +698,50 @@ void registertransaction(String descr,String nam,String mob)
                     // Convert the read in information to a Json string
 
                     String response = convertInputStreamToString(inputStream);
+                    final String hashgen="Complaint Registered under HashCode:"+response.replace("\"", "");
 
+
+
+
+                  Log.e("comphash",hashgen);
+                    // now process the string using the method that we implemented in the previous exercise
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    View alertLayout = inflater.inflate(R.layout.simpletextlayout, null);
+                    final TextView hash=alertLayout.findViewById(R.id.text);
+                    hash.setText(hashgen);
+
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getApplicationContext());
+
+                    // this is set the view from XML inside AlertDialog
+                    alert.setView(alertLayout);
+                    // disallow cancel of AlertDialog on click of back button and outside touch
+                    alert.setTitle("Complaint Registered ");
+                    alert.setIcon(R.drawable.ic_account_balance_black_24dp);
+
+
+
+                    alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+
+                        }
+                    });
+                    AlertDialog dialog = alert.create();
+                    dialog.show();
+
+                        }
+                    });
 
                     getlatestcompno();
-
-
-                    // now process the string using the method that we implemented in the previous exercise
 
 
 

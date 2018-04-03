@@ -17,8 +17,8 @@ public class MainintroActivity extends AppIntro {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        askForPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1); // OR
-        askForPermissions(new String[]{Manifest.permission.SEND_SMS, Manifest.permission.CALL_PHONE, Manifest.permission.READ_CONTACTS}, 2);
+        askForPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 2); // OR
+        askForPermissions(new String[]{Manifest.permission.SEND_SMS, Manifest.permission.CALL_PHONE, Manifest.permission.READ_CONTACTS}, 3);
         // Note here that we DO NOT use setContentView();
 
         // Add your slide fragments here.

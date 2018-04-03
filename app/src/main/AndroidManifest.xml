@@ -154,7 +154,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jskgmail.lifesaver.MainActivity" />
         </activity>
-        <activity android:name=".WebetherActivity"></activity>
+        <activity android:name=".WebetherActivity" />
+        <activity android:name=".Searchcomplaint">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jskgmail.lifesaver.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

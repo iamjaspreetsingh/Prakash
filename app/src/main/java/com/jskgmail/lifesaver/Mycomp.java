@@ -1,6 +1,7 @@
 package com.jskgmail.lifesaver;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -37,6 +38,11 @@ import ru.dimorinny.floatingtextbutton.FloatingTextButton;
 
 public class Mycomp extends AppCompatActivity {
 private RotateLoading rotateLoading;
+    TextView des;
+    TextView pro;
+    TextView mob;
+    TextView add;
+    TextView status;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +57,11 @@ private RotateLoading rotateLoading;
         rotateLoading.start();
         SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
 
-        final TextView des=findViewById(R.id.des);
-        final TextView pro=findViewById(R.id.pro);
-        final TextView mob=findViewById(R.id.no);
-        final TextView add=findViewById(R.id.add);
+         des=findViewById(R.id.des);
+         pro=findViewById(R.id.pro);
+        mob=findViewById(R.id.no);
+         add=findViewById(R.id.add);
+         status=findViewById(R.id.textView23111);
         final String uid= prefs.getString("uid", "");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("PROBLEMS");
@@ -63,6 +70,8 @@ private RotateLoading rotateLoading;
         final String getBcomp = pref.getString("my_compno", null);
         if(getBcomp!=null)
         {
+
+            status.setText("Status of complaint");
             getfind(getBcomp);
 
             FloatingTextButton floatingTextButton = findViewById(R.id.fab);
@@ -71,8 +80,9 @@ private RotateLoading rotateLoading;
                 public void onClick(View view) {
 
                     changestatus(getBcomp);
+                    finish();
 
-
+                    Toast.makeText(getApplicationContext(),"Complaint Deletetion initiated",Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -80,6 +90,7 @@ private RotateLoading rotateLoading;
         }
         else {
 
+            status.setText("Address Details");
 
             // Read from the database
             myRef.addValueEventListener(new ValueEventListener() {
@@ -188,8 +199,6 @@ ApiInterfacelatestcomp apiService = ApiClientcomp.getClient().create(ApiInterfac
                 Log.e("compno", url);
                 BloodB mytask = new BloodB();
                 mytask.execute(url);
-
-
             }
 
             @Override
@@ -262,7 +271,6 @@ ApiInterfacelatestcomp apiService = ApiClientcomp.getClient().create(ApiInterfac
 
         }
 
-
         // This method is executed in the background and will return a result to onPostExecute
 
         // method. It receives the file name as input parameter.
@@ -312,7 +320,7 @@ ApiInterfacelatestcomp apiService = ApiClientcomp.getClient().create(ApiInterfac
 
                 urlConnection.setRequestMethod("GET");
 
-                int statusCode = urlConnection.getResponseCode();
+                final int statusCode = urlConnection.getResponseCode();
 
 
 
@@ -325,25 +333,39 @@ ApiInterfacelatestcomp apiService = ApiClientcomp.getClient().create(ApiInterfac
 
                     // Convert the read in information to a Json string
 
-                    String response = convertInputStreamToString(inputStream);
+                    final String response = convertInputStreamToString(inputStream);
 
-                    Log.e("complaintwhattt", response);
-                    rotateLoading.stop();
+                    Log.e("complaintwhattt", response.replace("\"",""));
+                   final String response1= response.replace("\"","");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            rotateLoading.stop();
 
-                    final TextView des=findViewById(R.id.des);
-                    final TextView pro=findViewById(R.id.pro);
-                    final TextView mob=findViewById(R.id.no);
-                    final TextView add=findViewById(R.id.add);
 
 //may be said illogical but looking for faster implementation so not made jsonarrays and objects
-                   String[] re=response.replace("[","").replace("]","")
-                           .split(",");
-                  des.setText(re[2]);
-                  pro.setText(re[5]);
-                  mob.setText(re[3]);
-                  if (re[0].equals("99"))
-                  add.setText("Deleted");
-                  else   add.setText(re[0]);
+                            String[] re = response1.replace("\"","").replace("[", "").replace("]", "")
+                                    .split(",");
+                            Log.e("compew0",re[0]);
+                            des.setText(re[2]);
+                            pro.setText(re[5]);
+                            mob.setText(re[4]);
+                            if (re[0].equals("9")) {
+                                add.setText("Complaint Deleted");
+                                add.setTextColor(Color.RED);
+
+                            }
+                            else {add.setText("Your complaint is received and is under consideration");
+                                add.setTextColor(Color.BLACK);
+
+                            }
+                        }
+                    });
+
+
+
+                    //  showui(response);
+
                     // now process the string using the method that we implemented in the previous exercise
 
 
@@ -358,9 +380,6 @@ ApiInterfacelatestcomp apiService = ApiClientcomp.getClient().create(ApiInterfac
                 }
 
             } catch (Exception e) {
-
-
-
             }
 
             return result; //"Failed to fetch data!";
@@ -431,7 +450,7 @@ void changestatus(String getBcomp)
 
 }
     public interface ApiInterfacecomp {
-        @GET("complain/{p1}/{p2}/{p3}/{p4}")
+        @GET("changeStatus/{p1}/{p2}/{p3}/{p4}")
         retrofit2.Call<ResponseBody> getall(
 
                 @Path("p1") String id,
@@ -536,6 +555,7 @@ void changestatus(String getBcomp)
                     // Convert the read in information to a Json string
 
                     String response = convertInputStreamToString(inputStream);
+
 
 
 
