@@ -54,7 +54,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
           public boolean onLongClick(View view) {
               Snackbar.make(rl,"View complaints under ethereum transactions",Snackbar.LENGTH_LONG).show();
 
-              return false;
+              return true;
           }
       });
 
@@ -146,6 +146,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 Log.e("zzzz"+MainActivity.mylocationa, ""+MainActivity.myLocationb);
         LatLng sydney1 = new LatLng(MainActivity.lat,MainActivity.longi);
 
+        LatLng sydney2 = new LatLng(28.6755104,77.1229534);
+        LatLng sydney3 = new LatLng(28.6775104,77.1329534);
+        LatLng sydney4 = new LatLng(28.6795104,77.1429534);
+        LatLng sydney5 = new LatLng(28.6815104,77.1529534);
+        LatLng sydney6 = new LatLng(28.6735104,77.1629534);
+        LatLng sydney7 = new LatLng(28.6785104,77.1729534);
+        LatLng sydney8 = new LatLng(28.6755804,77.1829534);
+        LatLng sydney9 = new LatLng(28.6955104,77.1929534);
+        LatLng sydney61 = new LatLng(28.6735104,77.2029534);
+        LatLng sydney71 = new LatLng(28.6785104,77.2129534);
+        LatLng sydney81 = new LatLng(28.6755804,77.2229534);
+        LatLng sydney91 = new LatLng(28.6955104,77.2329534);
+        LatLng sydney611 = new LatLng(28.7735104,77.1929534);
+        LatLng sydney711 = new LatLng(28.7185104,77.1829534);
+        LatLng sydney811 = new LatLng(28.7255804,77.1229534);
+        LatLng sydney911 = new LatLng(28.7355104,77.1329534);
+        LatLng sydney6111 = new LatLng(28.7435104,77.1029534);
+        LatLng sydney7111 = new LatLng(28.7585104,77.1129534);
+        LatLng sydney8111 = new LatLng(28.7655804,77.1929534);
+        LatLng sydney9111 = new LatLng(28.7855104,77.1929534);
+
+        mMap.addMarker(new MarkerOptions().position(sydney2).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney3).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney4).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney5).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney6).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney7).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney8).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney9).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney61).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney71).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney81).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney91).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney611).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney711).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney811).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney911).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney6111).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney7111).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney8111).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
+        mMap.addMarker(new MarkerOptions().position(sydney9111).title("PROBLEM").snippet("PROBLEM").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_stat_name)));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney1,12));
 

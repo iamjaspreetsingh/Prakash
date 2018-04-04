@@ -456,11 +456,12 @@ viewc.setOnClickListener(new View.OnClickListener() {
                         == PackageManager.PERMISSION_GRANTED;
 
 
-                ActivityCompat.requestPermissions(MainActivity.this, new String[] {android.Manifest.permission.CAMERA}, CAMERA_REQUEST);
 
+                if (isEnabled)
+                    dispatchTakePictureIntent();
+                else
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[] {android.Manifest.permission.CAMERA}, CAMERA_REQUEST);
 
-
-                dispatchTakePictureIntent();
 
             }
         });

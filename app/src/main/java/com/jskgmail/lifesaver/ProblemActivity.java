@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +13,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -39,10 +39,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import ru.dimorinny.floatingtextbutton.FloatingTextButton;
 
 public class ProblemActivity extends AppCompatActivity {
 int problem=0;
 RelativeLayout rl;
+static String hash="0xf79f41336f2b9468c59d7a759f534e1bb8c1e8343a9203ff41c90bf3e60ed0a4";
+    String hashgen="Transaction initiated"+hash;
+    TextView cno;
+
     final String[] problems = {"Click here and select "};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ RelativeLayout rl;
 
 rl=findViewById(R.id.r);
 
+cno=findViewById(R.id.textView17);
 
 
 
@@ -69,8 +75,7 @@ rl=findViewById(R.id.r);
 
 
 
-
-
+getlatestcompno();
 
 
 
@@ -253,7 +258,7 @@ spinner.setText(problems[0]);
 
 spinner.setText(problems[0]);
         final RelativeLayout r=findViewById(R.id.r);
-        Button don=findViewById(R.id.button5);
+        FloatingTextButton don=findViewById(R.id.fab);
         don.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -278,16 +283,6 @@ spinner.setText(problems[0]);
                         @Override
                         public void onClick(View view) {
 
-                            DatabaseReference myRef = database.getReference("PROBLEMS");
-
-                            DatabaseReference myRef1 = myRef.child(uid);
-
-                            myRef1.child("GPS").setValue(MainActivity.lat+","+MainActivity.longi);
-                            myRef1.child("Prob").setValue(problems[0]);
-                            myRef1.child("Description").setValue(desc.getText().toString());
-                            myRef1.child("Name").setValue(name.getText().toString());
-                            myRef1.child("Mobile").setValue(mob.getText().toString());
-                            myRef1.child("Address").setValue(addr.getText().toString());
 
 
                             Toast toast = new Toast(getApplicationContext());
@@ -305,6 +300,17 @@ spinner.setText(problems[0]);
 
                         }
                     });
+
+                DatabaseReference myRef = database.getReference("PROBLEMS");
+
+                DatabaseReference myRef1 = myRef.child(uid);
+
+                myRef1.child("GPS").setValue(MainActivity.lat+","+MainActivity.longi);
+                myRef1.child("Prob").setValue(problems[0]);
+                myRef1.child("Description").setValue(desc.getText().toString());
+                myRef1.child("Name").setValue(name.getText().toString());
+                myRef1.child("Mobile").setValue(mob.getText().toString());
+                myRef1.child("Address").setValue(addr.getText().toString());
 
 
                 SharedPreferences prefs = getSharedPreferences("acckeys",MODE_PRIVATE);
@@ -346,6 +352,10 @@ spinner.setText(problems[0]);
                            registertransaction(desc.getText().toString(),name.getText().toString(),mob.getText().toString());
 
 
+                            Snackbar mySnackbar = Snackbar.make(rl, hashgen, Snackbar.LENGTH_LONG);
+                            mySnackbar.setAction("View", new ViewHash());
+                            mySnackbar.show();
+
 
 
 
@@ -371,14 +381,7 @@ spinner.setText(problems[0]);
         });
 
 
-        CheckedTextView comp=findViewById(R.id.compmy);
-        comp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(ProblemActivity.this,Mycomp.class);
-                startActivity(intent);
-            }
-        });
+
 }
     void getlatestcompno()
     {
@@ -421,6 +424,12 @@ void registertransaction(String descr,String nam,String mob)
 
                 String url = response.raw().request().url().toString();
                 Log.e("compether", url);
+               // Snackbar mySnackbar = Snackbar.make(rl, hashgen, Snackbar.LENGTH_LONG);
+              //  mySnackbar.setAction("View", new Complaint.ViewHash());
+              //  mySnackbar.show();
+
+
+
                 Complaint mytask = new Complaint();
                 mytask.execute(url);
 
@@ -568,12 +577,18 @@ void registertransaction(String descr,String nam,String mob)
 
                     // Convert the read in information to a Json string
 
-                    String response = convertInputStreamToString(inputStream);
+                    final String response = convertInputStreamToString(inputStream);
 
                         Log.e("complaintno", response);
-                        int compno=Integer.parseInt(response.replace("\"", "")) ;
+                        final int compno=Integer.parseInt(response.replace("\"", "")) ;
+                    runOnUiThread(new Runnable() {
+                                      @Override
+                                      public void run() {
 
-                        Toast.makeText(getApplicationContext(), "Your complaint no." + (compno) + " is being processed.Check its status in My Complaints", Toast.LENGTH_LONG).show();
+                                          cno.setText("Your complaint ID is : "+compno);
+
+                                      }
+                                  });
 
                     SharedPreferences.Editor editor= getSharedPreferences("acckeys",MODE_PRIVATE).edit();
                     editor.putString("my_compno", String.valueOf(compno));
@@ -627,7 +642,6 @@ void registertransaction(String descr,String nam,String mob)
         protected void onPreExecute() {
 
             super.onPreExecute();
-
 
             // Show the progress dialog on the screen
 
@@ -690,71 +704,50 @@ void registertransaction(String descr,String nam,String mob)
 
                 /* 200 represents HTTP OK */
 
-                if (statusCode == 200) {
+                //if (statusCode == 200) {
 
                     inputStream = new BufferedInputStream(urlConnection.getInputStream());
 
 
                     // Convert the read in information to a Json string
 
-                    String response = convertInputStreamToString(inputStream);
-                    final String hashgen="Complaint Registered under HashCode:"+response.replace("\"", "");
+                    String response = convertInputStreamToString(inputStream)+"aa";
+                Log.e("comphashhh",response);
+
+             //   hash=""+response;
+
+                    hashgen="Transaction initiated"+response;
 
 
 
+                    Log.e("comphashhh",hashgen);
 
-                  Log.e("comphash",hashgen);
+
+                          //  Snackbar mySnackbar = Snackbar.make(rl, hashgen, Snackbar.LENGTH_LONG);
+                        //    mySnackbar.setAction("View", new ViewHash());
+                         //   mySnackbar.show();
+
+
                     // now process the string using the method that we implemented in the previous exercise
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-
-
-                    LayoutInflater inflater = getLayoutInflater();
-                    View alertLayout = inflater.inflate(R.layout.simpletextlayout, null);
-                    final TextView hash=alertLayout.findViewById(R.id.text);
-                    hash.setText(hashgen);
-
-                    AlertDialog.Builder alert = new AlertDialog.Builder(getApplicationContext());
-
-                    // this is set the view from XML inside AlertDialog
-                    alert.setView(alertLayout);
-                    // disallow cancel of AlertDialog on click of back button and outside touch
-                    alert.setTitle("Complaint Registered ");
-                    alert.setIcon(R.drawable.ic_account_balance_black_24dp);
 
 
 
-                    alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
-
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-
-                        }
-                    });
-                    AlertDialog dialog = alert.create();
-                    dialog.show();
-
-                        }
-                    });
-
-                    getlatestcompno();
+                //    getlatestcompno();
 
 
 
 
                     result = 1; // Successful
 
-                } else {
+              //  } else {
 
-                    result = 0; //"Failed to fetch data!";
+             //       result = 0; //"Failed to fetch data!";
 
-                }
+              //  }
 
             } catch (Exception e) {
+                Log.e("compppp", String.valueOf(e));
 
 
 
@@ -764,9 +757,18 @@ void registertransaction(String descr,String nam,String mob)
 
         }
 
+
     }
 
+    private class ViewHash implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
 
+            Intent i=new Intent(ProblemActivity.this,WebhashActivity.class);
+            startActivity(i);
+
+        }
+    }
     private String convertInputStreamToString(InputStream inputStream) throws IOException {
 
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));

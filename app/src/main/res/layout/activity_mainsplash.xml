@@ -14,7 +14,7 @@
         android:layout_alignParentStart="true"
         android:background="@color/colorred"
         android:fitsSystemWindows="false"
-        app:srcCompat="@drawable/splalsh" />
+        app:srcCompat="@drawable/capture1" />
 
     <ProgressBar
         android:id="@+id/progressBar4"

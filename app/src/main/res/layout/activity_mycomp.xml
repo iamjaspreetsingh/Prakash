@@ -5,6 +5,7 @@
     android:id="@+id/rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="4dp"
     tools:context="com.jskgmail.lifesaver.Mycomp">
 
     <android.support.v7.widget.CardView
@@ -13,11 +14,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/cardView5"
-        android:layout_marginRight="3dp"
-        android:layout_marginTop="18dp"
-        android:elevation="5dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="11dp"
+        android:elevation="1dp"
         app:cardCornerRadius="3dp"
-        app:cardElevation="4dp">
+        app:cardElevation="1dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -35,7 +37,7 @@
                 android:text="Address Details"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
-                android:textSize="16sp" />
+                android:textSize="17sp" />
 
 
             <TextView
@@ -61,10 +63,11 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/cardView5"
         android:layout_below="@+id/textView38"
-        android:layout_marginTop="11dp"
-        android:elevation="5dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="17dp"
+        android:elevation="1dp"
         app:cardCornerRadius="3dp"
-        app:cardElevation="4dp">
+        app:cardElevation="1dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -82,7 +85,7 @@
                 android:text="Problem"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
-                android:textSize="16sp" />
+                android:textSize="17sp" />
 
 
             <TextView
@@ -107,11 +110,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/cardView4"
-        android:layout_marginRight="3dp"
-        android:layout_marginTop="12dp"
-        android:elevation="5dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="11dp"
+        android:elevation="1dp"
         app:cardCornerRadius="3dp"
-        app:cardElevation="4dp">
+        app:cardElevation="1dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -129,7 +133,7 @@
                 android:text="Description of problem"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
-                android:textSize="16sp" />
+                android:textSize="17sp" />
 
 
             <TextView
@@ -148,23 +152,24 @@
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
+
     <android.support.v7.widget.CardView
         android:id="@+id/cardView66"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/rotateloading1"
         android:layout_alignEnd="@+id/cardView6"
         android:layout_below="@+id/cardView6"
-        android:layout_marginEnd="3dp"
-        android:layout_marginTop="12dp"
-        android:elevation="5dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="10dp"
+        android:elevation="1dp"
         app:cardCornerRadius="3dp"
-        app:cardElevation="4dp">
+        app:cardElevation="1dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:paddingBottom="5dp">
 
             <TextView
                 android:id="@+id/textView2311"
@@ -177,7 +182,7 @@
                 android:text="Contact no."
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
-                android:textSize="16sp" />
+                android:textSize="17sp" />
 
 
             <TextView
@@ -196,22 +201,33 @@
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-
     <TextView
         android:id="@+id/textView38"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView20"
         android:layout_alignBottom="@+id/textView20"
         android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="false"
+        android:layout_marginBottom="6dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="8dp"
-        android:text="My Complaints :"
+        android:layout_marginTop="14dp"
+        android:foregroundGravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:text="MY COMPLAINTS"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp" />
+        android:textSize="18sp" />
 
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/textView38"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/darker_gray" />
     <com.victor.loading.rotate.RotateLoading
         android:id="@+id/rotateloading1"
         android:layout_width="50dp"

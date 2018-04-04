@@ -17,17 +17,19 @@ public class MainintroActivity extends AppIntro {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         askForPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 2); // OR
         askForPermissions(new String[]{Manifest.permission.SEND_SMS, Manifest.permission.CALL_PHONE, Manifest.permission.READ_CONTACTS}, 3);
         // Note here that we DO NOT use setContentView();
 
         // Add your slide fragments here.
         // AppIntro will automatically generate the dots indicator and buttons.
+                setFlowAnimation();
 
 
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest.
-        addSlide(AppIntroFragment.newInstance("Welcome to PRAKASH app", "The 24/7 bodyguard that protects and saves you from any mishap ", R.drawable.mobbb, Color.parseColor("#10a7ff")));
+        addSlide(AppIntroFragment.newInstance("WELCOME !", "The 24/7 bodyguard that protects and saves you from any mishap ", R.drawable.shield, Color.parseColor("#10a7ff")));
         addSlide(AppIntroFragment.newInstance("Your location", "Find nearest hospitals,blood banks and police stations to your location", R.drawable.hospii,Color.parseColor("#10a7ff")));
         addSlide(AppIntroFragment.newInstance("Your contacts", "Manages your emergency contacts and sends alert automatically in case of any problem detected", R.drawable.third, Color.parseColor("#10a7ff")));
 
@@ -37,8 +39,8 @@ public class MainintroActivity extends AppIntro {
 
         addSlide(AppIntroFragment.newInstance("Your complaints", "The blockchain based complaint system for problem registered by user", R.drawable.fourt, Color.parseColor("#10a7ff")));
 
-        // OPTIONAL METHODS
-        // Override bar/separator color.
+        // OPTIONAL METHODS        // Override bar/separator color.
+
         setBarColor(Color.parseColor("#3F51B5"));
         setSeparatorColor(Color.parseColor("#2196F3"));
 setBackButtonVisibilityWithDone(true);

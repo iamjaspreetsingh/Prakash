@@ -17,12 +17,12 @@ import java.util.List;
 public class BuilderManager {
 
     private static int[] imageResources = new int[]{
-            R.drawable.ambb,
-            R.drawable.pss,
-            R.drawable.firer,
-            R.drawable.wom,
-            R.drawable.earq,
-            R.drawable.chi
+            R.drawable.hoooo,
+            R.drawable.pllllcc,
+            R.drawable.firrrr,
+            R.drawable.wwww,
+            R.drawable.dissss,
+            R.drawable.csss
 
     };
     private static String[] imagtext = new String[]{

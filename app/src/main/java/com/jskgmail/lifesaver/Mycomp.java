@@ -137,6 +137,7 @@ private RotateLoading rotateLoading;
             });
 
 
+
             FloatingTextButton floatingTextButton = findViewById(R.id.fab);
             floatingTextButton.setOnClickListener(new View.OnClickListener() {
                 @Override

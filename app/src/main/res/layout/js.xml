@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="11dp"
         android:layout_marginTop="11dp"
-        app:srcCompat="@drawable/js" />
+        app:srcCompat="@drawable/bhaiya" />
 
     <TextView
         android:id="@+id/textView16"
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView16"
         android:layout_below="@+id/textView16"
-        android:text="Jaspreet Singh"
+        android:text="Vaibhav Chellani"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
     <TextView
