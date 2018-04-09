@@ -1,13 +1,19 @@
 package com.jskgmail.lifesaver;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -64,6 +70,24 @@ public class Searchcomplaint extends AppCompatActivity {
            allcard.setVisibility(View.INVISIBLE);
                 status.setText("Status of complaint");
 
+final RelativeLayout rl=findViewById(R.id.rl);
+        FloatingActionButton gototransaction=findViewById(R.id.floatingActionButton3);
+                gototransaction.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i=new Intent(Searchcomplaint.this,WebhashActivity.class);
+                        startActivity(i);
+                    }
+                });
+
+               gototransaction.setOnLongClickListener(new View.OnLongClickListener() {
+                   @Override
+                   public boolean onLongClick(View view) {
+                       Snackbar.make(rl,"View all complaints under ethereum transactions",Snackbar.LENGTH_LONG).show();
+                       return true;
+                   }
+               });
+
         final EditText id=findViewById(R.id.editText8);
         ImageView search=findViewById(R.id.imageView8);
         search.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +97,23 @@ public class Searchcomplaint extends AppCompatActivity {
 
                 getfind(id.getText().toString());
 
+            }
+        });
+        id.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+               if (i== EditorInfo.IME_ACTION_SEARCH)
+               {
+                   rotateLoading.start();
+InputMethodManager in= (InputMethodManager) getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
+in.hideSoftInputFromWindow(id.getWindowToken(),0);
+getfind(textView.getText().toString());
+                   return true;
+
+               }
+
+
+                return false;
             }
         });
 

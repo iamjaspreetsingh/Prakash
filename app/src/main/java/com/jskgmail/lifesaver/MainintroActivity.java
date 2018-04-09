@@ -3,6 +3,7 @@ package com.jskgmail.lifesaver;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,14 +19,21 @@ public class MainintroActivity extends AppIntro {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        askForPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 2); // OR
+
+        SharedPreferences prefs = getSharedPreferences("app",MODE_PRIVATE);
+        String firsttime = prefs.getString("intro", "1");
+        if (firsttime.equals("2")) {
+            Intent i = new Intent(MainintroActivity.this, EmailPasswordActivity.class);
+            startActivity(i);
+        }
+        else
+        { askForPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 2); // OR
         askForPermissions(new String[]{Manifest.permission.SEND_SMS, Manifest.permission.CALL_PHONE, Manifest.permission.READ_CONTACTS}, 3);
         // Note here that we DO NOT use setContentView();
 
         // Add your slide fragments here.
         // AppIntro will automatically generate the dots indicator and buttons.
-                setFlowAnimation();
-
+setFadeAnimation();
 
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest.
@@ -59,6 +67,9 @@ setGoBackLock(false);
 
     }
 
+
+    }
+
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
@@ -73,6 +84,11 @@ setGoBackLock(false);
 
         Intent i=new Intent(MainintroActivity.this,EmailPasswordActivity.class);
         startActivity(i);
+        SharedPreferences.Editor editor= getSharedPreferences("app",MODE_PRIVATE).edit();
+        editor.putString("intro","2");
+
+        editor.apply();
+
 
         // Do something when users tap on Done button.
     }

@@ -52,7 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
       fab.setOnLongClickListener(new View.OnLongClickListener() {
           @Override
           public boolean onLongClick(View view) {
-              Snackbar.make(rl,"View complaints under ethereum transactions",Snackbar.LENGTH_LONG).show();
+              Snackbar.make(rl,"Search or View complaints under ethereum transactions",Snackbar.LENGTH_LONG).show();
 
               return true;
           }

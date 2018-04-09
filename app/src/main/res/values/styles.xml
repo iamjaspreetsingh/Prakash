@@ -83,4 +83,6 @@
         <item name="android:textSize">@dimen/header_text_size</item>
 
     </style>
+
+
 </resources>

@@ -10,7 +10,7 @@
     tools:showIn="@layout/app_bar_main">
 
     <RelativeLayout
-        android:id="@+id/rl"
+        android:id="@+id/rla"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/grey_300">
@@ -76,82 +76,187 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textSize="16sp" />
 
-        <RelativeLayout
-            android:id="@+id/rl"
+
+
+        <HorizontalScrollView
+            android:id="@+id/rlh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/tt"
-            android:layout_marginEnd="3dp"
-            android:layout_marginStart="3dp"
-            android:background="@color/white"
-            android:padding="12dp">
+            android:layout_below="@+id/tt">
 
-            <ImageView
-                android:id="@+id/ho"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentStart="true"
+            <LinearLayout
 
-                android:layout_marginStart="17dp"
-                app:srcCompat="@drawable/hs" />
-
-            <ImageView
-                android:id="@+id/bb"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentRight="false"
-
-                android:layout_centerHorizontal="true"
-                android:layout_toLeftOf="@+id/ps"
-                android:layout_toRightOf="@+id/ho"
-                android:foregroundGravity="center_horizontal"
-                app:srcCompat="@drawable/bbb" />
-
-            <ImageView
-                android:id="@+id/ps"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
-
-                android:layout_marginEnd="19dp"
-                app:srcCompat="@drawable/ps" />
-
-
-            <TextView
-                android:id="@+id/textView25"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ho"
-                android:layout_toStartOf="@+id/bb"
-                android:text="Hospital" />
 
-            <TextView
-                android:id="@+id/textView30"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/textView25"
-                android:layout_centerHorizontal="true"
-                android:text="BloodBank" />
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="12dp">
 
-            <TextView
-                android:id="@+id/textView31"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/ps"
-                android:text="Police Station" />
+                <LinearLayout
+                    android:id="@+id/ho"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+
+                        android:foregroundGravity="center_horizontal"
+                        app:srcCompat="@drawable/hs" />
+
+                    <TextView
+                        android:id="@+id/textView25"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_horizontal"
+                        android:text="Hospital"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bb"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:foregroundGravity="center_horizontal"
+                        custom:srcCompat="@drawable/bbb" />
+
+                    <TextView
+                        android:id="@+id/textView31h"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/poss"
+                        android:layout_centerHorizontal="true"
+                        android:foregroundGravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="Blood\nBank"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+
+                        android:layout_centerHorizontal="true"
+                        android:foregroundGravity="center_horizontal"
+                        app:srcCompat="@drawable/ps" />
+
+                    <TextView
+                        android:id="@+id/textView30on"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+
+                        android:foregroundGravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="Police\nStation"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/posss"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+
+                        android:layout_width="70dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+
+                        android:foregroundGravity="center_horizontal"
+                        app:srcCompat="@drawable/recc" />
+
+                    <TextView
+                        android:id="@+id/textView31oop"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+
+                        android:gravity="center_horizontal"
+                        android:text="Recovery\nVan"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/possn"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+
+                        android:layout_width="70dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginEnd="11dp"
+                        android:foregroundGravity="center_horizontal"
+                        app:srcCompat="@drawable/crr" />
 
 
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/textView31on"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:foregroundGravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="Cranes"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <TextView
             android:id="@+id/textView311"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/tt"
-            android:layout_below="@+id/rl"
+            android:layout_below="@+id/rlh"
             android:layout_marginBottom="7dp"
             android:layout_marginTop="13dp"
             android:text="Tools for you"

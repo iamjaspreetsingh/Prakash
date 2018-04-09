@@ -67,13 +67,16 @@
 
     <TextView
         android:id="@+id/textView48"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText7"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="25dp"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
         android:text="Don't have an ethereum account? Create One"
+        android:textAppearance="@style/TextAppearance.AppCompat"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="15sp" />
 

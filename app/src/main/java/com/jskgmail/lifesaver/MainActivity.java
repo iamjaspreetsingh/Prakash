@@ -1,5 +1,6 @@
 package com.jskgmail.lifesaver;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +26,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
@@ -42,7 +45,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -54,6 +56,9 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -173,7 +178,7 @@ RelativeLayout rl;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-rl=findViewById(R.id.rl);
+rl=findViewById(R.id.rla);
 
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -239,11 +244,9 @@ stringArrayList=new ArrayList<>();
 
         accountdetail();
 
+        startService();
 
-
-
-
-startService();
+        //my_app_starter();
 
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -394,9 +397,12 @@ startService();
         mDemoSlider.addOnPageChangeListener(this);
 
 
-        ImageView ho=(ImageView)findViewById(R.id.ho);
-        ImageView bb=(ImageView)findViewById(R.id.bb);
-        ImageView ps=(ImageView)findViewById(R.id.ps);
+        LinearLayout ho=findViewById(R.id.ho);
+        LinearLayout bb=findViewById(R.id.bb);
+        LinearLayout ps=findViewById(R.id.ps);
+
+        LinearLayout rv=findViewById(R.id.posss);
+        LinearLayout cr=findViewById(R.id.possn);
         ho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -419,7 +425,22 @@ startService();
             }
         });
 
+        rv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(MainActivity.this,Webvan.class);
+                startActivity(i);
 
+            }
+        });
+cr.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        Intent i=new Intent(MainActivity.this,Webcrane.class);
+        startActivity(i);
+
+    }
+});
         LinearLayout comp=findViewById(R.id.hoo);
         LinearLayout viewc=findViewById(R.id.imageView7);
         LinearLayout bea=findViewById(R.id.bob);
@@ -2525,7 +2546,7 @@ void checkEarthquake()
 
             editor.apply();
             Snackbar.make(rl,"Safety Plus Plus is now activated. Just shake your phone for help!",Snackbar.LENGTH_LONG).show();
-
+sendNotification();
 
 
         } else if (id == R.id.Emergencycontacts) {
@@ -2717,7 +2738,7 @@ void checkEarthquake()
         Snackbar.make(rl,"Uploading and finding the image in our servers.....",Snackbar.LENGTH_LONG).show();
 
 
-        new CountDownTimer(3500, 1000) {
+        new CountDownTimer(3900, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -3583,4 +3604,86 @@ done.setOnClickListener(new View.OnClickListener() {
 }
 
 
+
+void my_app_starter()
+{
+
+
+    final TapTargetSequence sequence = new TapTargetSequence(this)
+            .targets(
+                    TapTarget.forView(findViewById(R.id.bmb), "Emergency button") .transparentTarget(true)     ,
+                    TapTarget.forView(findViewById(R.id.rl), "You", "Up") .transparentTarget(true)     ,
+
+                    TapTarget.forView(findViewById(R.id.rl1), "You", "Up") .transparentTarget(true)     )
+
+
+            .listener(new TapTargetSequence.Listener() {
+                // This listener will tell us when interesting(tm) events happen in regards
+                // to the sequence
+                @Override
+                public void onSequenceFinish() {
+                    Snackbar.make(rl,"Congratulations! You're all set to use the app!",Snackbar.LENGTH_LONG).setActionTextColor(Color.BLUE).show();
+                }
+
+                @Override
+                public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+                    Log.d("TapTargetView", "Clicked on " + lastTarget.id());
+                }
+
+                @Override
+                public void onSequenceCanceled(TapTarget lastTarget) {
+                    final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Uh oh")
+                            .setMessage("You canceled the sequence")
+                            .setPositiveButton("Oops", null).show();
+                    TapTargetView.showFor(dialog,
+                            TapTarget.forView(dialog.getButton(DialogInterface.BUTTON_POSITIVE), "Uh oh!", "You canceled the sequence at step " + lastTarget.id())
+                                    .cancelable(false)
+                                    .tintTarget(false), new TapTargetView.Listener() {
+                                @Override
+                                public void onTargetClick(TapTargetView view) {
+                                    super.onTargetClick(view);
+                                    dialog.dismiss();
+                                }
+                            });
+                }
+            });
+
+sequence.start();
 }
+
+
+
+
+        public void sendNotification() {
+
+
+            Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
+
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+            PendingIntent intent = PendingIntent.getActivity(getApplicationContext(), 0,
+                    notificationIntent, 0);
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle("Safety Plus Plus is active")
+                    .setContentText("Just shake your phone when you feel danger")
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText("Just shake your phone when you feel danger. An emergency notification would be sent to nearest police station"))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT).setContentIntent(intent)
+                    .setAutoCancel(true);
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+// notificationId is a unique int for each notification that you must define
+            notificationManager.notify(1, mBuilder.build());
+
+
+        }
+
+
+
+}
+
+

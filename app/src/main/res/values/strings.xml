@@ -126,5 +126,6 @@
     <string name="text_outside_circle_button_text_unable">Text Outside Circle Button(Unable)</string>
     <string name="publickey">Public Key</string>
     <string name="privatekey">Private Key</string>
+    <string name="turnoff">Turn off</string>
 
 </resources>

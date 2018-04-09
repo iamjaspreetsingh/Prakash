@@ -74,7 +74,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.github.apl-devs:appintro:v4.2.3'
     compile 'de.hdodenhof:circleimageview:2.2.0'
-    compile 'com.navercorp.pulltorefresh:library:3.2.0@aar'
+    compile 'com.github.d-max:spots-dialog:0.7@aar'
     compile 'com.yalantis:phoenix:1.2.3'
 
 
@@ -83,6 +83,8 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+
 
 
 

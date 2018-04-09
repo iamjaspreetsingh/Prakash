@@ -17,15 +17,16 @@
         android:layout_marginStart="13dp"
         android:layout_marginTop="17dp"
         android:layout_toStartOf="@+id/imageView8"
-        android:ems="10"
         android:hint="Enter your Complaint id"
+        android:imeOptions="actionSearch"
         android:inputType="number"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/imageView8"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignBottom="@+id/editText8"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="12dp"
@@ -254,7 +255,6 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_centerInParent="true"
-
         android:elevation="20dp"
         app:loading_color="#303F9F"
         app:loading_width="5dp" />
@@ -268,6 +268,19 @@
         android:layout_marginTop="8dp"
         android:padding="5dp"
         android:text="Enter the complaint id to find status of any complaint registered under ethereum transaction" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/imageView8"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="6dp"
+        android:clickable="true"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/ic_list_black_24dp" />
 
 
 </RelativeLayout>

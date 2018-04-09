@@ -53,5 +53,5 @@
         map:backgroundTint="@color/colorPrimary"
         map:elevation="3dp"
         map:fabSize="normal"
-        map:srcCompat="@drawable/ic_list_black_24dp" />
+        map:srcCompat="@drawable/ic_search_black_24dp" />
 </RelativeLayout>

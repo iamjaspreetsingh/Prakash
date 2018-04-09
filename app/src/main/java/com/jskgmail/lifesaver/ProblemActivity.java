@@ -292,7 +292,9 @@ spinner.setText(problems[0]);
                             toast.setGravity(Gravity.BOTTOM, 0, 0);
                             toast.show();
 
-
+                            SharedPreferences.Editor editor= getSharedPreferences("acckeys",MODE_PRIVATE).edit();
+                            editor.putString("my_compno", "fire");
+                            editor.apply();
 
                             finish();
 

@@ -139,7 +139,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jskgmail.lifesaver.MainActivity" />
         </activity>
-        <activity android:name=".MainppActivity" />
+        <activity android:name=".MainppActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jskgmail.lifesaver.MainActivity" />
+        </activity>
         <activity android:name=".Main5Activity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -155,12 +159,31 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jskgmail.lifesaver.MainActivity" />
         </activity>
-        <activity android:name=".WebetherActivity" />
-        <activity android:name=".WebhashActivity" />
+        <activity android:name=".WebetherActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jskgmail.lifesaver.MainActivity" />
+        </activity>
+        <activity android:name=".WebhashActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jskgmail.lifesaver.MainActivity" />
+        </activity>
         <activity android:name=".Searchcomplaint">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jskgmail.lifesaver.MainActivity" />
+        </activity>
+        <activity android:name=".Webvan">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.jskgmail.lifesaver.MainActivity" />
+        </activity>
+        <activity android:name=".Webcrane">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jskgmail.lifesaver.MainActivity" />
+
         </activity>
     </application>
 

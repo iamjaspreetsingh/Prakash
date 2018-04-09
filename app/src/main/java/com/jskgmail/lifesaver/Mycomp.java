@@ -68,7 +68,7 @@ private RotateLoading rotateLoading;
 
         SharedPreferences pref= getSharedPreferences("acckeys",MODE_PRIVATE);
         final String getBcomp = pref.getString("my_compno", null);
-        if(getBcomp!=null)
+        if(getBcomp!="fire")
         {
 
             status.setText("Status of complaint");
