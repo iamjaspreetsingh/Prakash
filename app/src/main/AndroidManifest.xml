@@ -113,7 +113,6 @@
             android:name=".MainsplashActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -180,6 +179,12 @@
             android:value="com.jskgmail.lifesaver.MainActivity" />
         </activity>
         <activity android:name=".Webcrane">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jskgmail.lifesaver.MainActivity" />
+
+        </activity>
+        <activity android:name=".SearchActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jskgmail.lifesaver.MainActivity" />

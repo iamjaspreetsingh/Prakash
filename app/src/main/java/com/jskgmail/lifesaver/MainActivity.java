@@ -396,7 +396,6 @@ stringArrayList=new ArrayList<>();
         mDemoSlider.setDuration(4000);
         mDemoSlider.addOnPageChangeListener(this);
 
-
         LinearLayout ho=findViewById(R.id.ho);
         LinearLayout bb=findViewById(R.id.bb);
         LinearLayout ps=findViewById(R.id.ps);
@@ -489,7 +488,8 @@ viewc.setOnClickListener(new View.OnClickListener() {
         emer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                emergencycontact();
+                Intent i=new Intent(MainActivity.this,SearchActivity.class);
+                startActivity(i);
             }
 
         });
@@ -1757,6 +1757,7 @@ if (flood.equals("1"))
                             hospp=""+pin[1].replace("\"","");
                             hospp1=""+pin[9].replace("\"","");
                             hospp11=""+emergencyno;
+
                         }
                     }                        result = 1; // Successful
 

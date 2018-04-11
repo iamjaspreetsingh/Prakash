@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_100">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/searchView"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="5dp">
+
+            <ListView
+                android:id="@+id/listsearch"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/searchView"
+
+                android:visibility="gone" />
+
+        </android.support.v7.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/textView52"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView42"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="11dp"
+            android:layout_marginStart="11dp"
+            android:padding="8dp"
+            android:text="Start Searching Hospitals nationwide :"
+            android:textSize="15sp" />
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/card"
+            android:background="@android:color/white"
+            android:elevation="5dp"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="10dp"
+            app:contentPadding="1dp">
+
+            <RelativeLayout
+                android:id="@+id/dett"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/grey_100"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/textView56"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="11dp"
+                    android:paddingLeft="10dp"
+                    android:text="Details:"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/friendlistcard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignWithParentIfMissing="false"
+                    android:layout_below="@+id/textView56"
+                    android:layout_margin="12dp"
+                    android:paddingTop="0dp"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="1dp"
+                    app:contentPadding="2dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/friendlist"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Hospital Name"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist1"
+                            android:padding="5dp"
+                            android:text="Category:"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist2"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist3"
+                            android:padding="5dp"
+                            android:text="System of medicine"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist4"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist5"
+                            android:padding="5dp"
+                            android:text="Address"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist6"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist8"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist7"
+                            android:padding="5dp"
+                            android:text="City"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist9"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist8"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist9"
+                            android:padding="5dp"
+                            android:text="Speciality"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist11"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist10"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist12"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist11"
+                            android:padding="5dp"
+                            android:text="Contact no."
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist13"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist12"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist13"
+                            android:padding="5dp"
+                            android:text="Email id"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist15"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist14"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist16"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist15"
+                            android:padding="5dp"
+                            android:text="Website"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist17"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist16"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+                <ru.dimorinny.floatingtextbutton.FloatingTextButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="13dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_below="@+id/friendlistcard"
+                    android:padding="5dp"
+                    app:floating_background_color="@color/cardview_light_background"
+                    app:floating_left_icon="@drawable/calll"
+                    app:floating_title="Call"
+                    app:floating_title_color="@android:color/holo_red_dark" />
+
+                <ru.dimorinny.floatingtextbutton.FloatingTextButton
+                    android:id="@+id/fab1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="13dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_below="@+id/friendlistcard"
+                    android:padding="5dp"
+                    app:floating_background_color="@color/cardview_light_background"
+                    app:floating_left_icon="@drawable/loc"
+                    app:floating_title="Directions"
+                    app:floating_title_color="@android:color/holo_red_dark" />
+
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView52"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="3dp"
+            android:elevation="4dp"
+            android:iconifiedByDefault="false"
+            android:queryHint="Search hospital name/ address" />
+
+    </RelativeLayout>
+</ScrollView>

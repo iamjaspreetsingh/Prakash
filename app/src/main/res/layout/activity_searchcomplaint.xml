@@ -30,7 +30,7 @@
         android:layout_alignBottom="@+id/editText8"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="12dp"
-        app:srcCompat="@drawable/ic_search_black_24dp" />
+        app:srcCompat="@drawable/ic_search_rblack_24dp" />
 
     <RelativeLayout
         android:id="@+id/allcards"
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText8"
         android:layout_marginEnd="7dp"
-        android:layout_marginStart="7dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:background="@color/colorredmenu"
         android:visibility="visible">
