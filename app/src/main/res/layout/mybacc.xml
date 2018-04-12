@@ -72,13 +72,18 @@
         android:layout_below="@+id/editText7"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="25dp"
         android:gravity="center_horizontal"
-        android:padding="5dp"
+        android:paddingBottom="4dp"
+        android:paddingEnd="1dp"
+        android:paddingStart="1dp"
+        android:paddingTop="4dp"
         android:text="Don't have an ethereum account? Create One"
-        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
 
     <Button
         android:id="@+id/button6"

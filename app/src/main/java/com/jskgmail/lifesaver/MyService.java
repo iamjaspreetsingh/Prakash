@@ -11,7 +11,6 @@ import android.hardware.SensorManager;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.jskgmail.lifesaver.beaconreference.BeaconTransmitterActivity1;
 
@@ -86,7 +85,6 @@ onDestroy();}
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Toast.makeText(this, "Service Destroyed", Toast.LENGTH_LONG).show();
     }
 
 
