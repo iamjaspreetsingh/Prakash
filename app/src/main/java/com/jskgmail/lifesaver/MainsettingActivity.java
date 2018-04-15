@@ -33,8 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainsettingActivity extends AppCompatActivity {
-    static String username="unknown",myno="087987879879",name="unknown";
+    static String name="unknown";
     RelativeLayout rl;
+    String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,11 +64,18 @@ String imgstring=prefs.getString("uri", "");
                         imgProfilePicture.setImageDrawable(drawable);
                     }
                 });
-        final String username = prefs.getString("username", "");
+       username = prefs.getString("username", "");
         String email = prefs.getString("email", "");
 
         final TextView nam=findViewById(R.id.textView2);
         TextView id=findViewById(R.id.textView4);
+        if (username.equals("null"))
+        {
+            SharedPreferences.Editor editor= getSharedPreferences("acckeys",MODE_PRIVATE).edit();
+            editor.putString("username","");
+            editor.apply();
+        }
+         username = prefs.getString("username", "");
         nam.setText(username);
         id.setText(email);
         ImageView edit=findViewById(R.id.edit);
@@ -112,10 +120,15 @@ namee.setText(username);
             }
         });
         Button signout=(Button)findViewById(R.id.signout);
+        if (EmailPasswordActivity.sout==1)
+            signout.setText("   Log in to the app");
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 signOut();
+
 
 
             }
@@ -312,6 +325,8 @@ Button but=(Button)findViewById(R.id.but);
 
     private void signOut() {
         EmailPasswordActivity.sout=1;
+
+
         Intent i=new Intent(MainsettingActivity.this,EmailPasswordActivity.class);
         startActivity(i);
     }

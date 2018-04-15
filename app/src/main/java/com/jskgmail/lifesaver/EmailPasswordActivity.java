@@ -18,6 +18,7 @@ package com.jskgmail.lifesaver;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -52,7 +53,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
 static Uri mypicc;
     private EditText mEmailField;
     private EditText mPasswordField;
-
+    private EditText pubkey,prikey;
     // [START declare_auth]
     private FirebaseAuth mAuth;
 static int sout=0;
@@ -71,12 +72,15 @@ private RotateLoading rotateLoading;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emailpassword);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         rotateLoading = (RotateLoading) findViewById(R.id.rotateloading);
         // Views
 
         mEmailField = (EditText) findViewById(R.id.field_email);
         mPasswordField = (EditText) findViewById(R.id.field_password);
+
+        pubkey=findViewById(R.id.publickey);
+        prikey=findViewById(R.id.privatekey);
 
         Button skip=findViewById(R.id.button4);
         skip.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +90,7 @@ private RotateLoading rotateLoading;
                 startActivity(intent);
             }
         });
+
         // Buttons
         findViewById(R.id.email_sign_in_button).setOnClickListener(this);
         findViewById(R.id.email_create_account_button).setOnClickListener(this);
@@ -417,9 +422,24 @@ sout=0;
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.email_create_account_button) {
-            createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+            {
+                createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                SharedPreferences.Editor editor= getSharedPreferences("acckeys",MODE_PRIVATE).edit();
+                editor.putString("public",pubkey.getText().toString());
+                editor.putString("private",prikey.getText().toString());
+
+                editor.apply();
+            }
         } else if (i == R.id.email_sign_in_button) {
             signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+            SharedPreferences.Editor editor= getSharedPreferences("acckeys",MODE_PRIVATE).edit();
+            editor.putString("public",pubkey.getText().toString());
+            editor.putString("private",prikey.getText().toString());
+
+            editor.apply();
+
+
+
         } else if (i == R.id.sign_out_button) {
             signOut();
         } else if (i == R.id.verify_email_button) {

@@ -59,10 +59,13 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/textView13"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
+        android:layout_marginBottom="6dp"
+        android:layout_marginEnd="9dp"
+        android:background="@android:color/transparent"
         app:srcCompat="@drawable/ic_volume_off_black_24dp" />
 
     <TextView

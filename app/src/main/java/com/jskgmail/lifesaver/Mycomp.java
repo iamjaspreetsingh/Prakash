@@ -216,7 +216,7 @@ ApiInterfacelatestcomp apiService = ApiClientcomp.getClient().create(ApiInterfac
 
     public static class ApiClientcomp {
 
-        public static final String BASE_URL ="http://54.169.130.29:3000/";
+        public static final String BASE_URL ="http://18.217.79.51:8080/";
 
         private static Retrofit retrofit = null;
 

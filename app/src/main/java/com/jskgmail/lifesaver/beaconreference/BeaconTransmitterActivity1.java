@@ -94,7 +94,7 @@ public class BeaconTransmitterActivity1 extends AppCompatActivity implements
         final int[] i = {120};
         alert.start();
         final TextView time = (TextView) findViewById(R.id.textView12);
-        new CountDownTimer(120000, 1000) {
+        final CountDownTimer countDownTimer=new CountDownTimer(120000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -131,6 +131,7 @@ public class BeaconTransmitterActivity1 extends AppCompatActivity implements
                 editor.putString("flood", "0");
 
                 editor.apply();
+                countDownTimer.cancel();
                 alert.stop();
                 flashLightOff();
   {

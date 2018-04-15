@@ -22,10 +22,7 @@
                    android:id="@+id/Emergencycontacts"
                    android:icon="@drawable/ic_contacts_black_24dp"
                    android:title="Emergency Contacts" />
-                <item
-                    android:id="@+id/logout"
-                    android:icon="@drawable/ic_check_box_outline_blank_black_24dp"
-                    android:title="Sign Out" />
+
 
     </group>
 

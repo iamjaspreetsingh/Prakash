@@ -1,6 +1,7 @@
 package com.jskgmail.lifesaver;
 
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,12 +10,14 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -246,7 +249,10 @@ stringArrayList=new ArrayList<>();
 
         startService();
 
-        //my_app_starter();
+        SharedPreferences prefs1 = getSharedPreferences("app",MODE_PRIVATE);
+        String firsttime = prefs1.getString("intro1", "1");
+        if (firsttime.equals("1"))
+        appstarter1();
 
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -269,9 +275,13 @@ stringArrayList=new ArrayList<>();
 
 
 
+      MediaPlayer  alert = MediaPlayer.create(MainActivity.this, R.raw.beepe);
+        alert.reset();
+        alert.release();
 
-
-
+        MediaPlayer  alert1 = MediaPlayer.create(MainActivity.this, R.raw.beep);
+        alert1.reset();
+        alert1.release();
 
 
 
@@ -2503,6 +2513,7 @@ void checkEarthquake()
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
         return true;
     }
 
@@ -2576,27 +2587,36 @@ sendNotification();
             startActivity(i);
 
         }
-        else if (id==R.id.logout)
-        {
-            EmailPasswordActivity.sout=1;
-            Intent i=new Intent(MainActivity.this,EmailPasswordActivity.class);
-            startActivity(i);
 
-        }
         else if (id==R.id.about)
         {
 
             LayoutInflater inflater = getLayoutInflater();
             View alertLayout = inflater.inflate(R.layout.layoutabout, null);
 
+
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            TextView link=alertLayout.findViewById(R.id.button5);
 
             // this is set the view from XML inside AlertDialog
             alert.setView(alertLayout);
             // disallow cancel of AlertDialog on click of back button and outside touch
             alert.setTitle("About ");
             alert.setIcon(R.drawable.ic_question_answer_black_24dp);
-
+link.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        String id="ssuHAfGJVdg";
+        Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id));
+        Intent webIntent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("http://www.youtube.com/watch?v=" + id));
+        try {
+            getApplicationContext().startActivity(appIntent);
+        } catch (ActivityNotFoundException ex) {
+            getApplicationContext().startActivity(webIntent);
+        }
+    }
+});
 
             alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
 
@@ -2720,12 +2740,14 @@ sendNotification();
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
 
-            case RESULT_PICK_CONTACT:
+            case RESULT_PICK_CONTACT: {
                 contactPicked(data);
-
+            break;
+            }
             case 111:
                 if (resultCode == RESULT_OK) {
-                    jsfind();
+                    find();
+                    uploadfirebase(photoURI);
 
                 }
 
@@ -2734,12 +2756,12 @@ sendNotification();
     }
 
 
-    private void jsfind()
+    private void find()
     {
         Snackbar.make(rl,"Uploading and finding the image in our servers.....",Snackbar.LENGTH_LONG).show();
 
 
-        new CountDownTimer(3900, 1000) {
+        new CountDownTimer(6500, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -2757,8 +2779,8 @@ sendNotification();
                 // this is set the view from XML inside AlertDialog
                 alert.setView(alertLayout);
                 // disallow cancel of AlertDialog on click of back button and outside touch
-                alert.setTitle("Image Recognised ");
-                alert.setIcon(R.drawable.ic_done_green_24dp);
+                alert.setTitle("Image Not Recognised ");
+                alert.setIcon(R.drawable.ic_cancel_black_24dp);
 
 
                 alert.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
@@ -3422,7 +3444,7 @@ done.setOnClickListener(new View.OnClickListener() {
 
         public static class ApiClientcomp {
 
-            public static final String BASE_URL ="http://54.169.130.29:3000/";
+            public static final String BASE_URL ="http://18.217.79.51:8080/";
 
             private static Retrofit retrofit = null;
 
@@ -3606,16 +3628,34 @@ done.setOnClickListener(new View.OnClickListener() {
 
 
 
-void my_app_starter()
+void my_app_starter() {
+    final Toolbar toolbar = findViewById(R.id.toolbar);
+    TapTargetView tapTargetView = TapTargetView.showFor(this, TapTarget.forToolbarMenuItem(toolbar, R.id.setting,
+            "This is a search icon", "As you can see, it has gotten pretty dark around here..."),
+
+            new TapTargetView.Listener() {
+                @Override
+                public void onTargetClick(TapTargetView view) {
+                    super.onTargetClick(view);
+                    view.dismiss(true);
+                    appstarter1();
+                    toolbar.inflateMenu(R.menu.main);
+                }
+            });
+
+
+}
+
+void appstarter1()
 {
-
-
     final TapTargetSequence sequence = new TapTargetSequence(this)
             .targets(
-                    TapTarget.forView(findViewById(R.id.bmb), "Emergency button") .transparentTarget(true)     ,
-                    TapTarget.forView(findViewById(R.id.rl), "You", "Up") .transparentTarget(true)     ,
+                    TapTarget.forView(findViewById(R.id.bmb), "Emergency button","For calling emergency services instantly") .transparentTarget(true) .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                            .drawShadow(true) .outerCircleAlpha(0.96f)         ,
+                    TapTarget.forView(findViewById(R.id.hoo), "Tools for you ","For complaint registration, finding beacons and searching hospitals") .transparentTarget(true).outerCircleAlpha(0.96f)   ,
+                    TapTarget.forView(findViewById(R.id.ps), "Nearest to you","For finding nearest emergency services") .transparentTarget(true).outerCircleAlpha(0.96f)
 
-                    TapTarget.forView(findViewById(R.id.rl1), "You", "Up") .transparentTarget(true)     )
+            )
 
 
             .listener(new TapTargetSequence.Listener() {
@@ -3624,6 +3664,10 @@ void my_app_starter()
                 @Override
                 public void onSequenceFinish() {
                     Snackbar.make(rl,"Congratulations! You're all set to use the app!",Snackbar.LENGTH_LONG).setActionTextColor(Color.BLUE).show();
+                    SharedPreferences.Editor editor= getSharedPreferences("app",MODE_PRIVATE).edit();
+                    editor.putString("intro1","2");
+
+                    editor.apply();
                 }
 
                 @Override
@@ -3633,26 +3677,12 @@ void my_app_starter()
 
                 @Override
                 public void onSequenceCanceled(TapTarget lastTarget) {
-                    final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Uh oh")
-                            .setMessage("You canceled the sequence")
-                            .setPositiveButton("Oops", null).show();
-                    TapTargetView.showFor(dialog,
-                            TapTarget.forView(dialog.getButton(DialogInterface.BUTTON_POSITIVE), "Uh oh!", "You canceled the sequence at step " + lastTarget.id())
-                                    .cancelable(false)
-                                    .tintTarget(false), new TapTargetView.Listener() {
-                                @Override
-                                public void onTargetClick(TapTargetView view) {
-                                    super.onTargetClick(view);
-                                    dialog.dismiss();
-                                }
-                            });
+
                 }
             });
 
-sequence.start();
+    sequence.start();
 }
-
 
 
 

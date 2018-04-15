@@ -43,13 +43,12 @@ public class MainalertActivity extends AppCompatActivity {
 
 
 
-
         final ImageButton alarm = (ImageButton) findViewById(R.id.imageButton);
       alert  = MediaPlayer.create(MainalertActivity.this, R.raw.siren);
         final int[] i = {120};
         alert.start();
         final TextView time = (TextView) findViewById(R.id.textView12);
-        new CountDownTimer(6000, 1000) {
+      final CountDownTimer countDownTimer=  new CountDownTimer(6000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -69,7 +68,6 @@ public class MainalertActivity extends AppCompatActivity {
                 go();
             }
         }.start();
-
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +83,7 @@ public class MainalertActivity extends AppCompatActivity {
                 editor.putString("flood","0");
 
                 editor.apply();
+                countDownTimer.cancel();
                 alert.stop();
                 flashLightOff();
 
@@ -93,6 +92,8 @@ public class MainalertActivity extends AppCompatActivity {
             }
 
         });
+
+
         alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
