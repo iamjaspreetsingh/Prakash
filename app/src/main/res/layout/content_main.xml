@@ -6,32 +6,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context="com.jskgmail.lifesaver.MainActivity"
+    tools:context="com.jskgmail.prakash.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
     <RelativeLayout
+        android:id="@+id/rla"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey_300">
+        android:background="@color/menu_text">
+
         <TextView
             android:id="@+id/textView32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
+            android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/tt"
-            android:layout_marginBottom="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="66dp"
             android:text="Tips and Precautions:"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimary11"
             android:textSize="16sp" />
+
         <com.daimajia.slider.library.SliderLayout
             android:id="@+id/slider"
             android:layout_width="match_parent"
             android:layout_height="200dp"
 
-            android:layout_alignParentStart="true"
 
-            android:layout_marginTop="34dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView32"
             android:padding="8dp"
             custom:auto_cycle="true"
             custom:indicator_visibility="visible"
@@ -39,7 +43,6 @@
             custom:pager_animation_span="1100" />
 
         <com.daimajia.slider.library.Indicators.PagerIndicator
-            android:id="@+id/custom_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -71,228 +74,175 @@
             android:layout_marginTop="12dp"
             android:text="Nearest to you "
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimary11"
             android:textSize="16sp" />
 
-        <RelativeLayout
-            android:id="@+id/rl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/tt"
-            android:background="@color/white"
-            android:padding="12dp">
-
-            <ImageView
-                android:id="@+id/ho"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentStart="true"
-
-                android:layout_marginStart="17dp"
-                app:srcCompat="@drawable/hs" />
-
-            <ImageView
-                android:id="@+id/bb"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentRight="false"
-
-                android:layout_centerHorizontal="true"
-                android:layout_toLeftOf="@+id/ps"
-                android:layout_toRightOf="@+id/ho"
-                android:foregroundGravity="center_horizontal"
-                app:srcCompat="@drawable/bbb" />
-
-            <ImageView
-                android:id="@+id/ps"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
-
-                android:layout_marginEnd="19dp"
-                app:srcCompat="@drawable/ps" />
-
-
-            <TextView
-                android:id="@+id/textView25"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ho"
-                android:layout_toStartOf="@+id/bb"
-                android:text="Hospital" />
-
-            <TextView
-                android:id="@+id/textView30"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/textView25"
-                android:layout_centerHorizontal="true"
-                android:text="BloodBank" />
-
-            <TextView
-                android:id="@+id/textView31"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/ps"
-                android:text="Police Station" />
-
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/textView311"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/tt"
-            android:layout_below="@+id/rl"
-            android:layout_marginBottom="3dp"
-            android:layout_marginTop="13dp"
-            android:text="Tools for you"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textSize="16sp" />
 
         <HorizontalScrollView
-            android:id="@+id/rl1"
+            android:id="@+id/rlh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView311">
+            android:layout_below="@+id/tt">
 
             <LinearLayout
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:background="@color/white"
+                android:background="@color/menu_text"
                 android:orientation="horizontal"
                 android:padding="12dp">
 
                 <LinearLayout
-                    android:layout_width="80dp"
+                    android:id="@+id/ho"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="8dp">
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/hoo"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
+
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:layout_centerHorizontal="true"
 
+                        android:background="@drawable/bg_round_corner"
+                        android:backgroundTintMode="src_in"
                         android:foregroundGravity="center_horizontal"
-                        app:srcCompat="@drawable/ic_report_problem_black_24dp" />
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/hs" />
 
                     <TextView
-                        android:id="@+id/textView25o"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
-                        android:text="Complaint Registration"
-                        android:textSize="12sp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="8dp">
-
-                    <ImageView
-                        android:id="@+id/imageView7"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-                        android:layout_centerHorizontal="true"
-                        android:foregroundGravity="center_horizontal"
-                        custom:srcCompat="@drawable/ic_streetview_black_24dp" />
-
-                    <TextView
-                        android:id="@+id/textView31ood"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/poss"
-                        android:layout_centerHorizontal="true"
-                        android:foregroundGravity="center_horizontal"
-                        android:gravity="center_horizontal"
-                        android:text="View Complaints"
-                        android:textSize="12sp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="8dp">
-
-                    <ImageView
-                        android:id="@+id/bob"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
-
-                        android:layout_centerHorizontal="true"
-                        android:foregroundGravity="center_horizontal"
-                        app:srcCompat="@drawable/bt" />
-
-                    <TextView
-                        android:id="@+id/textView30o"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-
-                        android:foregroundGravity="center_horizontal"
-                        android:gravity="center_horizontal"
-                        android:text="Find\nBeacons"
-                        android:textSize="12sp" />
+                        android:text="Hospital"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="80dp"
+                    android:id="@+id/bb"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/bg_round_corner"
+                        android:foregroundGravity="center_horizontal"
+                        android:padding="9dp"
+                        custom:srcCompat="@drawable/bbb" />
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/pub"
+                        android:layout_centerHorizontal="true"
+                        android:foregroundGravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="Blood\nBank"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ps"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/bg_round_corner"
+                        android:foregroundGravity="center_horizontal"
+                        android:padding="@dimen/_8dp"
+                        app:srcCompat="@drawable/ps" />
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+
+                        android:foregroundGravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="Police\nStation"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/posss"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:layout_marginRight="8dp">
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/poss"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
+
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:layout_centerHorizontal="true"
 
+                        android:background="@drawable/bg_round_corner"
                         android:foregroundGravity="center_horizontal"
-                        app:srcCompat="@drawable/ic_face_black_24dp" />
+                        android:padding="8dp"
+                        app:srcCompat="@drawable/recc" />
 
                     <TextView
-                        android:id="@+id/textView31oo"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
 
                         android:gravity="center_horizontal"
-                        android:text="Face Recognition"
-                        android:textSize="12sp" />
+                        android:text="Recovery\nVan"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="80dp"
+                    android:id="@+id/possn"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="8dp">
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/pos"
-                        android:layout_width="80dp"
-                        android:layout_height="40dp"
+
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginEnd="11dp"
+                        android:background="@drawable/bg_round_corner"
                         android:foregroundGravity="center_horizontal"
-                        app:srcCompat="@drawable/ic_perm_contact_calendar_black_24dp" />
+                        android:padding="9dp"
+                        app:srcCompat="@drawable/crr" />
 
 
                     <TextView
-                        android:id="@+id/textView31o"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:foregroundGravity="center_horizontal"
                         android:gravity="center_horizontal"
-                        android:text="Emergency Contacts"
-                        android:textSize="12sp" />
+                        android:text="Cranes"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
 
@@ -300,15 +250,249 @@
         </HorizontalScrollView>
 
         <TextView
+            android:id="@+id/textView311"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tt"
+            android:layout_below="@+id/rlh"
+            android:layout_marginBottom="7dp"
+            android:layout_marginTop="13dp"
+            android:text="Tools for you"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimary11"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView311"
+            android:id="@+id/rlaa"
+            >
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/hoo"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:padding="5dp"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="2dp">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="122dp"
+                    android:background="@color/colorPrimaryDark"
+                    android:elevation="@dimen/appIntroDefaultPaddingBottomIntro2"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:id="@+id/chaptertext"
+                        android:layout_width="58dp"
+                        android:layout_height="58dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/eagle_lake"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:srcCompat="@drawable/ic_device_hub_black_24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_below="@+id/chaptertext"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="11dp"
+                        android:gravity="center"
+                        android:paddingBottom="7dp"
+                        android:text="RELIEF FUNDING"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/find"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/hoo"
+        android:layout_marginEnd="6dp"
+        android:padding="5dp"
+        android:layout_marginStart="12dp"
+
+        app:cardCornerRadius="3dp"
+        app:cardElevation="2dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="122dp"
+            android:background="@android:color/holo_blue_dark">
+
+            <ImageView
+                android:id="@+id/chaptertext1"
+                android:layout_width="57dp"
+                android:layout_height="59dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="13dp"
+                android:fontFamily="@font/eagle_lake"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:srcCompat="@drawable/ic_new_releases_black_24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="31dp"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/chaptertext1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="9dp"
+                android:layout_marginTop="11dp"
+                android:gravity="center"
+                android:text="COMPLAINT DESK"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/pub"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="12dp"
+            android:padding="5dp"
+            android:layout_below="@+id/hoo"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="122dp"
+                android:background="@android:color/holo_purple">
+
+                <ImageView
+                    android:id="@+id/chaptertext12"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="13dp"
+                    android:fontFamily="@font/eagle_lake"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    app:srcCompat="@drawable/ic_streetview_black_24dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="31dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/chaptertext12"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="9dp"
+                    android:layout_marginTop="11dp"
+                    android:gravity="center"
+                    android:text="VIEW COMPLAINTS"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/pos"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/find"
+            android:layout_marginTop="12dp"
+            android:padding="5dp"
+            android:layout_marginStart="12dp"
+
+            app:cardCornerRadius="3dp"
+            app:cardElevation="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="122dp"
+                android:background="@android:color/holo_orange_light">
+
+                <ImageView
+                    android:id="@+id/chaptertext123"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="13dp"
+                    android:fontFamily="@font/eagle_lake"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    app:srcCompat="@drawable/ic_search_black_24dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="31dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/chaptertext123"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="9dp"
+                    android:layout_marginTop="11dp"
+                    android:gravity="center"
+                    android:text="SEARCH HOSPITALS"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <TextView
             android:id="@+id/tty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rl1"
-            android:layout_marginBottom="8dp"
+            android:layout_below="@+id/rlaa"
+            android:layout_marginBottom="6dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="12dp"
             android:text="First Aid Tips"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimary11"
             android:textSize="16sp" />
 
         <android.support.v4.view.ViewPager
@@ -320,14 +504,13 @@
             android:layout_below="@+id/tty"
             android:layout_gravity="bottom"
             android:clipToPadding="false"
+            android:elevation="7dp"
             android:overScrollMode="never"
             android:paddingBottom="30dp"
             android:paddingEnd="@dimen/card_padding"
             android:paddingLeft="@dimen/card_padding"
             android:paddingRight="@dimen/card_padding"
             android:paddingStart="@dimen/card_padding" />
-
-
 
 
     </RelativeLayout>

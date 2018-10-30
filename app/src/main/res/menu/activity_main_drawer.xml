@@ -4,54 +4,48 @@
     <group android:checkableBehavior="single">
 
 
+        <item
+            android:id="@+id/mycacc"
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="My Account" />
 
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_my_location_black_24dp"
-            android:title="My Location" />
+                <item
+                    android:id="@+id/mycomp"
+                    android:icon="@drawable/ic_verified_user_black_24dp"
+                    android:title="My Complaints" />
 
+                <item
+                    android:id="@+id/safetyplus"
+                    android:icon="@drawable/ic_swap_horiz_black_24dp"
+                    android:title="Enable Safety plus" />
+                <item
+                   android:id="@+id/Emergencycontacts"
+                   android:icon="@drawable/ic_contacts_black_24dp"
+                   android:title="Emergency Contacts" />
         <item
-            android:id="@+id/Emergencycontacts"
-            android:icon="@drawable/ic_contacts_black_24dp"
-            android:title="Add Emergency Contacts" />
-        <item
-            android:id="@+id/hosp"
-            android:icon="@drawable/ic_find_replace_black_24dp"
-            android:title="Hospitals near me" />
-        <item
-            android:id="@+id/bloodb"
-            android:icon="@drawable/ic_find_replace_black_24dp"
-            android:title="Blood Banks near me" />
+            android:id="@+id/DATA"
+            android:icon="@drawable/ic_data_usage_black_24dp"
+            android:title="Data Analytics" />
 
-        <item
-            android:id="@+id/testmy"
-            android:icon="@drawable/ic_question_answer_black_24dp"
-            android:title="Fake Test" />
-
-        <item
-            android:id="@+id/dead"
-            android:icon="@drawable/ic_check_box_outline_blank_black_24dp"
-            android:title="Dead Body Detection" />
-
-        <item
-            android:id="@+id/blue"
-            android:icon="@drawable/bt"
-            android:title="Beacons" />
-        <item
-            android:id="@+id/blueh"
-            android:icon="@drawable/bt"
-            android:title="Beacons broadcast" />
     </group>
-    <item android:title="Other">
+
+    <item android:title="Test">
         <menu>
+    <item
+        android:id="@+id/testmy"
+        android:icon="@drawable/ic_question_answer_black_24dp"
+        android:title="Fake Test" />
+            <item
+                android:id="@+id/findbea"
+                android:icon="@drawable/bt"
+                android:title="Beacons Test" />
+
             <item
                 android:id="@+id/settingg"
                 android:icon="@drawable/ic_settings_black1_24dp"
                 android:title="Settings" />
-            <item
-                android:id="@+id/about"
-                android:icon="@drawable/ic_info_black_24dp"
-                android:title="About" />
+
+
         </menu>
     </item>
 

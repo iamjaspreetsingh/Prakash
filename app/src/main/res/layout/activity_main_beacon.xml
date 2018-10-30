@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/menu_text"
+    tools:context=".MainBeaconActivity">
+
+    <RelativeLayout
+        android:id="@+id/rlaa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ad1"
+        android:layout_marginTop="30dp">
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/find"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/hoo"
+            android:layout_marginEnd="6dp"
+            android:layout_marginStart="12dp"
+            android:padding="5dp"
+
+            app:cardCornerRadius="3dp"
+            app:cardElevation="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="122dp"
+                android:background="@android:color/holo_blue_dark">
+
+                <ImageView
+                    android:id="@+id/chaptertext1"
+                    android:layout_width="57dp"
+                    android:layout_height="59dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="13dp"
+                    android:fontFamily="@font/eagle_lake"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    app:srcCompat="@drawable/ic_find_in_page_black_24dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="31dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/chaptertext1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="9dp"
+                    android:layout_marginTop="11dp"
+                    android:gravity="center"
+                    android:text="FIND BEACONS"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/pub"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_below="@+id/hoo"
+            android:layout_marginEnd="12dp"
+            android:padding="5dp"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="122dp"
+                android:background="@android:color/holo_purple">
+
+                <ImageView
+                    android:id="@+id/chaptertext12"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="13dp"
+                    android:fontFamily="@font/eagle_lake"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    app:srcCompat="@drawable/ic_publish_black_24dp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="31dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/chaptertext12"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="9dp"
+                    android:layout_marginTop="11dp"
+                    android:gravity="center"
+                    android:text="PUBLISH BEACON"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="154dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:srcCompat="@drawable/beconr" />
+
+    <TextView
+        android:id="@+id/ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="12dp"
+        android:text="BEACONS TESTING:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/colorPrimary11"
+        android:textSize="17dp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/ad1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ad"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="16dp"
+        android:text="Beacons are made using Bluetooth of mobile and are used to locate one precisely\n\nClick on Find Beacons to find Beacons nearby\n\nClick on Publish Beacon to make a beacon of the phone"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

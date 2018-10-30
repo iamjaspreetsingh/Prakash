@@ -7,7 +7,7 @@
     android:layout_marginLeft="4dp"
     android:layout_marginRight="3dp"
     android:padding="1dp"
-    tools:context="com.jskgmail.lifesaver.MainhospActivity">
+    tools:context="com.jskgmail.prakash.MainhospActivity">
 
     <TextView
         android:id="@+id/textView20"
@@ -28,6 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView20"
+        android:layout_marginEnd="3dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="26dp"
         android:elevation="5dp"
         app:cardCornerRadius="3dp"
@@ -75,7 +77,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/cardView4"
-        android:layout_marginRight="3dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="12dp"
         android:elevation="5dp"
         app:cardCornerRadius="3dp"
@@ -122,7 +125,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/cardView5"
-        android:layout_marginRight="3dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="12dp"
         android:elevation="5dp"
         app:cardCornerRadius="3dp"
@@ -134,7 +138,7 @@
             android:padding="5dp">
 
             <TextView
-                android:id="@+id/textView2311"
+                android:id="@+id/textView23111"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -152,8 +156,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_alignStart="@+id/textView2311"
-                android:layout_below="@+id/textView2311"
+                android:layout_alignStart="@+id/textView23111"
+                android:layout_below="@+id/textView23111"
                 android:layout_marginBottom="6dp"
                 android:layout_marginTop="4dp"
                 android:text="N.A."
@@ -171,6 +175,7 @@
         android:layout_alignBaseline="@+id/textView20"
         android:layout_alignBottom="@+id/textView20"
         android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
         android:text="Nearest BloodBank Details :"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="@color/colorPrimaryDark"
@@ -211,16 +216,5 @@
         app:floating_title="Directions"
         app:floating_title_color="@android:color/holo_red_dark" />
 
-    <TextView
-        android:id="@+id/ll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rotateloading"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="6dp"
-        android:elevation="20dp"
-        android:text="Finding Nearest BloodBank...."
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
-        android:textSize="16sp" />
+
 </RelativeLayout>

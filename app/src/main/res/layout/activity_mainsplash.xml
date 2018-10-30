@@ -5,24 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorred"
-    tools:context="com.jskgmail.lifesaver.MainsplashActivity">
+    tools:context="com.jskgmail.prakash.MainsplashActivity">
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="68dp"
         android:background="@color/colorred"
         android:fitsSystemWindows="false"
-        app:srcCompat="@drawable/splalsh" />
+        app:srcCompat="@drawable/sun" />
 
     <ProgressBar
-        android:id="@+id/progressBar4"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="187dp"
+        android:layout_marginBottom="93dp"
         android:indeterminateTint="@color/cardview_light_background" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="202dp"
+        android:fontFamily="serif"
+        android:text="PRAKASH"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="252dp"
+        android:fontFamily="@font/rozha_one"
+        android:text="ENLIGHTENING LIVES"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 </RelativeLayout>

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_100"
+    tools:context="com.jskgmail.prakash.Main2Activity$PlaceholderFragment">
+
+
+        <RelativeLayout
+            android:id="@+id/r"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView60"
+                android:paddingLeft="@dimen/_8dp"
+                android:paddingRight="@dimen/_8dp"
+                android:visibility="visible">
+
+                <Spinner
+                    android:id="@+id/cities"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@+id/textView420"
+                    android:layout_marginEnd="13dp">
+
+                </Spinner>
+
+
+                <TextView
+                    android:id="@+id/textView420"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentTop="true"
+                    android:layout_alignStart="@+id/textView51"
+                    android:layout_marginStart="@dimen/_8dp"
+                    android:layout_marginTop="57dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:paddingBottom="1dp"
+                    android:text="CHOOSE STATE : "
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignStart="@+id/textView51"
+                    android:layout_marginStart="@dimen/_8dp"
+                    android:layout_marginTop="18dp"
+                    android:text="ACCIDENTALS DEATHS"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/dett"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/rll"
+                android:background="@color/grey_100"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/textView56"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/textView50"
+                    android:layout_marginStart="99dp"
+                    android:paddingLeft="10dp"
+                    android:text=" ( deaths in 2014 )"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textView50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="11dp"
+                    android:paddingLeft="10dp"
+                    android:text="  DETAILS:"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/friendlistcard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignWithParentIfMissing="false"
+                    android:layout_below="@+id/textView56"
+                    android:layout_margin="12dp"
+                    android:padding="5dp"
+                    android:paddingTop="0dp"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="1dp"
+                    app:contentPadding="2dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp">
+
+                        <TextView
+                            android:id="@+id/friendlist"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Avalanche"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:text="0"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist1"
+                            android:padding="5dp"
+                            android:text="Cyclone"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist2"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:text="0"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist3"
+                            android:padding="5dp"
+                            android:text="Tornado"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist4"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:text="0"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist5"
+                            android:padding="5dp"
+                            android:text="Tsunami "
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist6"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:text="0"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist8"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist7"
+                            android:padding="5dp"
+                            android:text="Earthquake"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist9"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist8"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:text="0"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist9"
+                            android:padding="5dp"
+                            android:text="Floods"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist11"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist10"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:text="0"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist12"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist11"
+                            android:padding="5dp"
+                            android:text="Landslides"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist13"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist12"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:text="0"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist13"
+                            android:padding="5dp"
+                            android:text="Lightning"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist15"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist14"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:text="0"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist16"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist15"
+                            android:padding="5dp"
+                            android:text="Other Natural Accidents"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/friendlist17"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/friendlist16"
+                            android:layout_marginBottom="2dp"
+                            android:padding="5dp"
+                            android:text="0"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+
+            </RelativeLayout>
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/piechart_1"
+                android:layout_width="match_parent"
+                android:layout_height="340dp"
+                android:layout_below="@+id/dett"
+                android:layout_marginBottom="20dp"></com.github.mikephil.charting.charts.PieChart>
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>

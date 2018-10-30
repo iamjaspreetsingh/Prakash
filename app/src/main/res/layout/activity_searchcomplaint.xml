@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cardview_shadow_end_color"
+    tools:context="com.jskgmail.prakash.Searchcomplaint">
+
+    <EditText
+        android:id="@+id/editText8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView49"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="17dp"
+        android:layout_toStartOf="@+id/imageView8"
+        android:hint="Enter your Complaint id"
+        android:imeOptions="actionSearch"
+        android:inputType="number"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/editText8"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="12dp"
+        app:srcCompat="@drawable/ic_search_rblack_24dp" />
+
+    <RelativeLayout
+        android:id="@+id/allcards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText8"
+        android:layout_marginEnd="7dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/colorredmenu"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/cd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal"
+            android:text="COMPLAINT DETAILS"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/cardView5"
+            android:layout_marginEnd="6dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="12dp"
+            android:elevation="1dp"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="1dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/textView23111"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Address Details"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
+                    android:textSize="17sp" />
+
+
+                <TextView
+                    android:id="@+id/add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignStart="@+id/textView23111"
+                    android:layout_below="@+id/textView23111"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="4dp"
+                    android:text="N.A."
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/cardView5"
+            android:layout_below="@+id/cd"
+            android:layout_marginEnd="6dp"
+            android:layout_marginTop="13dp"
+            android:elevation="1dp"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="1dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/textView23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Problem"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
+                    android:textSize="17sp" />
+
+
+                <TextView
+                    android:id="@+id/pro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignStart="@+id/textView23"
+                    android:layout_below="@+id/textView23"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="6dp"
+                    android:text="Not registered yet"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/cardView6"
+            android:layout_below="@+id/cardView4"
+            android:layout_marginEnd="6dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="12dp"
+            android:elevation="1dp"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="1dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/textView231"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Description of problem"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
+                    android:textSize="17sp" />
+
+
+                <TextView
+                    android:id="@+id/des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignStart="@+id/textView231"
+                    android:layout_below="@+id/textView231"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="4dp"
+                    android:text="N.A."
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/cardView6"
+            android:layout_below="@+id/cardView6"
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="12dp"
+            android:elevation="1dp"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="1dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/textView2311"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Contact no."
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
+                    android:textSize="17sp" />
+
+
+                <TextView
+                    android:id="@+id/no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignStart="@+id/textView2311"
+                    android:layout_below="@+id/textView2311"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="4dp"
+                    android:text="N.A."
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+    <com.victor.loading.rotate.RotateLoading
+        android:id="@+id/rotateloading1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:elevation="20dp"
+        app:loading_color="#303F9F"
+        app:loading_width="5dp" />
+
+    <TextView
+        android:id="@+id/textView49"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/editText8"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:padding="5dp"
+        android:text="Enter the complaint id to find status of any complaint registered under ethereum transaction" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/imageView8"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="6dp"
+        android:clickable="true"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/ic_list_black_24dp" />
+
+
+</RelativeLayout>
