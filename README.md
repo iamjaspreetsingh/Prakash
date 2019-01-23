@@ -1,34 +1,45 @@
-# Lifesaver 
+# Prakash app
 
-### IDEA <br>
-This app tends to work on an idea that anyone who is stuck in any natural calamity like earthquake or any accidents may easily get help through your emergency contacts (that you prefer). App gets your location and sends it to the concerned so that help can be provided to you. <hr>
-#### LIFESAVER APP 
-<a href="https://play.google.com/store/apps/details?id=com.jskgmail.lifesaver">
+
+#### APP FEATURES 
+
+* Multiple Victim Detection Techniques like Alarm-like Audio Signals , Strong Flashlight , mission and Wireless Non Visible Signals in all directions around user.
+
+* Auto detects anomalies in user position and surrounding efficiently using sensors  on device (and machine learning) thus alerting possible victim.
+
+* Provides all information about victim’s health and safety at one place reduces hassle and restlessness among victim’s well wishers. Emergency Contacts are alerted with exact location and altitude of user with nearest public service locations. Also sends nearest hospital, police station, blood bank to victim details with every minute , real time detail .
+
+* Instant ,public ,decentralised complaint logging system using blockchain which helps users log a complaint/request which anyone from the public can solve including public service agencies. Global Organisations like UNO can view these transparent reports and send targeted aid. Also,  using decentralised wallet as identity during times of crisis.
+
+* Heat Map generated from these complaints/reports helps authorities to figure out areas that need most help and plan rescue operations accordingly . Allows general public to help out to others in, empowering communities to unite and survive !
+
+* Notifies all users of a particular area about Evacuation plan, Disease prone area and period (to take necessary precautions) .
+
+
+<a href="https://play.google.com/store/apps/details?id=com.opengov.prakash">
   <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge-border.png" height="64" />
 </a>
-<br><hr>
-<img src="https://github.com/iamjaspreetsingh/lifesaver/blob/master/Screenshots/Mainnavbar.png" align="left" height="700" width="400" >
-<img src="https://github.com/iamjaspreetsingh/lifesaver/blob/master/Screenshots/Settings.png" height="700" width="400" >
 
-### WORKING <br>
-The app uses the GPS location and all the data like my emergency contact list and checks if there is any disaster or not in my current realtime database as a background service.<br>
-The realtime earthquake APIs are used to know if the phone's location lies in the earthquake region or not. <br>
-For the case of accident, smart sensors like accelerometer sensor or temperature sensors are used alongwith hospitals and bloodbank APIs to find the nearest one.
-The app sends the alert message (with my exact location and earest hospital details) to all my emergency contacts at once if any tragedy occurs (after 120s response time. No spamming! )<hr>
+#### ABSTRACT 
 
-### CONCLUSION <br>
-The app is best suited for the regions where there are chances for earthquakes in spotting and rescuing them using their phone's location. It also triggers a help system during any accident (car accident, home fire etc.) after 120s wait time for response is over<hr>
-### Note <br>
+Prakash app is the one that is fledged with multiple victim detection techniques like alarm-like audio signals, strong flashlight emission, wireless non visible signals in all directions around user (power of beacons to locate victim precisely). It protects users in every emergency situation. It finds nearest hospital, police station, blood banks to victim with every minute, real time detail. The false trigger cases in the app are managed by the machine learning algorithms.
 
-##### The app uses the APIs that are localised for India taken by Govt website opendata.gov.in <br>
+Prakash auto detects anomalies in user position and surrounding efficiently using sensors on device thus alerting possible victim. Family and friends are alerted in case no response from user. Emergency Contacts are alerted with exact location and altitude of user with nearest public service locations (hospitals, blood banks etc.) and their contact numbers in the form of an sms. Also, it provides all information about victim’s health and safety at one place and hence reduces hassle and restlessness among victim’s well wishers.
 
-So, the app may not be as useful for other countries
-##### After installing the app, you also need to give the permissions required in your phone to access your contacts and location 
-(You will be prompted to do so)
+Instant, public, decentralised complaint logging system using blockchain in the app helps users log a complaint/request which anyone from the public can solve including public service agencies. Heat Map is generated from these complaints/reports helps authorities to figure out areas that need most help and plan rescue operations accordingly . It even allows general public to help out to others in, empowering communities to unite and survive ! Global Organisations like UNO can view these transparent reports and send targeted aid too.
+
+Fundraising for any tragedy using decentralized platform is integrated within the app that allows to raise funds for the areas suffering calamities powered by security and transparency of blockchain. Prakash uses decentralised wallet as identity during times of crisis to distribute essentials like food, water etc. 
+
+It notifies all users of a particular area about the evacuation plan, disease prone area and period (to take necessary precautions).
+
+Prakash also focuses on notifying its users precautions during emergency conditions, first aid tips and analyses the data during past years.
+
+Hence, Prakash is scalable to more than a billion people instantly !
+
 
 # License
 ```
- Copyright 2017 Jaspreet Singh
+ Copyright 2018 Jaspreet Singh
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -43,3 +54,4 @@ So, the app may not be as useful for other countries
  limitations under the License.
    
  ```
+
