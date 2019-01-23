@@ -1,7 +1,7 @@
 # Prakash app
 
 
-#### APP FEATURES 
+### FEATURES 
 
 * Multiple Victim Detection Techniques like Alarm-like Audio Signals , Strong Flashlight , mission and Wireless Non Visible Signals in all directions around user.
 * Auto detects anomalies in user position and surrounding efficiently using sensors  on device (and machine learning) thus alerting possible victim.
@@ -15,13 +15,18 @@
   <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge-border.png" height="64" />
 </a>
 
-#### ABSTRACT 
+### ABSTRACT 
 
 ★ Prakash app is the one that is fledged with multiple victim detection techniques like alarm-like audio signals, strong flashlight emission, wireless non visible signals in all directions around user (power of beacons to locate victim precisely). It protects users in every emergency situation. It finds nearest hospital, police station, blood banks to victim with every minute, real time detail. The false trigger cases in the app are managed by the machine learning algorithms.
+
 ★ Prakash auto detects anomalies in user position and surrounding efficiently using sensors on device thus alerting possible victim. Family and friends are alerted in case no response from user. Emergency Contacts are alerted with exact location and altitude of user with nearest public service locations (hospitals, blood banks etc.) and their contact numbers in the form of an sms. Also, it provides all information about victim’s health and safety at one place and hence reduces hassle and restlessness among victim’s well wishers.
+
 ★ Instant, public, decentralised complaint logging system using blockchain in the app helps users log a complaint/request which anyone from the public can solve including public service agencies. Heat Map is generated from these complaints/reports helps authorities to figure out areas that need most help and plan rescue operations accordingly . It even allows general public to help out to others in, empowering communities to unite and survive ! Global Organisations like UNO can view these transparent reports and send targeted aid too.
+
 ★ Fundraising for any tragedy using decentralized platform is integrated within the app that allows to raise funds for the areas suffering calamities powered by security and transparency of blockchain. Prakash uses decentralised wallet as identity during times of crisis to distribute essentials like food, water etc. 
+
 ★ It notifies all users of a particular area about the evacuation plan, disease prone area and period (to take necessary precautions).
+
 ★ Prakash also focuses on notifying its users precautions during emergency conditions, first aid tips and analyses the data during past years.
 
 ###### Hence, Prakash is scalable to more than a billion people instantly !
